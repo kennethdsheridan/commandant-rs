@@ -1,4 +1,3 @@
-```markdown
 # OneForAll Platform
 
 Developed by Ronin, OneForAll is an advanced platform specifically designed for backend infrastructure management, specializing in AI and database infrastructure use cases. This enterprise-level platform integrates robust capabilities for system integration, benchmarking, and security, catering to the intricate demands of modern technology landscapes.
