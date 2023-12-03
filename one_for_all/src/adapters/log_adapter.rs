@@ -1,35 +1,66 @@
-//! Log Adapter
-//!
-//! This module provides a logger with colored output, timestamps, and caller information.
-//! It uses the `env_logger` and `colored` crates to achieve this functionality.
-
 use colored::*;
-use env_logger::Builder;
+use fern::{Dispatch, log_file};
 use log::LevelFilter;
-use std::io::Write;
+use std::io;
+use chrono::Local;
 
-/// Initializes the logger with the specified log level filter.
+/// Initializes the logger with different log files for each level.
+///
+/// Log messages are directed to both the terminal and separate files for each log level.
+/// The files are created in the specified directory.
 ///
 /// # Arguments
 ///
-/// * `level_filter` - The minimum log level to display.
-pub fn init(level_filter: LevelFilter) {
-    Builder::new()
-        .format(|buf, record| {
+/// * `log_dir_path` - The path to the directory where log files will be written.
+///
+/// # Panics
+///
+/// This function will panic if it fails to create or write to any of the log files.
+pub fn init(log_dir_path: &str) {
+    // Create a base configuration for formatting log messages
+    let base_config = Dispatch::new()
+        .format(move |out, message, record| {
+            let color_message = match record.level() {
+                log::Level::Error => message.to_string().red(),
+                log::Level::Warn => message.to_string().yellow(),
+                log::Level::Info => message.to_string().green(),
+                log::Level::Debug => message.to_string().blue(),
+                log::Level::Trace => message.to_string().cyan(),
+            };
             writeln!(
-                buf,
+                out,
                 "{} [{}] - {}",
-                chrono::Local::now().format("%Y-%m-%dT%H:%M:%S"),
+                Local::now().format("%Y-%m-%dT%H:%M:%S"),
                 record.level(),
-                match record.level() {
-                    log::Level::Error => record.args().to_string().red(),
-                    log::Level::Warn => record.args().to_string().yellow(),
-                    log::Level::Info => record.args().to_string().green(),
-                    log::Level::Debug => record.args().to_string().blue(),
-                    log::Level::Trace => record.args().to_string().cyan(),
-                }
+                color_message
             )
-        })
-        .filter(None, level_filter)
-        .init();
+        });
+
+    // Dispatcher for terminal output
+    let stdout_config = base_config.chain(io::stdout());
+
+    // Dispatchers for file output, one for each log level
+    let error_file = log_file(&format!("{}/one_4_all_error.log", log_dir_path))
+        .expect("Failed to open error log file");
+    let warn_file = log_file(&format!("{}/one_4_all_warn.log", log_dir_path))
+        .expect("Failed to open warn log file");
+    let info_file = log_file(&format!("{}/one_4_all_info.log", log_dir_path))
+        .expect("Failed to open info log file");
+    let debug_file = log_file(&format!("{}/one_4_all_debug.log", log_dir_path))
+        .expect("Failed to open debug log file");
+    let trace_file = log_file(&format!("{}/one_4_all_trace.log", log_dir_path))
+        .expect("Failed to open trace log file");
+
+    // Combine all dispatches
+    let combined_config = Dispatch::new()
+        .chain(stdout_config)
+        .chain(Dispatch::new().filter(|metadata| metadata.level() == log::Level::Error).chain(error_file))
+        .chain(Dispatch::new().filter(|metadata| metadata.level() == log::Level::Warn).chain(warn_file))
+        .chain(Dispatch::new().filter(|metadata| metadata.level() == log::Level::Info).chain(info_file))
+        .chain(Dispatch::new().filter(|metadata| metadata.level() == log::Level::Debug).chain(debug_file))
+        .chain(Dispatch::new().filter(|metadata| metadata.level() == log::Level::Trace).chain(trace_file));
+
+    // Apply the logger configuration
+    combined_config.apply()
+        .expect("Failed to initialize logger.");
 }

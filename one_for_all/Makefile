@@ -1,14 +1,16 @@
-.PHONY: all build_linux build_macos clean test fmt check
+.PHONY: all build build_linux build_macos clean test fmt check lint help
 
-# Set the binary name and source directory
+# Set the binary name
 BINARY_NAME := one-for-all
-SOURCES_DIR := ./
 
 # Determine the operating system
-ifeq ($(shell uname -s),Linux)
+OS := $(shell uname -s)
+ifeq ($(OS),Linux)
     BINARY_EXT := linux
+    TARGET_ARCH := x86_64-unknown-linux-gnu
 else
     BINARY_EXT := darwin
+    TARGET_ARCH := x86_64-apple-darwin
 endif
 
 # Set the output directory
@@ -28,13 +30,13 @@ build:
 
 # Build the Linux binary
 build_linux:
-	cargo build --release --target x86_64-unknown-linux-gnu
-	cp $(OUTPUT_DIR)/x86_64-unknown-linux-gnu/release/$(BINARY_NAME) $(BINARY_LINUX)
+	cargo build --release --target $(TARGET_ARCH)
+	cp $(OUTPUT_DIR)/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_LINUX)
 
 # Build the MacOS binary
 build_macos:
-	cargo build --release --target x86_64-apple-darwin
-	cp $(OUTPUT_DIR)/x86_64-apple-darwin/release/$(BINARY_NAME) $(BINARY_MACOS)
+	cargo build --release --target $(TARGET_ARCH)
+	cp $(OUTPUT_DIR)/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_MACOS)
 
 # Clean the generated binaries and other build artifacts
 clean:
@@ -60,12 +62,12 @@ lint:
 help:
 	@echo "Usage: make [TARGET]"
 	@echo "Targets:"
-	@echo "  all        Build the project for the current OS"
-	@echo "  build      Alias for 'all'"
+	@echo "  all         Build the project for the current OS"
+	@echo "  build       Alias for 'all'"
 	@echo "  build_linux Build the project for Linux"
 	@echo "  build_macos Build the project for macOS"
-	@echo "  clean      Remove build artifacts"
-	@echo "  test       Run tests"
-	@echo "  fmt        Format the code"
-	@echo "  check      Check the code for errors"
-	@echo "  lint       Run clippy to catch common mistakes and improve your Rust code"
+	@echo "  clean       Remove build artifacts"
+	@echo "  test        Run tests"
+	@echo "  fmt         Format the code"
+	@echo "  check       Check the code for errors"
+	@echo "  lint        Run clippy to catch common mistakes and improve your Rust code"
