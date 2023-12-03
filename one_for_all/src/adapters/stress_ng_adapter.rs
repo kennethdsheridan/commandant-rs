@@ -26,9 +26,9 @@ impl StressTest for StressNgAdapter {
         // Define the stress-ng command for CPU tests
         let cpu_test_command = Command::new("stress-ng")
             .arg("--cpu")
-            .arg("4") // Number of CPUs to stress. Consider parameterizing this.
+            .arg("2") // Number of CPUs to stress. Consider parameterizing this.
             .arg("--timeout")
-            .arg("60s") // Duration of the stress test. Consider parameterizing this.
+            .arg("30s") // Duration of the stress test. Consider parameterizing this.
             .spawn()
             .expect("Failed to start stress-ng process");
 
