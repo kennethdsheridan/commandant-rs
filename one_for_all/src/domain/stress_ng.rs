@@ -55,11 +55,3 @@ impl StressNgConfig {
 const STRESS_NG_LINUX: &'static [u8] = include_bytes!("linux/stress-ng");
 const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
 
-// Use the binaries
-fn decide_stress_ng_arch() {
-    if cfg!(target_os = "linux") {
-        // Use STRESS_NG_LINUX
-    } else if cfg!(target_os = "macos") {
-        // Use STRESS_NG_MACOS
-    }
-}
