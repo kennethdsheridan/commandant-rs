@@ -5,6 +5,32 @@ use std::fs;
 use std::fs::File;
 use chrono::Local;
 
+use
+
+pub struct FernLogger;
+
+impl Logger for FernLogger {
+    fn log_info(&self, message: &str) {
+        log::info!("{}", message);
+    }
+
+    fn log_warn(&self, message: &str) {
+        log::warn!("{}", message);
+    }
+
+    fn log_error(&self, message: &str) {
+        log::error!("{}", message);
+    }
+
+    fn log_debug(&self, message: &str) {
+        log::debug!("{}", message);
+    }
+
+    fn log_trace(&self, message: &str) {
+        log::trace!("{}", message);
+    }
+}
+
 pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
     // Create the log directory if it doesn't exist
     fs::create_dir_all(log_dir_path)

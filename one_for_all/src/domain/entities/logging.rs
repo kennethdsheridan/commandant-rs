@@ -1,5 +1,4 @@
-// src/domain/logging.rs
-
+// Logger trait is a port in the hexagonal architecture.
 pub trait Logger {
     fn log_info(&self, message: &str);
     fn log_warn(&self, message: &str);
