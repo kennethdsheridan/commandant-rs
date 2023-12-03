@@ -4,8 +4,8 @@ use log::LevelFilter;
 use std::fs;
 use std::fs::File;
 use chrono::Local;
+use crate::domain::logging::Logger;
 
-use
 
 pub struct FernLogger;
 

@@ -1,2 +1,2 @@
-// src/adapters/mod.rs
+// src/adapters/domain
 pub mod log_adapter;
