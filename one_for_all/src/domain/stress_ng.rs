@@ -52,8 +52,8 @@ impl StressNgConfig {
 }
 
 // Include the stress-ng binaries
-const STRESS_NG_LINUX: &'static [u8] = include_bytes!("domain/linux/stress-ng");
-const STRESS_NG_MACOS: &'static [u8] = include_bytes!("domain/macOS/stress-ng");
+const STRESS_NG_LINUX: &'static [u8] = include_bytes!("linux/stress-ng");
+const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
 
 // Use the binaries
 fn decide_stress_ng_arch() {
