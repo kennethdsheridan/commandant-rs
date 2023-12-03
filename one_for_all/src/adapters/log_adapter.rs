@@ -1,30 +1,14 @@
 use colored::*;
-use fern::{Dispatch, log_file};
+use fern::{Dispatch};
 use log::LevelFilter;
-use std::io;
-use std::fs;
 use chrono::Local;
 
-/// Initializes the logger with different log files for each level.
-///
-/// Log messages are directed to both the terminal and separate files for each log level.
-/// The files are created in the specified directory. If the directory does not exist,
-/// it is created.
-///
-/// # Arguments
-///
-/// * `log_dir_path` - The path to the directory where log files will be written.
-///
-/// # Panics
-///
-/// This function will panic if it fails to create or write to any of the log files
-/// or if it cannot create the log directory.
 pub fn init(log_dir_path: &str) {
-    // Create log directory if it doesn't exist
-    fs::create_dir_all(log_dir_path)
-        .unwrap_or_else(|_| panic!("Failed to create log directory: {}", log_dir_path));
+    // Create the log directory if it doesn't exist
+    std::fs::create_dir_all(log_dir_path)
+        .expect("Failed to create log directory");
 
-    // Create a base configuration for formatting log messages
+    // Base configuration
     let base_config = Dispatch::new()
         .format(move |out, message, record| {
             let color_message = match record.level() {
@@ -34,19 +18,25 @@ pub fn init(log_dir_path: &str) {
                 log::Level::Debug => message.to_string().blue(),
                 log::Level::Trace => message.to_string().cyan(),
             };
-            writeln!(
-                out,
+            out.finish(format_args!(
                 "{} [{}] - {}",
                 Local::now().format("%Y-%m-%dT%H:%M:%S"),
                 record.level(),
                 color_message
-            )
-        });
+            ))
+        })
+        .level(level_filter);
 
-    // Rest of the logger setup
-    // ...
+    // Define log file paths
+    let error_log = format!("{}/one_4_all_error.log", log_dir_path);
+    // ... define other log files similarly
+
+    // Combined configuration
+    let combined_config = base_config
+        .chain(Dispatch::new().filter(|meta| meta.level() <= log::Level::Error).chain(fern::log_file(error_log).unwrap()))
+        // ... chain other log levels similarly
+        .chain(std::io::stdout()); // Add this to log to stdout
 
     // Apply the logger configuration
-    combined_config.apply()
-        .expect("Failed to initialize logger.");
+    combined_config.apply().expect("Failed to initialize logger.");
 }
