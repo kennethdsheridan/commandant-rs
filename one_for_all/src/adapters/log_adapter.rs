@@ -2,12 +2,21 @@ use colored::*;
 use fern::{Dispatch, log_file};
 use log::LevelFilter;
 use std::fs;
+use std::fs::File;
 use chrono::Local;
 
 pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
     // Create the log directory if it doesn't exist
     fs::create_dir_all(log_dir_path)
         .expect("Failed to create log directory");
+
+    // Truncate existing log files or create new ones
+    let log_levels = ["error", "warn", "info", "debug", "trace"];
+    for level in &log_levels {
+        let file_path = format!("{}/one_4_all_{}.log", log_dir_path, level);
+        File::create(&file_path)
+            .unwrap_or_else(|_| panic!("Failed to create or truncate log file: {}", file_path));
+    }
 
     // Base configuration for formatting log messages
     let base_config = Dispatch::new()
@@ -28,7 +37,7 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
         })
         .level(level_filter);
 
-    // Create log file paths for each level
+// Define log file paths and dispatchers for each log level
     let error_log = log_file(&format!("{}/one_4_all_error.log", log_dir_path)).unwrap();
     let warn_log = log_file(&format!("{}/one_4_all_warn.log", log_dir_path)).unwrap();
     let info_log = log_file(&format!("{}/one_4_all_info.log", log_dir_path)).unwrap();
