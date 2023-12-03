@@ -14,7 +14,8 @@ impl<'a> StressNgAdapter<'a> {
 
 impl<'a> StressTest for StressNgAdapter<'a> {
     fn run_cpu_tests(&self) {
-        let stress: () = decide_stress_ng_arch();
+        // Get the stress-ng binary path
+        let stress = decide_stress_ng_arch();
 
         // Define the stress-ng command for CPU tests
         let cpu_test_command = Command::new(stress)
