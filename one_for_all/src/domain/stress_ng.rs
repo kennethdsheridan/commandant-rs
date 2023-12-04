@@ -2,8 +2,15 @@
 //!
 //! This module provides a domain entity for stress-ng, a tool for stress testing
 //! CPU and memory on Linux and macOS systems.
+// Include the stress-ng binaries
+
+const STRESS_NG_LINUX: &'static [u8] = include_bytes!("one_for_all/src/domain/linux/stress-ng");
+const STRESS_NG_MACOS: &'static [u8] = include_bytes!("one_for_all/src/domain/macOS/stress-ng");
+
 
 use std::collections::HashSet;
+use std::fs;
+use std::io::Result;
 
 /// Represents the stress-ng configuration.
 pub struct StressNgConfig {
@@ -51,7 +58,7 @@ impl StressNgConfig {
     // Add methods to run the stress tests here...
 }
 
-// Include the stress-ng binaries
-const STRESS_NG_LINUX: &'static [u8] = include_bytes!("linux/stress-ng");
-const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
 
+pub fn write_binary_to_disk(binary: &[u8], filename: &str) -> Result<()> {
+    fs::write(filename, binary)
+}
