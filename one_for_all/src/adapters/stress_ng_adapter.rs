@@ -1,4 +1,4 @@
-use crate::domain::stress_test::StressTest;
+use crate::ports::stress_test::StressTest;
 use std::process::Command;
 use crate::domain::logging::Logger;
 

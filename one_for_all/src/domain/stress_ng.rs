@@ -4,8 +4,8 @@
 //! CPU and memory on Linux and macOS systems.
 // Include the stress-ng binaries
 
-const STRESS_NG_LINUX: &'static [u8] = include_bytes!("one_for_all/src/domain/linux/stress-ng");
-const STRESS_NG_MACOS: &'static [u8] = include_bytes!("one_for_all/src/domain/macOS/stress-ng");
+const STRESS_NG_LINUX: &'static [u8] = include_bytes!("linux/stress-ng");
+const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
 
 
 use std::collections::HashSet;
@@ -59,6 +59,18 @@ impl StressNgConfig {
 }
 
 
+/// Writes a binary file to the root directory of the project.
+///
+/// # Arguments
+///
+/// * `binary` - A byte slice that holds the binary data to be written to the file.
+/// * `filename` - A string slice that holds the name of the file.
+///
+/// # Errors
+///
+/// If this function encounters any form of I/O or system error, an error variant will be returned.
 pub fn write_binary_to_disk(binary: &[u8], filename: &str) -> Result<()> {
-    fs::write(filename, binary)
+    let mut path = std::env::current_dir()?;
+    path.push(filename);
+    fs::write(path, binary)
 }
