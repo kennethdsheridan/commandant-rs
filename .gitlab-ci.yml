@@ -1,13 +1,93 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+# Define the stages in the pipeline
 stages:
-- test
-sast:
+  - clear_cache
+  - build
+  - test
+  - document
+  - deploy
+
+# Set global variables
+variables:
+  BIN_NAME: one-for-all
+  ARTIFACTS_DIR: artifacts
+  RUST_PROJECT: gitlab.com/kennethdashensheridan/oneforall
+
+# Clear the cargo cache before each job
+clear_cache:
+  stage: build
+  script:
+    - echo "Changing to the one_for_all directory"
+    - cd /builds/kennethdsheridan/oneforall/  # Adjust this path as needed
+    - echo "Current working directory:"
+    - pwd
+    - echo "Clearing the Cargo build cache"
+    - cargo clean
+  when: always
+  allow_failure: true
+
+
+
+# Define the base image and settings for all jobs
+before_script:
+  - mkdir -p ${ARTIFACTS_DIR}
+  - apt-get update && apt-get install -y curl git gcc make
+  - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  - source $HOME/.cargo/env
+  - rustup default stable
+  - cd one_for_all  # Change to the directory containing Cargo.toml
+  - cargo fetch
+
+# Build the application for Linux
+build_linux:
+  stage: build
+  needs: ["clear_cache"]
+  script:
+    - cd one_for_all  # Ensure we are in the correct directory
+    - mkdir -p ${ARTIFACTS_DIR}/linux
+    - cargo build --release --target x86_64-unknown-linux-gnu
+    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} ${ARTIFACTS_DIR}/linux/
+  artifacts:
+    paths:
+      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}
+    expire_in: 1 week
+
+# Run unit tests
+test:
   stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  needs: ["build_linux"]
+  script:
+    - cd one_for_all  # Ensure we are in the correct directory
+    - cargo test --verbose
+
+# Generate Documentation
+# ... [rest of your pipeline configuration]
+document:
+  stage: document
+  script:
+    - cargo doc --no-deps
+    - mv target/doc ${ARTIFACTS_DIR}/
+  artifacts:
+    paths:
+      - ${ARTIFACTS_DIR}/doc
+    expire_in: 1 week
+
+# Deploy the application
+deploy:
+  stage: deploy
+  needs: ["test"]
+  script:
+    - echo "ARTIFACTS_DIR is $ARTIFACTS_DIR"
+    - echo "BIN_NAME is $BIN_NAME"
+    - ls -l $ARTIFACTS_DIR
+    - mkdir -p deploy
+    - mv ${ARTIFACTS_DIR}/linux/${BIN_NAME} deploy/
+    - ls -l deploy/
+    - echo "Deploying..."
+
+# Cache the Cargo dependencies to speed up builds
+cache:
+  key: "${CI_COMMIT_REF_SLUG}-cargo"
+  paths:
+    - Cargo.lock
+    - target
+    - $CARGO_HOME/registry
