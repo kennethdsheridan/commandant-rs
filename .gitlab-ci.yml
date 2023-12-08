@@ -52,10 +52,10 @@ build_linux:
     - cargo build --release --target x86_64-unknown-linux-gnu
     - echo "Listing contents of the release directory:"
     - ls -la target/x86_64-unknown-linux-gnu/release/
-    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/
+    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux
   artifacts:
     paths:
-      - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}
+      - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux
     expire_in: 1 week
 
 # Build the application for macOS (Intel)
@@ -72,11 +72,12 @@ build_macos:
     - cargo build --release --target x86_64-apple-darwin
     - echo "Listing contents of the macOS release directory:"
     - ls -la target/x86_64-apple-darwin/release/
-    - cp target/x86_64-apple-darwin/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/
+    - cp target/x86_64-apple-darwin/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
   artifacts:
     paths:
-      - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}
+      - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
     expire_in: 1 week
+
 
 test:
   stage: test
