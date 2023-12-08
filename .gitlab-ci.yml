@@ -34,6 +34,7 @@ before_script:
   - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   - source $HOME/.cargo/env
   - rustup default stable
+  - cd one_for_all  # Change to the directory containing Cargo.toml
   - cargo fetch
 
 # Build the application for Linux
@@ -41,6 +42,7 @@ build_linux:
   stage: build
   needs: ["clear_cache"]
   script:
+    - cd one_for_all  # Ensure we are in the correct directory
     - mkdir -p ${ARTIFACTS_DIR}/linux
     - cargo build --release --target x86_64-unknown-linux-gnu
     - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} ${ARTIFACTS_DIR}/linux/
@@ -54,9 +56,11 @@ test:
   stage: test
   needs: ["build_linux"]
   script:
+    - cd one_for_all  # Ensure we are in the correct directory
     - cargo test --verbose
 
 # Generate Documentation
+# ... [rest of your pipeline configuration]
 document:
   stage: document
   script:
