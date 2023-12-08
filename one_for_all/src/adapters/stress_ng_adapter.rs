@@ -15,7 +15,10 @@ pub struct StressNgAdapter<'a> {
 
 impl<'a> StressNgAdapter<'a> {
     pub fn new(logger: &'a dyn Logger) -> Self {
-        Self { logger }
+        Self {
+            logger,
+
+        }
     }
 }
 
@@ -31,8 +34,7 @@ impl<'a> StressTest for StressNgAdapter<'a> {
         };
 
         // Generate a unique temporary file name
-        let temp_file_path = format!("/tmp/stress-ng-{}", uuid::Uuid::new_v4());
-
+        let temp_file_path = format!("/tmp/{}", "stress-ng");
         // Write the binary data to a file
         if let Err(e) = File::create(&temp_file_path)
             .and_then(|mut file| file.write_all(binary_data)) {
@@ -56,7 +58,7 @@ impl<'a> StressTest for StressNgAdapter<'a> {
 
         // Check if the command was successfully started
         match cpu_test_command {
-            Ok(mut command) => {
+            Ok(command) => {
                 self.logger.log_debug("Executing stress-ng command");
 
                 // Start the stress-ng process and handle any errors
