@@ -13,3 +13,5 @@ env_logger = "0.10.1"
 fern = "0.6.0"
 chrono = "0.4.19"
 colored = "2.0.0"
+uuid = "1.6.1"
+

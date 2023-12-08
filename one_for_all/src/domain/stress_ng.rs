@@ -4,14 +4,7 @@
 //! CPU and memory on Linux and macOS systems.
 // Include the stress-ng binaries
 
-pub const STRESS_NG_LINUX: &'static [u8] = include_bytes!("linux/stress-ng");
-pub const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
-
 use std::collections::HashSet;
-use std::{env, fs};
-use std::fs::Permissions;
-use std::io::Result;
-use std::os::unix::fs::PermissionsExt;
 
 
 /// Represents the stress-ng configuration.
@@ -61,28 +54,3 @@ impl StressNgConfig {
 }
 
 
-/// Writes a binary file to the root directory of the project.
-///
-/// # Arguments
-///
-/// * `binary` - A byte slice that holds the binary data to be written to the file.
-/// * `filename` - A string slice that holds the name of the file.
-///
-/// # Returns
-///
-/// * `Result<()>` - Returns `Ok(())` if the file is successfully written, otherwise returns `Err` with the error information.
-pub fn write_binary_to_disk(binary: &str, filename: &str) -> Result<()> {
-    let mut path = env::current_dir()?;
-    path.push(filename);
-
-    // Create the directory if it doesn't exist
-    if let Some(dir) = path.parent() {
-        fs::create_dir_all(dir)?;
-    }
-
-    fs::write(&path, binary)?;
-
-    // Set permissions and make the file executable
-    let permissions = Permissions::from_mode(0o755);
-    fs::set_permissions(&path, permissions)
-}

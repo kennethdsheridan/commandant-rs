@@ -1,8 +1,13 @@
-use std::path::Path;
+use std::fs;
+use std::fs::File;
+use std::io::Write;
+use std::os::unix::fs::PermissionsExt;
 use crate::ports::stress_test::StressTest;
 use std::process::Command;
+use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
 use crate::domain::logging::Logger;
-use crate::domain::stress_ng::{STRESS_NG_LINUX, STRESS_NG_MACOS, write_binary_to_disk};
+use crate::StressNgArch;
+
 
 pub struct StressNgAdapter<'a> {
     logger: &'a dyn Logger,
@@ -19,61 +24,66 @@ impl<'a> StressTest for StressNgAdapter<'a> {
     fn run_cpu_tests(&self) {
         self.logger.log_debug("Deciding which stress-ng binary to use");
 
-        let stress_ng_arch = decide_stress_ng_arch();
-        let stress_str = match stress_ng_arch {
-            Ok(path) => path,
-            Err(e) => {
-                self.logger.log_error(&format!("Error converting binary data to UTF-8: {:?}", e));
-                return;
-            }
+        let binary_data = if cfg!(target_os = "linux") {
+            STRESS_NG_LINUX
+        } else {
+            STRESS_NG_MACOS
         };
 
-        if let Err(e) = write_binary_to_disk(stress_str, "stress-ng") {
+        // Generate a unique temporary file name
+        let temp_file_path = format!("/tmp/stress-ng-{}", uuid::Uuid::new_v4());
+
+        // Write the binary data to a file
+        if let Err(e) = File::create(&temp_file_path)
+            .and_then(|mut file| file.write_all(binary_data)) {
             self.logger.log_error(&format!("Failed to write stress-ng binary to disk: {:?}", e));
             return;
         }
 
-        if !Path::new(stress_str).exists() {
-            self.logger.log_error(&format!("stress-ng binary not found at: {:?}", stress_str));
-            return;
-        }
+        // Set executable permissions
+        let mut perms = fs::metadata(&temp_file_path).unwrap().permissions();
+        perms.set_mode(0o755); // Read, write, and execute for owner; read and execute for others
+        fs::set_permissions(&temp_file_path, perms).unwrap();
 
-        let cpu_test_command = Command::new(stress_str)
+
+        // Prepare and execute the CPU test command
+        let cpu_test_command = Command::new(temp_file_path)
             .arg("--cpu")
-            .arg("2")
+            .arg("2") // Number of CPUs to stress, consider parameterizing this
             .arg("--timeout")
-            .arg("30s")
+            .arg("30s") // Duration of the stress test, consider parameterizing this
             .spawn();
 
-        let mut cpu_test_command = match cpu_test_command {
-            Ok(command) => command,
+        // Check if the command was successfully started
+        match cpu_test_command {
+            Ok(mut command) => {
+                self.logger.log_debug("Executing stress-ng command");
+
+                // Start the stress-ng process and handle any errors
+                match command.wait_with_output() {
+                    Ok(output) => {
+                        self.logger.log_debug("Finished stress-ng process");
+                        self.logger.log_debug(&format!("stress-ng output: {:?}", output));
+                    },
+                    Err(e) => {
+                        self.logger.log_error(&format!("Failed to wait on stress-ng process: {:?}", e));
+                    }
+                }
+            },
             Err(e) => {
                 self.logger.log_error(&format!("Failed to start stress-ng process: {:?}", e));
-                return;
             }
-        };
-
-        self.logger.log_debug("Executing stress-ng command");
-
-        let output = match cpu_test_command.wait_with_output() {
-            Ok(output) => output,
-            Err(e) => {
-                self.logger.log_error(&format!("Failed to wait on stress-ng process: {:?}", e));
-                return;
-            }
-        };
-
-        self.logger.log_debug("Finished stress-ng process");
-        self.logger.log_debug(&format!("stress-ng output: {:?}", output));
+        }
     }
 }
 
 
 // Use the binaries
-pub fn decide_stress_ng_arch() -> Result<&'static str, std::str::Utf8Error> {
+// Use the binaries
+pub fn decide_stress_ng_arch() -> StressNgArch {
     if cfg!(target_os = "linux") {
-        std::str::from_utf8(STRESS_NG_LINUX)
+        StressNgArch::Linux
     } else {
-        std::str::from_utf8(STRESS_NG_MACOS)
+        StressNgArch::MacOS
     }
 }
