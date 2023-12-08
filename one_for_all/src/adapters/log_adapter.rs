@@ -1,4 +1,4 @@
-use crate::domain::logging::Logger;
+use crate::domain::logging::LoggerPort;
 use chrono::Local;
 use colored::*;
 use fern::{log_file, Dispatch};
@@ -8,7 +8,7 @@ use std::fs::File;
 
 pub struct FernLogger;
 
-impl Logger for FernLogger {
+impl LoggerPort for FernLogger {
     fn log_info(&self, message: &str) {
         log::info!("{}", message);
     }

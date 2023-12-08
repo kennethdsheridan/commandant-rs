@@ -1,6 +1,6 @@
 // stress_ng_manager.rs
 
-use crate::domain::logging::Logger;
+use crate::domain::logging::LoggerPort;
 use std::fs::File;
 use std::io::{self, Write};
 
@@ -14,7 +14,7 @@ pub enum StressNgArch {
 
 pub fn write_stress_ng_to_disk(
     stress_ng_arch: StressNgArch,
-    logr: &dyn Logger,
+    logr: &dyn LoggerPort,
 ) -> Result<(), std::io::Error> {
     let (binary_data, filename) = match stress_ng_arch {
         StressNgArch::Linux => (STRESS_NG_LINUX, "stress-ng-linux"),

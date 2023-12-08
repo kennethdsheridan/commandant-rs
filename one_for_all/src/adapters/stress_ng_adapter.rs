@@ -1,5 +1,5 @@
 use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
-use crate::domain::logging::Logger;
+use crate::domain::logging::LoggerPort;
 use crate::ports::stress_test::StressTest;
 use crate::StressNgArch;
 use std::fs;
@@ -22,7 +22,7 @@ pub struct StressNgAdapter<'a> {
     // The logger must implement the `Logger` trait.
     // The use of a dynamic reference (`dyn Logger`) allows for flexibility in
     // the specific logging implementation used.
-    logger: &'a dyn Logger,
+    logger: &'a dyn LoggerPort,
 }
 
 /// Implementation of `StressNgAdapter`.
@@ -46,7 +46,7 @@ impl<'a> StressNgAdapter<'a> {
     /// let logger = MyLogger::new();
     /// let adapter = StressNgAdapter::new(&logger);
     /// ```
-    pub fn new(logger: &'a dyn Logger) -> Self {
+    pub fn new(logger: &'a dyn LoggerPort) -> Self {
         Self { logger }
     }
 }
