@@ -109,37 +109,35 @@ document:
     expire_in: 1 week
 
 
-
 deploy:
   stage: deploy
   needs: ["build_linux", "build_macos", "document"]
   script:
     - echo "Deploying Linux binary..."
     - LINUX_ARTIFACT="${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux"
-    - if [ -f "${LINUX_ARTIFACT}" ]; then
-      echo "Linux artifact found, deploying..."
-      # Linux deployment commands
+    - |
+      if [ -f "${LINUX_ARTIFACT}" ]; then
+        echo "Linux artifact found, deploying..."
+        # Linux deployment commands
       else
-      echo "Linux artifact not found."
-      exit 1
+        echo "Linux artifact not found."
+        exit 1
       fi
     - echo "Deploying macOS binary..."
     - MACOS_ARTIFACT="${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos"
-    - if [ -f "${MACOS_ARTIFACT}" ]; then
-      echo "macOS artifact found, deploying..."
-      # macOS deployment commands
+    - |
+      if [ -f "${MACOS_ARTIFACT}" ]; then
+        echo "macOS artifact found, deploying..."
+        # macOS deployment commands
       else
-      echo "macOS artifact not found."
-      exit 1
+        echo "macOS artifact not found."
+        exit 1
       fi
   artifacts:
     paths:
       - ${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux  # Relative path
       - ${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos  # Relative path
-      - ${ARTIFACTS_DIR}/doc                     # Relative path
-
-
-
+      - ${ARTIFACTS_DIR}/doc                     # Rela
 
 
 # Cache the Cargo dependencies to speed up builds
