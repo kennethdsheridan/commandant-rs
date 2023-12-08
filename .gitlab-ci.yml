@@ -45,7 +45,10 @@ build_linux:
   stage: build
   needs: ["clear_cache"]
   script:
-    - cd one_for_all  # Ensure we are in the correct directory
+    - echo "Changing to the one_for_all directory for build"
+    - pwd
+    - ls -la
+    - cd one_for_all || { echo "Directory one_for_all not found"; exit 1; }
     - mkdir -p ${ARTIFACTS_DIR}/linux
     - cargo build --release --target x86_64-unknown-linux-gnu
     - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} ${ARTIFACTS_DIR}/linux/
@@ -54,16 +57,17 @@ build_linux:
       - ${ARTIFACTS_DIR}/linux/${BIN_NAME}
     expire_in: 1 week
 
-# Run unit tests
 test:
   stage: test
   needs: ["build_linux"]
   script:
-    - cd one_for_all  # Ensure we are in the correct directory
+    - echo "Changing to the one_for_all directory for test"
+    - pwd
+    - ls -la
+    - cd one_for_all || { echo "Directory one_for_all not found"; exit 1; }
     - cargo test --verbose
 
 # Generate Documentation
-# ... [rest of your pipeline configuration]
 document:
   stage: document
   script:
