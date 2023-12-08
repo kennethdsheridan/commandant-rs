@@ -63,7 +63,7 @@ build_macos:
   stage: build
   needs: ["clear_cache"]
   tags:
-    - macos-13-xcode-14  # Specify the macOS runner
+    - saas-macos-medium-m1 # Specify the macOS runner
   script:
     - echo "Preparing to build for macOS..."
 
