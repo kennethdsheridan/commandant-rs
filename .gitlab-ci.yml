@@ -8,7 +8,7 @@ stages:
 
 # Set global variables
 variables:
-  BIN_NAME: one-for-all
+  BIN_NAME: one_for_all
   ARTIFACTS_DIR: artifacts
   RUST_PROJECT: gitlab.com/kennethdashensheridan/oneforall
 
