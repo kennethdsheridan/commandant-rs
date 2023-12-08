@@ -10,7 +10,6 @@ use crate::adapters::stress_ng_manager_adapter::{
 use crate::ports::stress_test::StressTest;
 use adapters::log_adapter::{init, FernLogger};
 use domain::logging::LoggerPort;
-use log::logger;
 
 /// Enumeration representing the supported architectures for the `stress-ng` binary.
 /// This enum is used to select the correct binary for the running operating system.
