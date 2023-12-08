@@ -95,21 +95,22 @@ deploy:
   script:
     - echo "Current working directory:"
     - pwd
-    - echo "Checking if ARTIFACTS_DIR exists"
+    - ARTIFACTS_DIR_ABSOLUTE="/builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}"
+    - echo "Checking if ${ARTIFACTS_DIR_ABSOLUTE} exists"
     - ls -la
-    - if [ -d "${ARTIFACTS_DIR}" ]; then
-      echo "${ARTIFACTS_DIR} directory found.";
-      ls -la ${ARTIFACTS_DIR};
+    - if [ -d "${ARTIFACTS_DIR_ABSOLUTE}" ]; then
+      echo "${ARTIFACTS_DIR_ABSOLUTE} directory found.";
+      ls -la ${ARTIFACTS_DIR_ABSOLUTE};
       else
-      echo "${ARTIFACTS_DIR} directory not found.";
+      echo "${ARTIFACTS_DIR_ABSOLUTE} directory not found.";
       exit 1;
       fi
     - echo "Deploying..."
 
   artifacts:
     paths:
-      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}
-      - ${ARTIFACTS_DIR}/doc
+      - ${ARTIFACTS_DIR_ABSOLUTE}/linux/${BIN_NAME}
+      - ${ARTIFACTS_DIR_ABSOLUTE}/doc
 
 
 # Cache the Cargo dependencies to speed up builds
