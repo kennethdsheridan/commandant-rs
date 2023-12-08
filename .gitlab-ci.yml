@@ -48,14 +48,14 @@ build_linux:
     - ls -la
     - echo "Listing contents of src directory:"
     - ls -la src/
-    - mkdir -p ${ARTIFACTS_DIR}/linux
+    - mkdir -p /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux
     - cargo build --release --target x86_64-unknown-linux-gnu
     - echo "Listing contents of the release directory:"
     - ls -la target/x86_64-unknown-linux-gnu/release/
-    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} ${ARTIFACTS_DIR}/linux/
+    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/
   artifacts:
     paths:
-      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}
+      - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}
     expire_in: 1 week
 
 test:
