@@ -130,12 +130,38 @@ impl<'a> StressTest for StressNgAdapter<'a> {
 
 
 
-// Use the binaries
-// Use the binaries
+/// Determines the appropriate architecture version of the `stress-ng` binary to use
+/// based on the operating system the program is running on. This function is designed
+/// to support different versions of `stress-ng` for different platforms (currently Linux and macOS).
+///
+/// This decision is crucial for ensuring compatibility and proper functioning of
+/// the stress tests on different operating systems.
+///
+/// # Returns
+///
+/// * `StressNgArch` - An enum variant representing the architecture-specific version of `stress-ng`.
+///   This will be either `StressNgArch::Linux` or `StressNgArch::MacOS` depending on the OS.
+///
+/// # Examples
+///
+/// ```
+/// let stress_ng_arch = decide_stress_ng_arch();
+/// match stress_ng_arch {
+///     StressNgArch::Linux => {
+///         // Use the Linux version of stress-ng
+///     },
+///     StressNgArch::MacOS => {
+///         // Use the macOS version of stress-ng
+///     },
+/// }
+/// ```
 pub fn decide_stress_ng_arch() -> StressNgArch {
+    // Check the target operating system at compile time
+    // and return the corresponding `StressNgArch` enum variant.
     if cfg!(target_os = "linux") {
         StressNgArch::Linux
     } else {
         StressNgArch::MacOS
     }
 }
+
