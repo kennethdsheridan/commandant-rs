@@ -110,26 +110,34 @@ document:
 
 
 
-# Deploy the application
 deploy:
   stage: deploy
-  needs: ["build_linux", "document"]
+  needs: ["build_linux", "build_macos", "document"]
   script:
-    - echo "Deploying..."
-    - ARTIFACTS_DIR_RELATIVE="${ARTIFACTS_DIR}/linux/${BIN_NAME}"  # Relative path for artifacts
-    - |
-      if [ -f "${ARTIFACTS_DIR_RELATIVE}" ]; then
-        echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} found, proceeding with deployment."
+    - echo "Deploying Linux binary..."
+    - LINUX_ARTIFACT="${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux"
+    - if [ -f "${LINUX_ARTIFACT}" ]; then
+      echo "Linux artifact found, deploying..."
+      # Linux deployment commands
       else
-        echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} not found."
-        exit 1
+      echo "Linux artifact not found."
+      exit 1
       fi
-    # Add your deployment commands below this line
-
+    - echo "Deploying macOS binary..."
+    - MACOS_ARTIFACT="${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos"
+    - if [ -f "${MACOS_ARTIFACT}" ]; then
+      echo "macOS artifact found, deploying..."
+      # macOS deployment commands
+      else
+      echo "macOS artifact not found."
+      exit 1
+      fi
   artifacts:
     paths:
-      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}  # Relative path
-      - ${ARTIFACTS_DIR}/doc               # Relative path
+      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux  # Relative path
+      - ${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos  # Relative path
+      - ${ARTIFACTS_DIR}/doc                     # Relative path
+
 
 
 
