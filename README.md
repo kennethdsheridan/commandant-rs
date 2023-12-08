@@ -9,8 +9,7 @@ OneForAll is an innovative platform designed for high-performance backend infras
 - **Scalable System Integration and Benchmarking**: Expertise in integrating and benchmarking complex, large-scale enterprise infrastructures.
 - **Advanced Vulnerability and Performance Testing**: Rigorous testing protocols to identify vulnerabilities and performance bottlenecks in AI-driven environments and database architectures.
 - **Blockchain Technology Compatibility**: Readiness to test and optimize blockchain infrastructures, with upcoming specialized toolsets.
-- **Automated Insights and Reporting**: Harnessing AI to generate automated, insightful reports for improved decision-making and strategic planning.
-- **Immutable Ledger for Audit Trails**: Utilizes distributed ledger technology for secure and traceable recording of testing audits and reports.
+- **Automated Insights and Reporting**: Generate automated, insightful in browser reports for improved decision-making and strategic planning.
 
 ## Getting Started
 
