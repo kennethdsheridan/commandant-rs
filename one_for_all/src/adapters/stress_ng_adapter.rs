@@ -9,18 +9,51 @@ use crate::domain::logging::Logger;
 use crate::StressNgArch;
 
 
+/// `StressNgAdapter` is a struct that provides functionality for performing stress tests
+/// using the `stress-ng` utility. It is designed to work with any implementation of the `Logger` trait,
+/// allowing for flexible logging.
+///
+/// The struct holds a reference to a logger, allowing it to log messages at various points
+/// during the execution of stress tests.
+///
+/// Lifetime `'a` is used to denote that `StressNgAdapter` holds a reference to a logger
+/// for the duration of its lifetime.
 pub struct StressNgAdapter<'a> {
+    // Logger reference: This allows `StressNgAdapter` to log messages.
+    // The logger must implement the `Logger` trait.
+    // The use of a dynamic reference (`dyn Logger`) allows for flexibility in
+    // the specific logging implementation used.
     logger: &'a dyn Logger,
 }
 
+/// Implementation of `StressNgAdapter`.
 impl<'a> StressNgAdapter<'a> {
+    /// Creates a new instance of `StressNgAdapter`.
+    ///
+    /// This constructor function takes a reference to an object that implements the `Logger` trait.
+    /// This allows `StressNgAdapter` to perform logging during its operations.
+    ///
+    /// # Arguments
+    ///
+    /// * `logger` - A reference to an object that implements the `Logger` trait.
+    ///
+    /// # Returns
+    ///
+    /// * `Self` - An instance of `StressNgAdapter`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let logger = MyLogger::new();
+    /// let adapter = StressNgAdapter::new(&logger);
+    /// ```
     pub fn new(logger: &'a dyn Logger) -> Self {
         Self {
             logger,
-
         }
     }
 }
+
 
 
 /// Implementation of `StressTest` trait for `StressNgAdapter`.
