@@ -16,7 +16,12 @@ variables:
 clear_cache:
   stage: build
   script:
-    - cargo clean # Clear the Cargo build cache
+    - echo "Changing to the one_for_all directory"
+    - cd one_for_all
+    - echo "Current working directory:"
+    - pwd
+    - echo "Clearing the Cargo build cache"
+    - cargo clean
     - echo "Starting additional cache clearing..."
     - |
       # Check if additional cache directory exists and clear it
@@ -32,6 +37,7 @@ clear_cache:
     - echo "Additional cache clearing completed successfully."
   when: always
   allow_failure: true
+
 
 # Define the base image and settings for all jobs
 before_script:
