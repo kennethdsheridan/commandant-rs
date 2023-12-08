@@ -34,7 +34,10 @@ before_script:
   - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   - source $HOME/.cargo/env
   - rustup default stable
-  - cd one_for_all  # Change to the directory containing Cargo.toml
+  - echo "Changing to the one_for_all directory"
+  - pwd
+  - ls -la
+  - cd one_for_all || { echo "Directory one_for_all not found"; exit 1; }
   - cargo fetch
 
 # Build the application for Linux
