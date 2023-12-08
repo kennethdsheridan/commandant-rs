@@ -24,7 +24,7 @@ clear_cache:
 before_script:
   - mkdir -p ${ARTIFACTS_DIR}
   - apt-get update && apt-get install -y curl git gcc make
-  - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  - curl -y --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   - source $HOME/.cargo/env
   - rustup default stable
   - cargo fetch
