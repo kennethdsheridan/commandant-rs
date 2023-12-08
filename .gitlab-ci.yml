@@ -112,26 +112,23 @@ document:
 # Deploy the application
 deploy:
   stage: deploy
-  needs: ["build_linux", "document"]  # Ensure it needs all stages that produce artifacts
+  needs: ["build_linux", "document"]
   script:
-    - echo "Current working directory:"
-    - pwd
-    - ARTIFACTS_DIR_ABSOLUTE="/builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}"
-    - echo "Checking if ${ARTIFACTS_DIR_ABSOLUTE} exists"
-    - ls -la
-    - if [ -d "${ARTIFACTS_DIR_ABSOLUTE}" ]; then
-      echo "${ARTIFACTS_DIR_ABSOLUTE} directory found.";
-      ls -la ${ARTIFACTS_DIR_ABSOLUTE};
+    - echo "Deploying..."
+    - ARTIFACTS_DIR_RELATIVE="${ARTIFACTS_DIR}/linux/${BIN_NAME}"  # Relative path for artifacts
+    - if [ -f "${ARTIFACTS_DIR_RELATIVE}" ]; then
+      echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} found, proceeding with deployment.";
       else
-      echo "${ARTIFACTS_DIR_ABSOLUTE} directory not found.";
+      echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} not found.";
       exit 1;
       fi
-    - echo "Deploying..."
+    - # Your deployment commands go here
 
   artifacts:
     paths:
-      - ${ARTIFACTS_DIR_ABSOLUTE}/linux/${BIN_NAME}
-      - ${ARTIFACTS_DIR_ABSOLUTE}/doc
+      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}  # Relative path
+      - ${ARTIFACTS_DIR}/doc               # Relative path
+
 
 
 # Cache the Cargo dependencies to speed up builds
