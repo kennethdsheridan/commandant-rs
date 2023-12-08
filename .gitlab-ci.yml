@@ -61,21 +61,33 @@ build_linux:
 # Build the application for macOS (Intel)
 build_macos:
   stage: build
-  needs: ["clear_cache"]
+  tags:
+    - macos-13-xcode-14  # Specify the macOS runner
   script:
+    - echo "Preparing to build for macOS..."
+
+    # Check if Rust and Cargo are installed
+    - echo "Checking for Rust and Cargo..."
+    - which rustc && rustc --version || echo "Rust not found"
+    - which cargo && cargo --version || echo "Cargo not found"
+
+    # Add checks for any other dependencies here
+
+    # Proceed to build
     - echo "Changing to the one_for_all directory for macOS build"
     - pwd
     - ls -la
     - echo "Listing contents of src directory:"
     - ls -la src/
-    - echo "Adding macOS target for Rust"
-    - rustup target add x86_64-apple-darwin
-    - mkdir -p /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos
+
     - echo "Building for macOS..."
     - cargo build --release --target x86_64-apple-darwin
+
     - echo "Listing contents of the macOS release directory:"
     - ls -la target/x86_64-apple-darwin/release/
+
     - cp target/x86_64-apple-darwin/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
+
   artifacts:
     paths:
       - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
@@ -83,9 +95,11 @@ build_macos:
 
 
 
+
+# Testing after both Linux and macOS builds
 test:
   stage: test
-  needs: ["build_linux"]
+  needs: ["build_linux", "build_macos"]  # Include build_macos
   script:
     - echo "Changing to the one_for_all directory for test"
     - pwd
