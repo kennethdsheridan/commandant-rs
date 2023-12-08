@@ -17,24 +17,11 @@ clear_cache:
   stage: build
   script:
     - echo "Changing to the one_for_all directory"
-    - cd /builds/kennethdsheridan/oneforall/one_for_all  # Adjust this path as needed
+    - cd /builds/kennethdsheridan/oneforall/  # Adjust this path as needed
     - echo "Current working directory:"
     - pwd
     - echo "Clearing the Cargo build cache"
     - cargo clean
-    - echo "Starting additional cache clearing..."
-    - |
-      # Check if additional cache directory exists and clear it
-      if [ -d "/builds/kennethdsheridan/oneforall/path/to/additional/cache" ]; then  # Adjust this path as needed
-          echo "Additional cache directory found. Clearing cache..."
-          rm -rf /builds/kennethdsheridan/oneforall/path/to/additional/cache || {
-              echo "Failed to clear additional cache, but continuing with the build."
-              exit 0
-          }
-      else
-          echo "No additional cache directory found. Nothing to clear."
-      fi
-    - echo "Additional cache clearing completed successfully."
   when: always
   allow_failure: true
 
