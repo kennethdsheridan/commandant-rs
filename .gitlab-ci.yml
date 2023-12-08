@@ -16,7 +16,20 @@ variables:
 clear_cache:
   stage: build
   script:
-    - cargo clean
+    - cargo clean # Clear the Cargo build cache
+    - echo "Starting additional cache clearing..."
+    - |
+      # Check if additional cache directory exists and clear it
+      if [ -d "path/to/additional/cache" ]; then
+          echo "Additional cache directory found. Clearing cache..."
+          rm -rf path/to/additional/cache || {
+              echo "Failed to clear additional cache, but continuing with the build."
+              exit 0
+          }
+      else
+          echo "No additional cache directory found. Nothing to clear."
+      fi
+    - echo "Additional cache clearing completed successfully."
   when: always
   allow_failure: true
 
