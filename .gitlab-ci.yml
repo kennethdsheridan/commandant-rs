@@ -71,25 +71,46 @@ test:
 document:
   stage: document
   script:
+    - echo "Generating documentation with cargo doc"
     - cargo doc --no-deps
-    - mv target/doc ${ARTIFACTS_DIR}/
+    - DOCUMENTATION_DIR="/builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/doc"
+    - echo "Checking if target/doc exists"
+    - ls -la target/doc
+    - echo "Ensuring ${DOCUMENTATION_DIR} exists"
+    - mkdir -p ${DOCUMENTATION_DIR}
+    - echo "Moving generated docs to ${DOCUMENTATION_DIR}"
+    - mv target/doc/* ${DOCUMENTATION_DIR}/
+    - echo "Listing contents of ${DOCUMENTATION_DIR}"
+    - ls -la ${DOCUMENTATION_DIR}
   artifacts:
     paths:
-      - ${ARTIFACTS_DIR}/doc
+      - ${DOCUMENTATION_DIR}
     expire_in: 1 week
+
 
 # Deploy the application
 deploy:
   stage: deploy
-  needs: ["test"]
+  needs: ["build_linux", "document"]  # Ensure it needs all stages that produce artifacts
   script:
-    - echo "ARTIFACTS_DIR is $ARTIFACTS_DIR"
-    - echo "BIN_NAME is $BIN_NAME"
-    - ls -l $ARTIFACTS_DIR
-    - mkdir -p deploy
-    - mv ${ARTIFACTS_DIR}/linux/${BIN_NAME} deploy/
-    - ls -l deploy/
+    - echo "Current working directory:"
+    - pwd
+    - echo "Checking if ARTIFACTS_DIR exists"
+    - ls -la
+    - if [ -d "${ARTIFACTS_DIR}" ]; then
+      echo "${ARTIFACTS_DIR} directory found.";
+      ls -la ${ARTIFACTS_DIR};
+      else
+      echo "${ARTIFACTS_DIR} directory not found.";
+      exit 1;
+      fi
     - echo "Deploying..."
+
+  artifacts:
+    paths:
+      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}
+      - ${ARTIFACTS_DIR}/doc
+
 
 # Cache the Cargo dependencies to speed up builds
 cache:
