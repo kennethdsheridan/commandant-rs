@@ -31,6 +31,10 @@ cargo build --release
 echo "Copying the binary to /usr/local/bin..."
 cp target/release/$APP_NAME /usr/local/bin
 
+# Show the Rust version
+# shellcheck disable=SC2046
+echo "Rust version:" $(rustc --version) "installed successfully!"  # Show the Rust version
+
 
 
 
