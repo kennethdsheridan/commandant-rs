@@ -116,18 +116,20 @@ deploy:
   script:
     - echo "Deploying..."
     - ARTIFACTS_DIR_RELATIVE="${ARTIFACTS_DIR}/linux/${BIN_NAME}"  # Relative path for artifacts
-    - if [ -f "${ARTIFACTS_DIR_RELATIVE}" ]; then
-      echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} found, proceeding with deployment.";
+    - |
+      if [ -f "${ARTIFACTS_DIR_RELATIVE}" ]; then
+        echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} found, proceeding with deployment."
       else
-      echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} not found.";
-      exit 1;
+        echo "Artifact file ${ARTIFACTS_DIR_RELATIVE} not found."
+        exit 1
       fi
-    - # Your deployment commands go here
+    # Add your deployment commands below this line
 
   artifacts:
     paths:
       - ${ARTIFACTS_DIR}/linux/${BIN_NAME}  # Relative path
       - ${ARTIFACTS_DIR}/doc               # Relative path
+
 
 
 
