@@ -1,8 +1,8 @@
 // stress_ng_manager.rs
 
+use crate::domain::logging::Logger;
 use std::fs::File;
 use std::io::{self, Write};
-use crate::domain::logging::Logger;
 
 pub const STRESS_NG_LINUX: &'static [u8] = include_bytes!("linux/stress-ng");
 pub const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
@@ -12,7 +12,10 @@ pub enum StressNgArch {
     MacOS,
 }
 
-pub fn write_stress_ng_to_disk(stress_ng_arch: StressNgArch, logr: &dyn Logger) -> Result<(), std::io::Error> {
+pub fn write_stress_ng_to_disk(
+    stress_ng_arch: StressNgArch,
+    logr: &dyn Logger,
+) -> Result<(), std::io::Error> {
     let (binary_data, filename) = match stress_ng_arch {
         StressNgArch::Linux => (STRESS_NG_LINUX, "stress-ng-linux"),
         StressNgArch::MacOS => (STRESS_NG_MACOS, "stress-ng-macos"),
@@ -20,13 +23,19 @@ pub fn write_stress_ng_to_disk(stress_ng_arch: StressNgArch, logr: &dyn Logger) 
 
     match write_binary_to_disk(binary_data, filename) {
         Ok(_) => {
-            logr.log_debug(&format!("Successfully wrote stress-ng binary to disk: {}", filename));
+            logr.log_debug(&format!(
+                "Successfully wrote stress-ng binary to disk: {}",
+                filename
+            ));
             Ok(())
-        },
+        }
         Err(e) => {
-            logr.log_error(&format!("Failed to write stress-ng binary to disk: {:?}", e));
+            logr.log_error(&format!(
+                "Failed to write stress-ng binary to disk: {:?}",
+                e
+            ));
             Err(e)
-        },
+        }
     }
 }
 

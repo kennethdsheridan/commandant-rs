@@ -1,13 +1,12 @@
+use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
+use crate::domain::logging::Logger;
+use crate::ports::stress_test::StressTest;
+use crate::StressNgArch;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
 use std::os::unix::fs::PermissionsExt;
-use crate::ports::stress_test::StressTest;
 use std::process::Command;
-use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
-use crate::domain::logging::Logger;
-use crate::StressNgArch;
-
 
 /// `StressNgAdapter` is a struct that provides functionality for performing stress tests
 /// using the `stress-ng` utility. It is designed to work with any implementation of the `Logger` trait,
@@ -48,13 +47,9 @@ impl<'a> StressNgAdapter<'a> {
     /// let adapter = StressNgAdapter::new(&logger);
     /// ```
     pub fn new(logger: &'a dyn Logger) -> Self {
-        Self {
-            logger,
-        }
+        Self { logger }
     }
 }
-
-
 
 /// Implementation of `StressTest` trait for `StressNgAdapter`.
 /// This struct is responsible for running stress tests using the `stress-ng` utility.
@@ -65,7 +60,8 @@ impl<'a> StressTest for StressNgAdapter<'a> {
     /// with specific arguments to stress test the CPU.
     fn run_cpu_tests(&self) {
         // Log the start of the decision process for choosing the appropriate binary
-        self.logger.log_debug("Deciding which stress-ng binary to use");
+        self.logger
+            .log_debug("Deciding which stress-ng binary to use");
 
         // Choose the appropriate binary data based on the target OS
         let binary_data = if cfg!(target_os = "linux") {
@@ -79,9 +75,13 @@ impl<'a> StressTest for StressNgAdapter<'a> {
 
         // Attempt to create the file and write the binary data to it
         // If there is an error during this process, log the error and return early
-        if let Err(e) = File::create(&temp_file_path)
-            .and_then(|mut file| file.write_all(binary_data)) {
-            self.logger.log_error(&format!("Failed to write stress-ng binary to disk: {:?}", e));
+        if let Err(e) =
+            File::create(&temp_file_path).and_then(|mut file| file.write_all(binary_data))
+        {
+            self.logger.log_error(&format!(
+                "Failed to write stress-ng binary to disk: {:?}",
+                e
+            ));
             return;
         }
 
@@ -112,23 +112,24 @@ impl<'a> StressTest for StressNgAdapter<'a> {
                     Ok(output) => {
                         // Log the successful completion and the output of the command
                         self.logger.log_debug("Finished stress-ng process");
-                        self.logger.log_debug(&format!("stress-ng output: {:?}", output));
-                    },
+                        self.logger
+                            .log_debug(&format!("stress-ng output: {:?}", output));
+                    }
                     Err(e) => {
                         // Log any errors encountered while waiting for the command to complete
-                        self.logger.log_error(&format!("Failed to wait on stress-ng process: {:?}", e));
+                        self.logger
+                            .log_error(&format!("Failed to wait on stress-ng process: {:?}", e));
                     }
                 }
-            },
+            }
             Err(e) => {
                 // Log any errors encountered while starting the command
-                self.logger.log_error(&format!("Failed to start stress-ng process: {:?}", e));
+                self.logger
+                    .log_error(&format!("Failed to start stress-ng process: {:?}", e));
             }
         }
     }
 }
-
-
 
 /// Determines the appropriate architecture version of the `stress-ng` binary to use
 /// based on the operating system the program is running on. This function is designed
@@ -164,4 +165,3 @@ pub fn decide_stress_ng_arch() -> StressNgArch {
         StressNgArch::MacOS
     }
 }
-

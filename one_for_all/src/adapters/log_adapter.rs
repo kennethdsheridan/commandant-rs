@@ -1,11 +1,10 @@
+use crate::domain::logging::Logger;
+use chrono::Local;
 use colored::*;
-use fern::{Dispatch, log_file};
+use fern::{log_file, Dispatch};
 use log::LevelFilter;
 use std::fs;
 use std::fs::File;
-use chrono::Local;
-use crate::domain::logging::Logger;
-
 
 pub struct FernLogger;
 
@@ -33,8 +32,7 @@ impl Logger for FernLogger {
 
 pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
     // Create the log directory if it doesn't exist
-    fs::create_dir_all(log_dir_path)
-        .expect("Failed to create log directory");
+    fs::create_dir_all(log_dir_path).expect("Failed to create log directory");
 
     // Truncate existing log files or create new ones
     let log_levels = ["error", "warn", "info", "debug", "trace"];
@@ -63,7 +61,7 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
         })
         .level(level_filter);
 
-// Define log file paths and dispatchers for each log level
+    // Define log file paths and dispatchers for each log level
     let error_log = log_file(&format!("{}/one_4_all_error.log", log_dir_path)).unwrap();
     let warn_log = log_file(&format!("{}/one_4_all_warn.log", log_dir_path)).unwrap();
     let info_log = log_file(&format!("{}/one_4_all_info.log", log_dir_path)).unwrap();
@@ -71,11 +69,21 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
     let trace_log = log_file(&format!("{}/one_4_all_trace.log", log_dir_path)).unwrap();
 
     // Dispatchers for each log level
-    let error_dispatch = Dispatch::new().filter(|meta| meta.level() == log::Level::Error).chain(error_log);
-    let warn_dispatch = Dispatch::new().filter(|meta| meta.level() == log::Level::Warn).chain(warn_log);
-    let info_dispatch = Dispatch::new().filter(|meta| meta.level() == log::Level::Info).chain(info_log);
-    let debug_dispatch = Dispatch::new().filter(|meta| meta.level() == log::Level::Debug).chain(debug_log);
-    let trace_dispatch = Dispatch::new().filter(|meta| meta.level() == log::Level::Trace).chain(trace_log);
+    let error_dispatch = Dispatch::new()
+        .filter(|meta| meta.level() == log::Level::Error)
+        .chain(error_log);
+    let warn_dispatch = Dispatch::new()
+        .filter(|meta| meta.level() == log::Level::Warn)
+        .chain(warn_log);
+    let info_dispatch = Dispatch::new()
+        .filter(|meta| meta.level() == log::Level::Info)
+        .chain(info_log);
+    let debug_dispatch = Dispatch::new()
+        .filter(|meta| meta.level() == log::Level::Debug)
+        .chain(debug_log);
+    let trace_dispatch = Dispatch::new()
+        .filter(|meta| meta.level() == log::Level::Trace)
+        .chain(trace_log);
 
     // Combine all dispatches
     let combined_config = base_config
@@ -87,5 +95,7 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
         .chain(std::io::stdout());
 
     // Apply the logger configuration
-    combined_config.apply().expect("Failed to initialize logger.");
+    combined_config
+        .apply()
+        .expect("Failed to initialize logger.");
 }
