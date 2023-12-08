@@ -68,7 +68,10 @@ build_macos:
     - ls -la
     - echo "Listing contents of src directory:"
     - ls -la src/
+    - echo "Adding macOS target for Rust"
+    - rustup target add x86_64-apple-darwin
     - mkdir -p /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos
+    - echo "Building for macOS..."
     - cargo build --release --target x86_64-apple-darwin
     - echo "Listing contents of the macOS release directory:"
     - ls -la target/x86_64-apple-darwin/release/
@@ -77,6 +80,7 @@ build_macos:
     paths:
       - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
     expire_in: 1 week
+
 
 
 test:
