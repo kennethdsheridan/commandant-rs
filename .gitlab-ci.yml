@@ -58,6 +58,7 @@ build_linux:
       - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux
     expire_in: 1 week
 
+
 # Build the application for macOS (Intel)
 build_macos:
   stage: build
