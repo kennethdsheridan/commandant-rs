@@ -39,7 +39,6 @@ before_script:
 
 # Build the application for Linux
 build_linux:
-  image: redhat/ubi8
   stage: build
   needs: ["clear_cache"]
   script:
