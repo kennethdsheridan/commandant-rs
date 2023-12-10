@@ -2,7 +2,7 @@
 
 > **⚠️ Important Notice:** OneForAll is currently under active development. This project is still in a developmental stage, and not all functionalities are fully operational yet. Please be aware that some features might not work as expected.
 
-# OneForAll: A Kit for Backend Hardware Performance Engineering
+# OneForAll: A Kit for Enterprise Hardware Performance Engineering
 
 Hello everyone,
 
