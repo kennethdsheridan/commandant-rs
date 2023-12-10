@@ -35,7 +35,7 @@ build:
 build_linux:
 	cargo build --release --target $(TARGET_ARCH)
 	mkdir -p $(OUTPUT_DIR)
-	cp $(OUTPUT_DIR)/$(BINARY_NAME) $(BINARY_LINUX)
+	cp ./target/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_LINUX)
 
 # Build the MacOS binary
 build_macos:
