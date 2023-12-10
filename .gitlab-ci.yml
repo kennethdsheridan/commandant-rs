@@ -43,20 +43,31 @@ build_linux:
   stage: build
   needs: ["clear_cache"]
   script:
-    - echo "Changing to the one_for_all directory for build"
+    - echo "Preparing to build for Linux..."
+    - echo "Checking for Rust and Cargo..."
+    - which rustc && rustc --version || { echo "Rust not found, installing..."; curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; source $HOME/.cargo/env; }
+    - which cargo && cargo --version || echo "Cargo not found, but it should have been installed with Rust."
+
+    - echo "Changing to the one_for_all directory for Linux build"
     - pwd
     - ls -la
     - echo "Listing contents of src directory:"
     - ls -la src/
+
+    - echo "Building for Linux..."
     - mkdir -p /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux
-    - cargo build --release --target x86_64-unknown-linux-gnu
-    - echo "Listing contents of the release directory:"
+    - cargo build --release --target x86_64-unknown-linux-gnu || { echo "Cargo build failed. Exiting build."; exit 1; }
+
+    - echo "Listing contents of the Linux release directory:"
     - ls -la target/x86_64-unknown-linux-gnu/release/
-    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux
+
+    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux || { echo "Failed to copy binary to artifacts directory. Exiting build."; exit 1; }
+
   artifacts:
     paths:
       - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux
     expire_in: 1 week
+
 
 
 # Build the application for macOS (Intel)
@@ -67,15 +78,10 @@ build_macos:
     - macos # Specify the macOS runner
   script:
     - echo "Preparing to build for macOS..."
-
-    # Check if Rust and Cargo are installed
     - echo "Checking for Rust and Cargo..."
-    - which rustc && rustc --version || echo "Rust not found"
-    - which cargo && cargo --version || echo "Cargo not found"
+    - which rustc && rustc --version || { echo "Rust not found, installing..."; curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; source $HOME/.cargo/env; }
+    - which cargo && cargo --version || echo "Cargo not found, but it should have been installed with Rust."
 
-    # Add checks for any other dependencies here
-
-    # Proceed to build
     - echo "Changing to the one_for_all directory for macOS build"
     - pwd
     - ls -la
@@ -88,6 +94,7 @@ build_macos:
     - echo "Listing contents of the macOS release directory:"
     - ls -la target/x86_64-apple-darwin/release/
 
+    - mkdir -p /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos  # Create the directory for the macOS binary
     - cp target/x86_64-apple-darwin/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
 
   artifacts:
