@@ -167,6 +167,7 @@ deploy:
       - ${ARTIFACTS_DIR}/doc                     # Rela
 
 
+
 # Cache the Cargo dependencies to speed up builds
 cache:
   key: "${CI_COMMIT_REF_SLUG}-cargo"
