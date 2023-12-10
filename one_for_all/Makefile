@@ -14,11 +14,11 @@ else
 endif
 
 # Set the output directory
-OUTPUT_DIR := ./oneforall/one_for_all/target/linux/release
+OUTPUT_DIR := ./oneforall/one_for_all/target/release
 
 # Set the output paths for Linux and macOS binaries
-BINARY_LINUX := $(OUTPUT_DIR)/$(BINARY_NAME)
-BINARY_MACOS := $(OUTPUT_DIR)/$(BINARY_NAME)_macos
+BINARY_LINUX := $(OUTPUT_DIR)/linux/$(BINARY_NAME)
+BINARY_MACOS := $(OUTPUT_DIR)/macos/$(BINARY_NAME)
 
 # Default target: build for the current OS
 all: build
@@ -26,22 +26,22 @@ all: build
 # Build the binary for the current OS
 build:
 	cargo build --release
-	mkdir -p $(OUTPUT_DIR)
-	if [ -f $(OUTPUT_DIR)/$(BINARY_NAME) ]; then \
-		cp $(OUTPUT_DIR)/$(BINARY_NAME) $(OUTPUT_DIR)/$(BINARY_NAME)_$(BINARY_EXT); \
+	mkdir -p $(OUTPUT_DIR)/$(BINARY_EXT)
+	if [ -f ./target/release/$(BINARY_NAME) ]; then \
+		cp ./target/release/$(BINARY_NAME) $(OUTPUT_DIR)/$(BINARY_EXT)/$(BINARY_NAME); \
 	fi
 
 # Build the Linux binary
 build_linux:
 	cargo build --release --target $(TARGET_ARCH)
-	mkdir -p $(OUTPUT_DIR)
+	mkdir -p $(OUTPUT_DIR)/linux
 	cp ./target/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_LINUX)
 
 # Build the MacOS binary
 build_macos:
 	cargo build --release --target $(TARGET_ARCH)
-	mkdir -p $(OUTPUT_DIR)
-	cp $(OUTPUT_DIR)/$(BINARY_NAME) $(BINARY_MACOS)
+	mkdir -p $(OUTPUT_DIR)/macos
+	cp ./target/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_MACOS)
 
 # Clean the generated binaries and other build artifacts
 clean:
