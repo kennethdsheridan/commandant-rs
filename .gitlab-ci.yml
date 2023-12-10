@@ -39,6 +39,7 @@ before_script:
 
 # Build the application for Linux
 build_linux:
+  image: shell:latest
   stage: build
   needs: ["clear_cache"]
   script:
@@ -71,6 +72,7 @@ build_linux:
 
 # Build the application for macOS (Intel)
 build_macos:
+  image: shell:latest
   stage: build
   needs: ["clear_cache"]
   tags:
@@ -107,6 +109,7 @@ build_macos:
 # Testing after both Linux and macOS builds
 test:
   stage: test
+  image: shell:latest
   needs: ["build_linux", "build_macos"]  # Include build_macos
   script:
     - echo "Changing to the one_for_all directory for test"
@@ -116,6 +119,7 @@ test:
 
 # Generate Documentation
 document:
+  image: shell:latest
   stage: document
   script:
     - echo "Generating documentation with cargo doc"
@@ -136,6 +140,7 @@ document:
 
 
 deploy:
+  image: shell:latest
   stage: deploy
   needs: ["build_linux", "build_macos", "document"]
   script:
