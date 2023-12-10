@@ -141,7 +141,7 @@ document:
     - ls -la "${ARTIFACTS_DIR_RELATIVE}"
   artifacts:
     paths:
-      - ${ARTIFACTS_DIR}/doc
+      - ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc
     expire_in: 1 week
 
 
