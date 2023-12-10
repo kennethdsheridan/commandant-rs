@@ -116,6 +116,8 @@ test:
     - pwd
     - ls -la
     - cargo test --verbose
+
+
 # Generate Documentation
 document:
   stage: document
@@ -126,17 +128,17 @@ document:
     - ARTIFACTS_DIR_RELATIVE="${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc"
     - echo "Checking if target/doc exists..."
     - if [ -d "target/doc" ]; then
-      echo "target/doc directory found. Proceeding with moving files..."
-      mkdir -p ${ARTIFACTS_DIR_RELATIVE} || { echo "Failed to create artifacts directory"; exit 1; }
-      mv target/doc/* ${ARTIFACTS_DIR_RELATIVE}/ || { echo "Failed to move documentation files"; exit 1; }
-      echo "Documentation files moved to ${ARTIFACTS_DIR_RELATIVE}"
+      echo "target/doc directory found. Proceeding with moving files...";
+      mkdir -p "${ARTIFACTS_DIR_RELATIVE}" || { echo "Failed to create artifacts directory"; exit 1; };
+      mv target/doc/* "${ARTIFACTS_DIR_RELATIVE}/" || { echo "Failed to move documentation files"; exit 1; };
+      echo "Documentation files moved to ${ARTIFACTS_DIR_RELATIVE}";
       else
-      echo "target/doc directory not found. Documentation generation failed."
-      exit 1
+      echo "target/doc directory not found. Documentation generation failed.";
+      exit 1;
       fi
 
     - echo "Listing contents of ${ARTIFACTS_DIR_RELATIVE}..."
-    - ls -la ${ARTIFACTS_DIR_RELATIVE}
+    - ls -la "${ARTIFACTS_DIR_RELATIVE}"
   artifacts:
     paths:
       - ${ARTIFACTS_DIR_RELATIVE}
