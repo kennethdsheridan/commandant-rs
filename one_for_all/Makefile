@@ -1,7 +1,7 @@
 .PHONY: all build build_linux build_macos clean test fmt check lint help
 
 # Set the binary name
-BINARY_NAME := one-for-all
+BINARY_NAME := one_for_all
 
 # Determine the operating system
 OS := $(shell uname -s)
@@ -14,10 +14,10 @@ else
 endif
 
 # Set the output directory
-OUTPUT_DIR := ./target/release
+OUTPUT_DIR := ./oneforall/one_for_all/target/linux/release
 
 # Set the output paths for Linux and macOS binaries
-BINARY_LINUX := $(OUTPUT_DIR)/$(BINARY_NAME)_linux
+BINARY_LINUX := $(OUTPUT_DIR)/$(BINARY_NAME)
 BINARY_MACOS := $(OUTPUT_DIR)/$(BINARY_NAME)_macos
 
 # Default target: build for the current OS
@@ -26,17 +26,22 @@ all: build
 # Build the binary for the current OS
 build:
 	cargo build --release
-	cp $(OUTPUT_DIR)/$(BINARY_NAME) $(OUTPUT_DIR)/$(BINARY_NAME)_$(BINARY_EXT)
+	mkdir -p $(OUTPUT_DIR)
+	if [ -f $(OUTPUT_DIR)/$(BINARY_NAME) ]; then \
+		cp $(OUTPUT_DIR)/$(BINARY_NAME) $(OUTPUT_DIR)/$(BINARY_NAME)_$(BINARY_EXT); \
+	fi
 
 # Build the Linux binary
 build_linux:
 	cargo build --release --target $(TARGET_ARCH)
-	cp $(OUTPUT_DIR)/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_LINUX)
+	mkdir -p $(OUTPUT_DIR)
+	cp $(OUTPUT_DIR)/$(BINARY_NAME) $(BINARY_LINUX)
 
 # Build the MacOS binary
 build_macos:
 	cargo build --release --target $(TARGET_ARCH)
-	cp $(OUTPUT_DIR)/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_MACOS)
+	mkdir -p $(OUTPUT_DIR)
+	cp $(OUTPUT_DIR)/$(BINARY_NAME) $(BINARY_MACOS)
 
 # Clean the generated binaries and other build artifacts
 clean:
