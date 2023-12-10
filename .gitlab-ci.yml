@@ -64,7 +64,7 @@ build_macos:
   stage: build
   needs: ["clear_cache"]
   tags:
-    - macos_runner # Specify the macOS runner
+    - macos # Specify the macOS runner
   script:
     - echo "Preparing to build for macOS..."
 

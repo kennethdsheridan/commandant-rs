@@ -1,47 +1,29 @@
-.PHONY: all build build_linux build_macos clean test fmt check lint help
+.PHONY: all build_linux build_macos
 
 # Set the binary name
 BINARY_NAME := one_for_all
 
-# Determine the operating system
-OS := $(shell uname -s)
-ifeq ($(OS),Linux)
-    BINARY_EXT := linux
-    TARGET_ARCH := x86_64-unknown-linux-gnu
-else
-    BINARY_EXT := darwin
-    TARGET_ARCH := x86_64-apple-darwin
-endif
-
 # Set the output directory
-OUTPUT_DIR := ./oneforall/one_for_all/target/release
+OUTPUT_DIR := ./target/release
 
 # Set the output paths for Linux and macOS binaries
 BINARY_LINUX := $(OUTPUT_DIR)/linux/$(BINARY_NAME)
 BINARY_MACOS := $(OUTPUT_DIR)/macos/$(BINARY_NAME)
 
-# Default target: build for the current OS
-all: build
-
-# Build the binary for the current OS
-build:
-	cargo build --release
-	mkdir -p $(OUTPUT_DIR)/$(BINARY_EXT)
-	if [ -f ./target/release/$(BINARY_NAME) ]; then \
-		cp ./target/release/$(BINARY_NAME) $(OUTPUT_DIR)/$(BINARY_EXT)/$(BINARY_NAME); \
-	fi
+# Default target: build for both Linux and macOS
+all: build_linux build_macos
 
 # Build the Linux binary
 build_linux:
-	cargo build --release --target $(TARGET_ARCH)
+	cargo build --release --target x86_64-unknown-linux-gnu
 	mkdir -p $(OUTPUT_DIR)/linux
-	cp ./target/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_LINUX)
+	cp ./target/x86_64-unknown-linux-gnu/release/$(BINARY_NAME) $(BINARY_LINUX)
 
 # Build the MacOS binary
 build_macos:
-	cargo build --release --target $(TARGET_ARCH)
+	cargo build --release --target x86_64-apple-darwin
 	mkdir -p $(OUTPUT_DIR)/macos
-	cp ./target/$(TARGET_ARCH)/release/$(BINARY_NAME) $(BINARY_MACOS)
+	cp ./target/x86_64-apple-darwin/release/$(BINARY_NAME) $(BINARY_MACOS)
 
 # Clean the generated binaries and other build artifacts
 clean:
@@ -67,7 +49,7 @@ lint:
 help:
 	@echo "Usage: make [TARGET]"
 	@echo "Targets:"
-	@echo "  all         Build the project for the current OS"
+	@echo "  all         Build the project for the current OS and Linux"
 	@echo "  build       Alias for 'all'"
 	@echo "  build_linux Build the project for Linux"
 	@echo "  build_macos Build the project for macOS"
