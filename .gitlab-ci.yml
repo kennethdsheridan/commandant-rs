@@ -39,7 +39,7 @@ before_script:
 
 # Build the application for Linux
 build_linux:
-  image: shell:latest
+  image: redhat/ubi8
   stage: build
   needs: ["clear_cache"]
   script:
@@ -109,7 +109,7 @@ build_macos:
 # Testing after both Linux and macOS builds
 test:
   stage: test
-  image: shell:latest
+  image: redhat/ubi8
   needs: ["build_linux", "build_macos"]  # Include build_macos
   script:
     - echo "Changing to the one_for_all directory for test"
@@ -119,7 +119,7 @@ test:
 
 # Generate Documentation
 document:
-  image: shell:latest
+  image: redhat/ubi8
   stage: document
   script:
     - echo "Generating documentation with cargo doc"
@@ -140,7 +140,7 @@ document:
 
 
 deploy:
-  image: shell:latest
+  image: redhat/ubi8
   stage: deploy
   needs: ["build_linux", "build_macos", "document"]
   script:
