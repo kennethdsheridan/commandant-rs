@@ -1,0 +1,3 @@
+2023-12-07T20:08:32 [DEBUG] - [34mSuccessfully wrote stress-ng binary to disk: stress-ng-macos[0m
+2023-12-07T20:08:32 [DEBUG] - [34mDeciding which stress-ng binary to use[0m
+2023-12-07T20:08:32 [DEBUG] - [34mExecuting stress-ng command[0m

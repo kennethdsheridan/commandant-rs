@@ -38,6 +38,7 @@ before_script:
   - cd one_for_all || { echo "Directory one_for_all not found"; exit 1; }
   - cargo fetch
 
+
 # Build the application for Linux
 build_linux:
   stage: build
