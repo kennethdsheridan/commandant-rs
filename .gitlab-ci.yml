@@ -93,14 +93,14 @@ build_macos:
     - echo "Listing contents of the macOS release directory:"
     - ls -la target/x86_64-apple-darwin/release/
 
-    - mkdir -p /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos  # Create the directory for the macOS binary
-    - cp target/x86_64-apple-darwin/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
+    # Use a writable directory for artifacts
+    - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos
+    - cp target/x86_64-apple-darwin/release/${BIN_NAME} ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
 
   artifacts:
     paths:
-      - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
+      - ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
     expire_in: 1 week
-
 
 
 
@@ -163,7 +163,7 @@ deploy:
     paths:
       - ${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux  # Relative path
       - ${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos  # Relative path
-      - ${ARTIFACTS_DIR}/doc                     # Rela
+      - ${ARTIFACTS_DIR}/doc                      # Relative path
 
 
 
