@@ -119,7 +119,6 @@ test:
 
 # Generate Documentation
 document:
-  image: redhat/ubi8
   stage: document
   script:
     - echo "Generating documentation with cargo doc"
