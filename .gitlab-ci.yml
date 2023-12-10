@@ -35,7 +35,6 @@ before_script:
   - echo "Changing to the one_for_all directory"
   - pwd
   - ls -la
-  - cd one_for_all || { echo "Directory one_for_all not found"; exit 1; }
   - cargo fetch
 
 # Build the application for Linux
