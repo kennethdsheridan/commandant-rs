@@ -256,7 +256,7 @@ For inquiries or feedback:
 
 - **Email:** [kennethdashensheridan@gmail.com](mailto:kennethdashensheridan@gmail.com)
 
-## Socials
+## Social
 
 - [TikTok: @kennyknightsheridan](https://www.tiktok.com/@kennyknightsheridan?_t=8i3DZQJhD8l&_r=1)
 - [Threads: @kennethdashen](https://www.threads.net/@kennethdashen)
