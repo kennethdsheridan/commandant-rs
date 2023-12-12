@@ -1,24 +1,47 @@
 # In Development
 
+<<<<<<< HEAD
 > **⚠️ Important Notice:** OneForAll is currently under active development. This project is still in a developmental stage, and not all functionalities are fully operational yet. Please be aware that some features might not work as expected.
+=======
+OneForAll is an innovative platform designed for high-performance backend infrastructure management. Specializing in AI and database infrastructure use cases, OneForAll leverages open-source tools created by genius engineers, such as stress-ng, iperf3, and Flexible I/O Tester (FIO), to deliver unparalleled performance testing and benchmarking capabilities.
+>>>>>>> main
 
 # OneForAll: A Kit for Enterprise Hardware Performance Engineering
 
+<<<<<<< HEAD
 Hello everyone,
+=======
+- **AI and Database Infrastructure Specialization**: Tailored to empower AI algorithms and database systems, ensuring optimal performance and security.
+- **Integration with Open-Source Tools**: Incorporates powerful tools like stress-ng for stress testing, iperf3 for network performance measurement, and FIO for flexible I/O testing.
+- **Scalable System Integration and Benchmarking**: Expertise in integrating and benchmarking complex, large-scale enterprise infrastructures.
+- **Advanced Vulnerability and Performance Testing**: Rigorous testing protocols to identify vulnerabilities and performance bottlenecks in AI-driven environments and database architectures.
+- **Blockchain Technology Compatibility**: Readiness to test and optimize blockchain infrastructures, with upcoming specialized toolsets.
+- **Automated Insights and Reporting**: Generate automated, insightful in browser reports for improved decision-making and strategic planning.
+>>>>>>> main
 
 Introducing OneForAll, an innovative toolkit designed to revolutionize backend hardware engineering performance. This enterprise-grade platform is adept at managing backend infrastructure, with a focus on AI and database infrastructure use cases, making it essential for hardware engineering, hardware reliability engineering, and capacity management.
 
+<<<<<<< HEAD
 ## Useful Enterprise Features
+=======
+Deploying OneForAll in your enterprise environment is streamlined for ease of use.
+>>>>>>> main
 
 OneForAll offers a comprehensive suite of features for backend infrastructure, ensuring peak efficiency and security:
 
+<<<<<<< HEAD
 - **Comprehensive Testing Suite**: Encompasses NIC Stress Testing, Memory Testing, Storage Performance Testing, GPU & CPU Testing, and NVMe Testing.
 - **Integration with Open-Source Tools**: Incorporates respected tools like iperf3, stress-ng, and FIO, wrapped in comprehensive layers for seamless functionality.
 - **Diagnostics and Performance Insights**: Provides detailed diagnostic information from the system during tests, enhancing understanding and decision-making.
 - **Unmatched Runtime Performance**: Ensures high efficiency and low latency in operations, crucial for enterprise applications.
+=======
+- Compatible with major operating systems including Linux, MacOS, and Windows.
+- Requires administrative privileges for installation.
+>>>>>>> main
 
 ## Simplifying Hardware Validation
 
+<<<<<<< HEAD
 OneForAll streamlines performance validation across various hardware configurations, offering ease of use without needing specialized training. It serves key roles in:
 
 - **Hardware Engineering**: Enhancing the process of hardware performance evaluation.
@@ -68,15 +91,33 @@ OneForAll supports multiple system architectures, with ongoing development for e
 1. Clone the repository:
    ```
    git clone https://github.com/kennetdsheridan/OneForAll.git
+=======
+1. Clone the OneForAll repository:
+   ```bash
+   git clone https://github.com/Ronin/OneForAll.git
+   ```
+2. Navigate to the OneForAll directory:
+   ```bash
+   cd OneForAll
+   ```
+3. Execute the installation script with administrative rights:
+   ```bash
+   sudo ./install.sh
+>>>>>>> main
    ```
 2. Follow the provided installation script.
 
 ## Roadmap and Contributions
 
+<<<<<<< HEAD
 Future enhancements focus on distributed ledger and AI infrastructure test frameworks. Contributions are encouraged, with guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
+=======
+For detailed usage instructions, refer to the user manual in the `/docs` directory.
+>>>>>>> main
 
 ## Licensing
 
+<<<<<<< HEAD
 OneForAll is available under the MIT License. See [LICENSE.md](LICENSE.md) for details.
 
 ## Acknowledgments
@@ -98,4 +139,23 @@ For more information or feedback, please reach out:
 - **Facebook:** [knight.sheridan](https://www.facebook.com/knight.sheridan?mibextid=2JQ9oc)
 - **GitLab:** [Kenny D. Sheridan](https://gitlab.com/kennethdsheridan)
 - **GitHub:** [kennethdsheridan (Kenny Sheridan)](https://github.com/kennethdsheridan)
+=======
+- **Blockchain Testing Framework**: Introduction of an extensive suite for blockchain infrastructure evaluation.
+- **AI and Database Testing Enhancements**: Ongoing development of features for AI and database infrastructure optimization.
+- **Global Scalability Enhancements**: Continuous improvements to ensure global scalability and performance consistency.
+
+## Contributing
+
+Contributions are highly encouraged. For contribution guidelines, please refer to [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+OneForAll is open-sourced under the MIT License. See [LICENSE.md](LICENSE.md) for more details.
+
+## Acknowledgments
+
+- Special thanks to the Ronin development team and all contributors.
+- Gratitude to our enterprise users and partners for their ongoing support.
+- Acknowledgment to cybersecurity experts and researchers for their critical insights.
+>>>>>>> main
 

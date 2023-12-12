@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="removed repeat information" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="26tr0ita" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2ZLH2SiFJ9s2uAVFxfurG2D9WMz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/kennethsheridan/Documents/workspaces/oneforall",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="" />
+      <created>1702194234851</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702194234851</updated>
+      <workItem from="1702194235335" duration="2558000" />
+      <workItem from="1702196798062" duration="12792000" />
+    </task>
+    <task id="LOCAL-00001" summary="removed redundant oneforall directory">
+      <option name="closed" value="true" />
+      <created>1702194312073</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702194312073</updated>
+    </task>
+    <task id="LOCAL-00002" summary="removed &quot;cd&quot; from before_script">
+      <option name="closed" value="true" />
+      <created>1702195181978</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702195181978</updated>
+    </task>
+    <task id="LOCAL-00003" summary="removed &quot;cd&quot; from before_scripThe script now uses ${CI_PROJECT_DIR}, which is a predefined GitLab CI/CD variable that points to the root directory of your project. This directory should have the necessary write permissions.&#10;                              The mkdir -p and cp commands have been updated to use ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos as the directory for artifacts.">
+      <option name="closed" value="true" />
+      <created>1702195451584</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702195451584</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added the shell executor: image: shell:latest">
+      <option name="closed" value="true" />
+      <created>1702196036012</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702196036012</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added the shell executor: image: shell:latest">
+      <option name="closed" value="true" />
+      <created>1702196297933</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1702196297933</updated>
+    </task>
+    <task id="LOCAL-00006" summary="removed image for build_linux">
+      <option name="closed" value="true" />
+      <created>1702196500846</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1702196500846</updated>
+    </task>
+    <task id="LOCAL-00007" summary="removed image for test and deploy">
+      <option name="closed" value="true" />
+      <created>1702196714617</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1702196714617</updated>
+    </task>
+    <task id="LOCAL-00008" summary="removed image for test and deploy">
+      <option name="closed" value="true" />
+      <created>1702196914039</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702196914039</updated>
+    </task>
+    <task id="LOCAL-00009" summary="removed image for test and deploy">
+      <option name="closed" value="true" />
+      <created>1702197054302</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702197054302</updated>
+    </task>
+    <task id="LOCAL-00010" summary="removed image for test and deploy">
+      <option name="closed" value="true" />
+      <created>1702197186517</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1702197186517</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added semicolons ; to separate commands within the if block.&#10;Added quotes around ${ARTIFACTS_DIR_RELATIVE} in the mkdir and mv commands to handle any potential spaces or special characters.">
+      <option name="closed" value="true" />
+      <created>1702197529901</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1702197529901</updated>
+    </task>
+    <task id="LOCAL-00012" summary="changed to       - ${ARTIFACTS_DIR}/doc">
+      <option name="closed" value="true" />
+      <created>1702197983823</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1702197983823</updated>
+    </task>
+    <task id="LOCAL-00013" summary="${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc">
+      <option name="closed" value="true" />
+      <created>1702198294543</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1702198294543</updated>
+    </task>
+    <task id="LOCAL-00014" summary="refactored README.md">
+      <option name="closed" value="true" />
+      <created>1702208645802</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1702208645802</updated>
+    </task>
+    <task id="LOCAL-00015" summary="refactored README.md">
+      <option name="closed" value="true" />
+      <created>1702209149840</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1702209149840</updated>
+    </task>
+    <task id="LOCAL-00016" summary="removed repeat information">
+      <option name="closed" value="true" />
+      <created>1702356466493</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1702356466493</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="removed redundant oneforall directory" />
+    <MESSAGE value="removed &quot;cd&quot; from before_script" />
+    <MESSAGE value="removed &quot;cd&quot; from before_scripThe script now uses ${CI_PROJECT_DIR}, which is a predefined GitLab CI/CD variable that points to the root directory of your project. This directory should have the necessary write permissions.&#10;                              The mkdir -p and cp commands have been updated to use ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos as the directory for artifacts." />
+    <MESSAGE value="added the shell executor: image: shell:latest" />
+    <MESSAGE value="removed image for build_linux" />
+    <MESSAGE value="removed image for test and deploy" />
+    <MESSAGE value="Added semicolons ; to separate commands within the if block.&#10;Added quotes around ${ARTIFACTS_DIR_RELATIVE} in the mkdir and mv commands to handle any potential spaces or special characters." />
+    <MESSAGE value="changed to       - ${ARTIFACTS_DIR}/doc" />
+    <MESSAGE value="${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc" />
+    <MESSAGE value="refactored README.md" />
+    <MESSAGE value="removed repeat information" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed repeat information" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
