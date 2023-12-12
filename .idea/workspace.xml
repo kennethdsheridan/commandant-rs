@@ -8,11 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="removed repeat information">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/oneforall.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stress-ng" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stress-ng-macos" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/.rustc_info.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/.rustc_info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick.json" beforeDir="false" />
@@ -187,9 +187,6 @@
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-b567a20311608ca4/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-b567a20311608ca4/lib-uuid" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-b567a20311608ca4/lib-uuid.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/libc-ea0dfb14a1132b06/invoked.timestamp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/libc-ea0dfb14a1132b06/output" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/libc-ea0dfb14a1132b06/stderr" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -301,7 +298,7 @@
       <workItem from="1702194235335" duration="2558000" />
       <workItem from="1702196798062" duration="12792000" />
       <workItem from="1702418562010" duration="88000" />
-      <workItem from="1702418661449" duration="893000" />
+      <workItem from="1702418661449" duration="1363000" />
     </task>
     <task id="LOCAL-00001" summary="removed redundant oneforall directory">
       <option name="closed" value="true" />
@@ -431,7 +428,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702356466493</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="amended README.md">
+      <option name="closed" value="true" />
+      <created>1702419672684</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1702419672685</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -460,7 +465,8 @@
     <MESSAGE value="${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc" />
     <MESSAGE value="refactored README.md" />
     <MESSAGE value="removed repeat information" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed repeat information" />
+    <MESSAGE value="amended README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="amended README.md" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
