@@ -1,0 +1,11 @@
+/Users/kennethsheridan/Documents/workspaces/oneforall/target/debug/deps/libfern-5658efac6c1d4f0c.rmeta: /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/lib.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/builders.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/errors.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/log_impl.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/meta.rs
+
+/Users/kennethsheridan/Documents/workspaces/oneforall/target/debug/deps/libfern-5658efac6c1d4f0c.rlib: /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/lib.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/builders.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/errors.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/log_impl.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/meta.rs
+
+/Users/kennethsheridan/Documents/workspaces/oneforall/target/debug/deps/fern-5658efac6c1d4f0c.d: /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/lib.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/builders.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/errors.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/log_impl.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/meta.rs
+
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/lib.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/builders.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/errors.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/log_impl.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/fern-0.6.2/src/meta.rs:
