@@ -7,16 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="removed repeat information">
+    <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="added &quot;clap&quot; crate">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stress-ng" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stress-ng-macos" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/.rustc_info.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/.rustc_info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-f5989d68ad88988a/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/autocfg-061be4e95da2b0aa/dep-lib-autocfg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/autocfg-061be4e95da2b0aa/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/autocfg-061be4e95da2b0aa/lib-autocfg" beforeDir="false" />
@@ -196,21 +193,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitLabMergeRequestFiltersHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPENED",
-    "assignee": {
-      "type": "org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue",
-      "username": "kennethdsheridan",
-      "fullname": "Kenny D. Sheridan"
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;kennethdsheridan&quot;,
+      &quot;fullname&quot;: &quot;Kenny D. Sheridan&quot;
     }
   }
-}]]></component>
-  <component name="GitLabMergeRequestsSettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "first": "https://oauth2:glpat-hHFCzdAK4as9CJLX96un@gitlab.com/kennethdsheridan/oneforall.git",
-    "second": "40881e9d-11fc-4262-b584-c8c8e71ef717"
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;https://oauth2:glpat-hHFCzdAK4as9CJLX96un@gitlab.com/kennethdsheridan/oneforall.git&quot;,
+    &quot;second&quot;: &quot;40881e9d-11fc-4262-b584-c8c8e71ef717&quot;
   }
+}</component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
 }]]></component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="26tr0ita" />
@@ -226,25 +226,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;featureCLIAdapter&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/kennethsheridan/Documents/workspaces/oneforall&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "git-widget-placeholder": "featureCLIAdapter",
+    "go.import.settings.migrated": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/kennethsheridan/Documents/workspaces/oneforall",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -298,7 +299,8 @@
       <workItem from="1702194235335" duration="2558000" />
       <workItem from="1702196798062" duration="12792000" />
       <workItem from="1702418562010" duration="88000" />
-      <workItem from="1702418661449" duration="1363000" />
+      <workItem from="1702418661449" duration="4741000" />
+      <workItem from="1702523404243" duration="568000" />
     </task>
     <task id="LOCAL-00001" summary="removed redundant oneforall directory">
       <option name="closed" value="true" />
@@ -436,7 +438,23 @@
       <option name="project" value="LOCAL" />
       <updated>1702419672685</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="removed repeat information">
+      <option name="closed" value="true" />
+      <created>1702421307443</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1702421307443</updated>
+    </task>
+    <task id="LOCAL-00019" summary="added &quot;clap&quot; crate">
+      <option name="closed" value="true" />
+      <created>1702523955566</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1702523955566</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -464,9 +482,13 @@
     <MESSAGE value="changed to       - ${ARTIFACTS_DIR}/doc" />
     <MESSAGE value="${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc" />
     <MESSAGE value="refactored README.md" />
-    <MESSAGE value="removed repeat information" />
     <MESSAGE value="amended README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="amended README.md" />
+    <MESSAGE value="removed repeat information" />
+    <MESSAGE value="added &quot;clap&quot; crate" />
+    <option name="LAST_COMMIT_MESSAGE" value="added &quot;clap&quot; crate" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
