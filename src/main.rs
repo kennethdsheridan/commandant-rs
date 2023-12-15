@@ -62,7 +62,7 @@ fn long_description() -> &'static str {
     \
     - Discover: Analyze and report on the configuration and current state of your hardware components.\n\
     \
-    - Overwatch: Watch your system's performance in real-time, capturing critical metrics and providing live feedback.\n\
+    - Overwatch: Watch your system's performance in real-time, capturing critical metrics and providing live feedback.\n\n\
    
     OneForAll is designed with both simplicity and power in mind, making it suitable for both casual users looking to \
     check their system's performance and professionals requiring detailed hardware analysis."
