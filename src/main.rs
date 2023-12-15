@@ -52,7 +52,7 @@ enum Commands {
 fn long_description() -> &'static str {
     "\n\n\nOneForAll is a comprehensive tool designed for in-depth hardware performance analysis and diagnostics. \
     It leverages advanced testing methodologies to provide users with detailed insights into their system's capabilities \
-    and bottlenecks. With OneForAll, you can run various tests, including benchmarks, stress tests, and hardware scans, \
+    and bottlenecks. With OneForAll, you can run various tests, including benchmarks, stress tests, and hardware discovery, \
     to understand the full scope of your hardware's performance.\n\n\
     The tool is structured into several modules, each targeting a specific aspect of hardware performance:\n\n\
     \
