@@ -24,7 +24,6 @@ enum StressNgArch {
 // OneForAll CLI Application
 // This struct represents the command-line interface of the application,
 // defining the available subcommands and their respective functionalities.
-// Main application description.
 #[derive(Parser, Debug)]
 #[clap(author = "Kenny Sheridan", version = "0.1 (Dev)", about = "OneForAll - An advanced tool for hardware performance testing and diagnostics.", long_about = long_description())]
 struct Cli {
