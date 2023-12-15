@@ -7,10 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="added &quot;clap&quot; crate">
+    <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="added &quot;clap&quot; crate and modified filename in the log_adapter.rs">
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/.rustc_info.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/.rustc_info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/logging.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/logging.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick.json" beforeDir="false" />
@@ -209,9 +209,9 @@
     &quot;second&quot;: &quot;40881e9d-11fc-4262-b584-c8c8e71ef717&quot;
   }
 }</component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="26tr0ita" />
   </component>
@@ -226,26 +226,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "git-widget-placeholder": "featureCLIAdapter",
-    "go.import.settings.migrated": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/kennethsheridan/Documents/workspaces/oneforall",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;featureCLIAdapter&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/kennethsheridan/Documents/workspaces/oneforall&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -288,6 +288,9 @@
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
   </component>
+  <component name="RustfmtProjectSettings">
+    <option name="runRustfmtOnSave" value="true" />
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -301,6 +304,11 @@
       <workItem from="1702418562010" duration="88000" />
       <workItem from="1702418661449" duration="4741000" />
       <workItem from="1702523404243" duration="568000" />
+      <workItem from="1702524006347" duration="380000" />
+      <workItem from="1702524400164" duration="78000" />
+      <workItem from="1702524511894" duration="874000" />
+      <workItem from="1702526637249" duration="3737000" />
+      <workItem from="1702588051782" duration="855000" />
     </task>
     <task id="LOCAL-00001" summary="removed redundant oneforall directory">
       <option name="closed" value="true" />
@@ -454,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702523955566</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="added &quot;clap&quot; crate and modified filename in the log_adapter.rs">
+      <option name="closed" value="true" />
+      <created>1702524355743</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1702524355743</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -485,12 +501,17 @@
     <MESSAGE value="amended README.md" />
     <MESSAGE value="removed repeat information" />
     <MESSAGE value="added &quot;clap&quot; crate" />
-    <option name="LAST_COMMIT_MESSAGE" value="added &quot;clap&quot; crate" />
+    <MESSAGE value="added &quot;clap&quot; crate and modified filename in the log_adapter.rs" />
+    <option name="LAST_COMMIT_MESSAGE" value="added &quot;clap&quot; crate and modified filename in the log_adapter.rs" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
