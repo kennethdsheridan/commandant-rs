@@ -62,11 +62,11 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
         .level(level_filter);
 
     // Define log file paths and dispatchers for each log level
-    let error_log = log_file(&format!("{}/one_4_all_error.log", log_dir_path)).unwrap();
-    let warn_log = log_file(&format!("{}/one_4_all_warn.log", log_dir_path)).unwrap();
-    let info_log = log_file(&format!("{}/one_4_all_info.log", log_dir_path)).unwrap();
-    let debug_log = log_file(&format!("{}/one_4_all_debug.log", log_dir_path)).unwrap();
-    let trace_log = log_file(&format!("{}/one_4_all_trace.log", log_dir_path)).unwrap();
+    let error_log = log_file(&format!("{}/error.log", log_dir_path)).unwrap();
+    let warn_log = log_file(&format!("{}/warn.log", log_dir_path)).unwrap();
+    let info_log = log_file(&format!("{}/info.log", log_dir_path)).unwrap();
+    let debug_log = log_file(&format!("{}/debug.log", log_dir_path)).unwrap();
+    let trace_log = log_file(&format!("{}/trace.log", log_dir_path)).unwrap();
 
     // Dispatchers for each log level
     let error_dispatch = Dispatch::new()
