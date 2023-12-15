@@ -56,13 +56,13 @@ fn long_description() -> &'static str {
     to understand the full scope of your hardware's performance.\n\n\
     The tool is structured into several modules, each targeting a specific aspect of hardware performance:\n\n\
     \
-    - Benchmark: Run extensive benchmarks to measure the speed and efficiency of your CPU, GPU, memory, and storage devices.\n\n\
+    - Benchmark: Run extensive benchmarks to measure the speed and efficiency of your CPU, GPU, memory, and storage devices.\n\
+    
+    - Stress: Put your system under intense stress to test stability and endurance under heavy loads.\n\
     \
-    - Stress: Put your system under intense stress to test stability and endurance under heavy loads.\n\n\
+    - Discover: Analyze and report on the configuration and current state of your hardware components.\n\
     \
-    - Discover: Analyze and report on the configuration and current state of your hardware components.\n\n\
-    \
-    - Overwatch: Watch your system's performance in real-time, capturing critical metrics and providing live feedback.\n\n\
+    - Overwatch: Watch your system's performance in real-time, capturing critical metrics and providing live feedback.\n\
    
     OneForAll is designed with both simplicity and power in mind, making it suitable for both casual users looking to \
     check their system's performance and professionals requiring detailed hardware analysis."
