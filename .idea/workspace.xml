@@ -7,21 +7,58 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="## Commit Message&#10;&#10;**Title:**&#10;Integrate clap for Command-Line Interface in main.rs&#10;&#10;**Body:**&#10;This commit integrates the `clap` crate into `main.rs` for improved command-line argument parsing. The changes include:&#10;&#10;- **Clap Implementation:** Introduced the use of `clap`'s `Parser` and `Subcommand` traits to handle CLI commands more efficiently. This makes the CLI interface more user-friendly and robust.&#10;&#10;- **Command Structs:** Defined a `Cli` struct and a `Commands` enum to represent the different subcommands (`Benchmark`, `Stress`, `Scan`, `Overwatch`) available in the application.&#10;&#10;- **Subcommand Handling:** Implemented a match statement in the `main` function to handle each subcommand, linking them to their respective functionalities.&#10;&#10;- **Logging Integration:** Maintained and integrated the existing logging setup with the new CLI structure, ensuring that all operations are properly logged.&#10;&#10;- **Architecture-Based Binary Handling:** Continued the use of `StressNgArch` enum for deciding the appropriate `stress-ng` binary based on the operating system.&#10;&#10;These changes significantly enhance the command-line interface of the OneForAll application, making it more intuitive for users and aligning with modern Rust CLI practices.&#10;&#10;**Impact:**&#10;- Enhances user interaction with the application.&#10;- Streamlines command-line argument parsing.&#10;- Sets a foundation for further development and integration of CLI-based features.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/one_4_all_debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/one_4_all_debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+    <list default="true" id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="chore: fixed getrandom error with: &#10;[dependencies]&#10;getrandom = { version = &quot;0.2.11&quot;, features = [&quot;js&quot;] }">
+      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/oneforall.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rust.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/install.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/one_4_all_debug.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/one_4_all_error.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/one_4_all_info.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/one_4_all_trace.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/one_4_all_warn.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/linux/stress-ng" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/log_adapter.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/macOS/stress-ng" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/stress_ng_adapter.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/stress_ng_manager_adapter.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/logging.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/stress_ng.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ports/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ports/stress_test.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/.rustc_info.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/.rustc_info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/.rustc_info.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CACHEDIR.TAG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.cargo-lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-8aa479cb705a4d99/lib-aho_corasick.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-f5989d68ad88988a/dep-lib-aho_corasick" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-f5989d68ad88988a/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-f5989d68ad88988a/lib-aho_corasick" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/aho-corasick-f5989d68ad88988a/lib-aho_corasick.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/autocfg-061be4e95da2b0aa/dep-lib-autocfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/autocfg-061be4e95da2b0aa/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/autocfg-061be4e95da2b0aa/lib-autocfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/autocfg-061be4e95da2b0aa/lib-autocfg.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/bitflags-0a258e3745380d51/dep-lib-bitflags" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/bitflags-0a258e3745380d51/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/bitflags-0a258e3745380d51/lib-bitflags" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/bitflags-0a258e3745380d51/lib-bitflags.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/bitflags-1e93888f10dd8573/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/bitflags-1e93888f10dd8573/lib-bitflags" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/bitflags-1e93888f10dd8573/lib-bitflags.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/chrono-0d4919cb4ab2b855/dep-lib-chrono" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/chrono-0d4919cb4ab2b855/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/chrono-0d4919cb4ab2b855/lib-chrono" beforeDir="false" />
@@ -29,6 +66,9 @@
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/chrono-4807326b7f377edb/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/chrono-4807326b7f377edb/lib-chrono" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/chrono-4807326b7f377edb/lib-chrono.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/colored-8e01ebae130f9df9/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/colored-8e01ebae130f9df9/lib-colored" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/colored-8e01ebae130f9df9/lib-colored.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/colored-a7aecd36ede840d8/dep-lib-colored" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/colored-a7aecd36ede840d8/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/colored-a7aecd36ede840d8/lib-colored" beforeDir="false" />
@@ -37,26 +77,47 @@
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/core-foundation-sys-314a17a44d048947/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/core-foundation-sys-314a17a44d048947/lib-core-foundation-sys" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/core-foundation-sys-314a17a44d048947/lib-core-foundation-sys.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/core-foundation-sys-96569df3b7d100ea/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/core-foundation-sys-96569df3b7d100ea/lib-core-foundation-sys" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/core-foundation-sys-96569df3b7d100ea/lib-core-foundation-sys.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/env_logger-6cd45e843b943ec9/dep-lib-env_logger" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/env_logger-6cd45e843b943ec9/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/env_logger-6cd45e843b943ec9/lib-env_logger" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/env_logger-6cd45e843b943ec9/lib-env_logger.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/env_logger-968c5851f50bd8b0/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/env_logger-968c5851f50bd8b0/lib-env_logger" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/env_logger-968c5851f50bd8b0/lib-env_logger.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/errno-41b9ca789a724a3f/dep-lib-errno" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/errno-41b9ca789a724a3f/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/errno-41b9ca789a724a3f/lib-errno" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/errno-41b9ca789a724a3f/lib-errno.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/errno-da9b33557dc1610f/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/errno-da9b33557dc1610f/lib-errno" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/errno-da9b33557dc1610f/lib-errno.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/fern-5658efac6c1d4f0c/dep-lib-fern" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/fern-5658efac6c1d4f0c/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/fern-5658efac6c1d4f0c/lib-fern" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/fern-5658efac6c1d4f0c/lib-fern.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/fern-f5b36928ba66703b/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/fern-f5b36928ba66703b/lib-fern" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/fern-f5b36928ba66703b/lib-fern.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/humantime-06c2188819691d79/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/humantime-06c2188819691d79/lib-humantime" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/humantime-06c2188819691d79/lib-humantime.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/humantime-519613fd3e174c2c/dep-lib-humantime" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/humantime-519613fd3e174c2c/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/humantime-519613fd3e174c2c/lib-humantime" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/humantime-519613fd3e174c2c/lib-humantime.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/iana-time-zone-4660e40fdcb1b5b1/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/iana-time-zone-4660e40fdcb1b5b1/lib-iana-time-zone" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/iana-time-zone-4660e40fdcb1b5b1/lib-iana-time-zone.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/iana-time-zone-7e52047d7bb2b2f9/dep-lib-iana-time-zone" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/iana-time-zone-7e52047d7bb2b2f9/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/iana-time-zone-7e52047d7bb2b2f9/lib-iana-time-zone" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/iana-time-zone-7e52047d7bb2b2f9/lib-iana-time-zone.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/is-terminal-39789a44f1356eca/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/is-terminal-39789a44f1356eca/lib-is-terminal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/is-terminal-39789a44f1356eca/lib-is-terminal.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/is-terminal-3f65ddc955acff0f/dep-lib-is-terminal" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/is-terminal-3f65ddc955acff0f/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/is-terminal-3f65ddc955acff0f/lib-is-terminal" beforeDir="false" />
@@ -65,10 +126,25 @@
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/lazy_static-409cdd896a443fda/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/lazy_static-409cdd896a443fda/lib-lazy_static" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/lazy_static-409cdd896a443fda/lib-lazy_static.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/lazy_static-91b44fee876c6e0d/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/lazy_static-91b44fee876c6e0d/lib-lazy_static" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/lazy_static-91b44fee876c6e0d/lib-lazy_static.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-04bcefa3b9a9eb76/build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-04bcefa3b9a9eb76/build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-04bcefa3b9a9eb76/dep-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-04bcefa3b9a9eb76/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-293ed52c604023ad/run-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-293ed52c604023ad/run-build-script-build-script-build.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-5b51fc38b0e8b805/dep-lib-libc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-5b51fc38b0e8b805/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-5b51fc38b0e8b805/lib-libc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-5b51fc38b0e8b805/lib-libc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-9d94d2c7bca500c3/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-9d94d2c7bca500c3/lib-libc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/libc-9d94d2c7bca500c3/lib-libc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/log-a287eed575ff807e/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/log-a287eed575ff807e/lib-log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/log-a287eed575ff807e/lib-log.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/log-f0ffae8523c24483/dep-lib-log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/log-f0ffae8523c24483/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/log-f0ffae8523c24483/lib-log" beforeDir="false" />
@@ -77,6 +153,9 @@
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/memchr-1d74ce66f30c4d38/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/memchr-1d74ce66f30c4d38/lib-memchr" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/memchr-1d74ce66f30c4d38/lib-memchr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/memchr-84b03a741fb49732/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/memchr-84b03a741fb49732/lib-memchr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/memchr-84b03a741fb49732/lib-memchr.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-486b5bc4408eeca2/dep-lib-num-traits" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-486b5bc4408eeca2/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-486b5bc4408eeca2/lib-num-traits" beforeDir="false" />
@@ -84,6 +163,10 @@
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-548a7e0d3139ed78/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-548a7e0d3139ed78/lib-num-traits" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-548a7e0d3139ed78/lib-num-traits.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-a73118e82731066b/build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-a73118e82731066b/build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-a73118e82731066b/dep-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-a73118e82731066b/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-cbd2ff9630e46a45/run-build-script-build-script-build" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/num-traits-cbd2ff9630e46a45/run-build-script-build-script-build.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/one_for_all-56afc47b5620a747/invoked.timestamp" beforeDir="false" />
@@ -97,34 +180,84 @@
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/one_for_all-b8196e35c68d81be/bin-one_for_all" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/one_for_all-b8196e35c68d81be/bin-one_for_all.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/one_for_all-b8196e35c68d81be/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-6d598ec9343d5f7f/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-6d598ec9343d5f7f/lib-regex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-6d598ec9343d5f7f/lib-regex.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-automata-4f9d0c3d0afae52f/dep-lib-regex-automata" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-automata-4f9d0c3d0afae52f/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-automata-4f9d0c3d0afae52f/lib-regex-automata" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-automata-4f9d0c3d0afae52f/lib-regex-automata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-automata-e110952f23dc26c8/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-automata-e110952f23dc26c8/lib-regex-automata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-automata-e110952f23dc26c8/lib-regex-automata.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-ffb06d597b068115/dep-lib-regex" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-ffb06d597b068115/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-ffb06d597b068115/lib-regex" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-ffb06d597b068115/lib-regex.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-syntax-481536835ff928b8/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-syntax-481536835ff928b8/lib-regex-syntax" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-syntax-481536835ff928b8/lib-regex-syntax.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-syntax-f09f914f7fa4159c/dep-lib-regex-syntax" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-syntax-f09f914f7fa4159c/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-syntax-f09f914f7fa4159c/lib-regex-syntax" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/regex-syntax-f09f914f7fa4159c/lib-regex-syntax.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-378d00f023853afc/run-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-378d00f023853afc/run-build-script-build-script-build.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-4841b8da85eb642d/dep-lib-rustix" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-4841b8da85eb642d/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-4841b8da85eb642d/lib-rustix" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-4841b8da85eb642d/lib-rustix.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-597381a16aa06b94/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-597381a16aa06b94/lib-rustix" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-597381a16aa06b94/lib-rustix.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-5ca28d45d858268f/build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-5ca28d45d858268f/build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-5ca28d45d858268f/dep-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/rustix-5ca28d45d858268f/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/termcolor-4dcb3373faf416cf/dep-lib-termcolor" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/termcolor-4dcb3373faf416cf/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/termcolor-4dcb3373faf416cf/lib-termcolor" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/termcolor-4dcb3373faf416cf/lib-termcolor.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/termcolor-cfcf0e941476483b/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/termcolor-cfcf0e941476483b/lib-termcolor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/termcolor-cfcf0e941476483b/lib-termcolor.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-292a79b5ae392452/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-292a79b5ae392452/lib-uuid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-292a79b5ae392452/lib-uuid.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-b567a20311608ca4/dep-lib-uuid" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-b567a20311608ca4/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-b567a20311608ca4/lib-uuid" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/.fingerprint/uuid-b567a20311608ca4/lib-uuid.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/libc-04bcefa3b9a9eb76/build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/libc-04bcefa3b9a9eb76/build_script_build-04bcefa3b9a9eb76" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/libc-04bcefa3b9a9eb76/build_script_build-04bcefa3b9a9eb76.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/libc-293ed52c604023ad/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/libc-293ed52c604023ad/output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/libc-293ed52c604023ad/root-output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/libc-293ed52c604023ad/stderr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-a73118e82731066b/build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-a73118e82731066b/build_script_build-a73118e82731066b" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-a73118e82731066b/build_script_build-a73118e82731066b.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe0.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe1.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe2.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe3.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe4.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe5.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe6.ll" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/out/probe7.ll" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/output" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/root-output" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/build/num-traits-cbd2ff9630e46a45/stderr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-378d00f023853afc/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-378d00f023853afc/out/librust_out.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-378d00f023853afc/output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-378d00f023853afc/root-output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-378d00f023853afc/stderr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-5ca28d45d858268f/build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-5ca28d45d858268f/build_script_build-5ca28d45d858268f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/build/rustix-5ca28d45d858268f/build_script_build-5ca28d45d858268f.d" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/aho_corasick-f5989d68ad88988a.aho_corasick.42664f08c41f0e0-cgu.00.rcgu.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/aho_corasick-f5989d68ad88988a.aho_corasick.42664f08c41f0e0-cgu.01.rcgu.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/aho_corasick-f5989d68ad88988a.aho_corasick.42664f08c41f0e0-cgu.02.rcgu.o" beforeDir="false" />
@@ -142,6 +275,7 @@
       <change beforePath="$PROJECT_DIR$/target/debug/deps/aho_corasick-f5989d68ad88988a.aho_corasick.42664f08c41f0e0-cgu.14.rcgu.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/aho_corasick-f5989d68ad88988a.aho_corasick.42664f08c41f0e0-cgu.15.rcgu.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/aho_corasick-f5989d68ad88988a.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/deps/autocfg-061be4e95da2b0aa.d" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/bitflags-0a258e3745380d51.bitflags.2c94348013734a74-cgu.0.rcgu.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/bitflags-0a258e3745380d51.d" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/chrono-0d4919cb4ab2b855.chrono.fe234fa3a159ccb4-cgu.00.rcgu.o" beforeDir="false" />
@@ -195,6 +329,8 @@
       <change beforePath="$PROJECT_DIR$/target/debug/deps/lazy_static-409cdd896a443fda.lazy_static.b1d358097b7cb343-cgu.0.rcgu.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/libaho_corasick-f5989d68ad88988a.rlib" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/libaho_corasick-f5989d68ad88988a.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/deps/libautocfg-061be4e95da2b0aa.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/debug/deps/libautocfg-061be4e95da2b0aa.rmeta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/libbitflags-0a258e3745380d51.rlib" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/libbitflags-0a258e3745380d51.rmeta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/deps/libc-5b51fc38b0e8b805.d" beforeDir="false" />
@@ -392,22 +528,240 @@
       <change beforePath="$PROJECT_DIR$/target/debug/incremental/one_for_all-1iktxcku7odm2/s-grfss3pq3g-15lh49p.lock" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/one_for_all" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/debug/one_for_all.d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/release/macos/one_for_all/one_for_all" beforeDir="false" afterPath="$PROJECT_DIR$/target/release/macos/one_for_all/one_for_all" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.cargo-lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/autocfg-6d1d13c549692cf8/dep-lib-autocfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/autocfg-6d1d13c549692cf8/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/autocfg-6d1d13c549692cf8/lib-autocfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/autocfg-6d1d13c549692cf8/lib-autocfg.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/libc-750d073f5b15d0bc/build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/libc-750d073f5b15d0bc/build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/libc-750d073f5b15d0bc/dep-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/libc-750d073f5b15d0bc/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/num-traits-3416909f2af4502e/build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/num-traits-3416909f2af4502e/build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/num-traits-3416909f2af4502e/dep-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/num-traits-3416909f2af4502e/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/rustix-4e03849263a6d6d7/build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/rustix-4e03849263a6d6d7/build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/rustix-4e03849263a6d6d7/dep-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/.fingerprint/rustix-4e03849263a6d6d7/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/libc-750d073f5b15d0bc/build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/libc-750d073f5b15d0bc/build_script_build-750d073f5b15d0bc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/libc-750d073f5b15d0bc/build_script_build-750d073f5b15d0bc.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/num-traits-3416909f2af4502e/build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/num-traits-3416909f2af4502e/build_script_build-3416909f2af4502e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/num-traits-3416909f2af4502e/build_script_build-3416909f2af4502e.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/rustix-4e03849263a6d6d7/build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/rustix-4e03849263a6d6d7/build_script_build-4e03849263a6d6d7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/build/rustix-4e03849263a6d6d7/build_script_build-4e03849263a6d6d7.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/deps/autocfg-6d1d13c549692cf8.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/deps/libautocfg-6d1d13c549692cf8.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/deps/libautocfg-6d1d13c549692cf8.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/release/macos/one_for_all/one_for_all" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/CACHEDIR.TAG" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release 2/.cargo-lock" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release 2/one_for_all.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/aho-corasick-0493ca03f0e4ab0b/dep-lib-aho_corasick" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/aho-corasick-0493ca03f0e4ab0b/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/aho-corasick-0493ca03f0e4ab0b/lib-aho_corasick" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/aho-corasick-0493ca03f0e4ab0b/lib-aho_corasick.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/bitflags-47f328cd44d8921a/dep-lib-bitflags" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/bitflags-47f328cd44d8921a/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/bitflags-47f328cd44d8921a/lib-bitflags" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/bitflags-47f328cd44d8921a/lib-bitflags.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/chrono-6ec9296b44ace330/dep-lib-chrono" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/chrono-6ec9296b44ace330/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/chrono-6ec9296b44ace330/lib-chrono" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/chrono-6ec9296b44ace330/lib-chrono.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/colored-0c3ff29f9631308d/dep-lib-colored" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/colored-0c3ff29f9631308d/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/colored-0c3ff29f9631308d/lib-colored" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/colored-0c3ff29f9631308d/lib-colored.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/core-foundation-sys-07461522aa6a7b00/dep-lib-core-foundation-sys" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/core-foundation-sys-07461522aa6a7b00/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/core-foundation-sys-07461522aa6a7b00/lib-core-foundation-sys" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/core-foundation-sys-07461522aa6a7b00/lib-core-foundation-sys.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/env_logger-377e646663d8ef60/dep-lib-env_logger" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/env_logger-377e646663d8ef60/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/env_logger-377e646663d8ef60/lib-env_logger" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/env_logger-377e646663d8ef60/lib-env_logger.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/errno-8d6307470d43f4d3/dep-lib-errno" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/errno-8d6307470d43f4d3/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/errno-8d6307470d43f4d3/lib-errno" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/errno-8d6307470d43f4d3/lib-errno.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/fern-3108c27cb88d1cb0/dep-lib-fern" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/fern-3108c27cb88d1cb0/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/fern-3108c27cb88d1cb0/lib-fern" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/fern-3108c27cb88d1cb0/lib-fern.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/humantime-80036f60b7c66fd3/dep-lib-humantime" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/humantime-80036f60b7c66fd3/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/humantime-80036f60b7c66fd3/lib-humantime" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/humantime-80036f60b7c66fd3/lib-humantime.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/iana-time-zone-f03b8e250f168e82/dep-lib-iana-time-zone" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/iana-time-zone-f03b8e250f168e82/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/iana-time-zone-f03b8e250f168e82/lib-iana-time-zone" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/iana-time-zone-f03b8e250f168e82/lib-iana-time-zone.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/is-terminal-e301d8f1e4b23305/dep-lib-is-terminal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/is-terminal-e301d8f1e4b23305/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/is-terminal-e301d8f1e4b23305/lib-is-terminal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/is-terminal-e301d8f1e4b23305/lib-is-terminal.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/lazy_static-732a2cc53659cc12/dep-lib-lazy_static" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/lazy_static-732a2cc53659cc12/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/lazy_static-732a2cc53659cc12/lib-lazy_static" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/lazy_static-732a2cc53659cc12/lib-lazy_static.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/libc-ea0dfb14a1132b06/run-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/libc-ea0dfb14a1132b06/run-build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/libc-ee1f6588012e5982/dep-lib-libc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/libc-ee1f6588012e5982/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/libc-ee1f6588012e5982/lib-libc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/libc-ee1f6588012e5982/lib-libc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/log-45996695fae4c138/dep-lib-log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/log-45996695fae4c138/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/log-45996695fae4c138/lib-log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/log-45996695fae4c138/lib-log.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/memchr-61d759135c207704/dep-lib-memchr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/memchr-61d759135c207704/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/memchr-61d759135c207704/lib-memchr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/memchr-61d759135c207704/lib-memchr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/num-traits-29297e85af7fedfd/dep-lib-num-traits" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/num-traits-29297e85af7fedfd/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/num-traits-29297e85af7fedfd/lib-num-traits" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/num-traits-29297e85af7fedfd/lib-num-traits.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/num-traits-795baafec987d83b/run-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/num-traits-795baafec987d83b/run-build-script-build-script-build.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/one_for_all-ec846646ead7a0ba/bin-one_for_all" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/one_for_all-ec846646ead7a0ba/bin-one_for_all.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/one_for_all-ec846646ead7a0ba/dep-bin-one_for_all" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/one_for_all-ec846646ead7a0ba/invoked.timestamp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/one_for_all-ec846646ead7a0ba/output-bin-one_for_all" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-automata-a287c7ae947917f5/dep-lib-regex-automata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-automata-a287c7ae947917f5/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-automata-a287c7ae947917f5/lib-regex-automata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-automata-a287c7ae947917f5/lib-regex-automata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-f5be3004220aead3/dep-lib-regex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-f5be3004220aead3/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-f5be3004220aead3/lib-regex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-f5be3004220aead3/lib-regex.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-syntax-45c3c8953cac2585/dep-lib-regex-syntax" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-syntax-45c3c8953cac2585/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-syntax-45c3c8953cac2585/lib-regex-syntax" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/regex-syntax-45c3c8953cac2585/lib-regex-syntax.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/rustix-464ea773f3d65d4c/run-build-script-build-script-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/rustix-464ea773f3d65d4c/run-build-script-build-script-build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/rustix-8502c4225d935008/dep-lib-rustix" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/rustix-8502c4225d935008/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/rustix-8502c4225d935008/lib-rustix" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/rustix-8502c4225d935008/lib-rustix.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/termcolor-5edaadf2a54b9d2c/dep-lib-termcolor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/termcolor-5edaadf2a54b9d2c/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/termcolor-5edaadf2a54b9d2c/lib-termcolor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/termcolor-5edaadf2a54b9d2c/lib-termcolor.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/uuid-c6d9b92720e24548/dep-lib-uuid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/uuid-c6d9b92720e24548/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/uuid-c6d9b92720e24548/lib-uuid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/.fingerprint/uuid-c6d9b92720e24548/lib-uuid.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/libc-ea0dfb14a1132b06/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/libc-ea0dfb14a1132b06/output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/libc-ea0dfb14a1132b06/root-output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/libc-ea0dfb14a1132b06/stderr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe0.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe1.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe2.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe3.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe4.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe5.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe6.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/out/probe7.ll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/root-output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/num-traits-795baafec987d83b/stderr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/rustix-464ea773f3d65d4c/invoked.timestamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/rustix-464ea773f3d65d4c/out/librust_out.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/rustix-464ea773f3d65d4c/output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/rustix-464ea773f3d65d4c/root-output" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/build/rustix-464ea773f3d65d4c/stderr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/aho_corasick-0493ca03f0e4ab0b.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/bitflags-47f328cd44d8921a.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/chrono-6ec9296b44ace330.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/colored-0c3ff29f9631308d.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/core_foundation_sys-07461522aa6a7b00.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/env_logger-377e646663d8ef60.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/errno-8d6307470d43f4d3.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/fern-3108c27cb88d1cb0.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/humantime-80036f60b7c66fd3.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/iana_time_zone-f03b8e250f168e82.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/is_terminal-e301d8f1e4b23305.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/lazy_static-732a2cc53659cc12.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libaho_corasick-0493ca03f0e4ab0b.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libaho_corasick-0493ca03f0e4ab0b.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libbitflags-47f328cd44d8921a.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libbitflags-47f328cd44d8921a.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libc-ee1f6588012e5982.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libchrono-6ec9296b44ace330.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libchrono-6ec9296b44ace330.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libcolored-0c3ff29f9631308d.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libcolored-0c3ff29f9631308d.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libcore_foundation_sys-07461522aa6a7b00.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libcore_foundation_sys-07461522aa6a7b00.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libenv_logger-377e646663d8ef60.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libenv_logger-377e646663d8ef60.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liberrno-8d6307470d43f4d3.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liberrno-8d6307470d43f4d3.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libfern-3108c27cb88d1cb0.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libfern-3108c27cb88d1cb0.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libhumantime-80036f60b7c66fd3.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libhumantime-80036f60b7c66fd3.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libiana_time_zone-f03b8e250f168e82.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libiana_time_zone-f03b8e250f168e82.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libis_terminal-e301d8f1e4b23305.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libis_terminal-e301d8f1e4b23305.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liblazy_static-732a2cc53659cc12.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liblazy_static-732a2cc53659cc12.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liblibc-ee1f6588012e5982.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liblibc-ee1f6588012e5982.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liblog-45996695fae4c138.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/liblog-45996695fae4c138.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libmemchr-61d759135c207704.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libmemchr-61d759135c207704.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libnum_traits-29297e85af7fedfd.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libnum_traits-29297e85af7fedfd.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libregex-f5be3004220aead3.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libregex-f5be3004220aead3.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libregex_automata-a287c7ae947917f5.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libregex_automata-a287c7ae947917f5.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libregex_syntax-45c3c8953cac2585.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libregex_syntax-45c3c8953cac2585.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/librustix-8502c4225d935008.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/librustix-8502c4225d935008.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libtermcolor-5edaadf2a54b9d2c.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libtermcolor-5edaadf2a54b9d2c.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libuuid-c6d9b92720e24548.rlib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/libuuid-c6d9b92720e24548.rmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/log-45996695fae4c138.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/memchr-61d759135c207704.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/num_traits-29297e85af7fedfd.d" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/one_for_all-ec846646ead7a0ba" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/one_for_all-ec846646ead7a0ba.d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/one_for_all" beforeDir="false" afterPath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/one_for_all" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/regex-f5be3004220aead3.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/regex_automata-a287c7ae947917f5.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/regex_syntax-45c3c8953cac2585.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/rustix-8502c4225d935008.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/termcolor-5edaadf2a54b9d2c.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/deps/uuid-c6d9b92720e24548.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/x86_64-apple-darwin/release/one_for_all" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -422,12 +776,12 @@
     }
   }
 }</component>
-  <component name="GitLabMergeRequestsSettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;first&quot;: &quot;https://oauth2:glpat-hHFCzdAK4as9CJLX96un@gitlab.com/kennethdsheridan/oneforall.git&quot;,
-    &quot;second&quot;: &quot;40881e9d-11fc-4262-b584-c8c8e71ef717&quot;
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "first": "git@gitlab.com:teufel-hunden-technology-group/oneforall.git",
+    "second": "7151b37e-894d-456c-a438-f51f3114ab80"
   }
-}</component>
+}]]></component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
@@ -445,26 +799,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;featureCLIAdapter&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/kennethsheridan/Documents/workspaces/oneforall&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/kennethsheridan/Documents/workspaces/oneforall",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.gitlab.GitLabSettingsConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -511,6 +865,9 @@
     <option name="runRustfmtOnSave" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="0380e6e4-6874-4f6a-9b57-10e94a5ab93a" name="Changes" comment="" />
@@ -529,6 +886,7 @@
       <workItem from="1702526637249" duration="3737000" />
       <workItem from="1702588051782" duration="3145000" />
       <workItem from="1702613528019" duration="1026000" />
+      <workItem from="1702792021977" duration="1594000" />
     </task>
     <task id="LOCAL-00001" summary="removed redundant oneforall directory">
       <option name="closed" value="true" />
@@ -714,7 +1072,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702613049978</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="added &quot;plotters&quot; and &quot;wasm-pack&quot; and &quot;wasm-bindgen&quot;">
+      <option name="closed" value="true" />
+      <created>1702793230541</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1702793230541</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -748,7 +1114,9 @@
     <MESSAGE value="added &quot;clap&quot; crate and modified filename in the log_adapter.rs" />
     <MESSAGE value="added documentation to logging.rs" />
     <MESSAGE value="## Commit Message&#10;&#10;**Title:**&#10;Integrate clap for Command-Line Interface in main.rs&#10;&#10;**Body:**&#10;This commit integrates the `clap` crate into `main.rs` for improved command-line argument parsing. The changes include:&#10;&#10;- **Clap Implementation:** Introduced the use of `clap`'s `Parser` and `Subcommand` traits to handle CLI commands more efficiently. This makes the CLI interface more user-friendly and robust.&#10;&#10;- **Command Structs:** Defined a `Cli` struct and a `Commands` enum to represent the different subcommands (`Benchmark`, `Stress`, `Scan`, `Overwatch`) available in the application.&#10;&#10;- **Subcommand Handling:** Implemented a match statement in the `main` function to handle each subcommand, linking them to their respective functionalities.&#10;&#10;- **Logging Integration:** Maintained and integrated the existing logging setup with the new CLI structure, ensuring that all operations are properly logged.&#10;&#10;- **Architecture-Based Binary Handling:** Continued the use of `StressNgArch` enum for deciding the appropriate `stress-ng` binary based on the operating system.&#10;&#10;These changes significantly enhance the command-line interface of the OneForAll application, making it more intuitive for users and aligning with modern Rust CLI practices.&#10;&#10;**Impact:**&#10;- Enhances user interaction with the application.&#10;- Streamlines command-line argument parsing.&#10;- Sets a foundation for further development and integration of CLI-based features." />
-    <option name="LAST_COMMIT_MESSAGE" value="## Commit Message&#10;&#10;**Title:**&#10;Integrate clap for Command-Line Interface in main.rs&#10;&#10;**Body:**&#10;This commit integrates the `clap` crate into `main.rs` for improved command-line argument parsing. The changes include:&#10;&#10;- **Clap Implementation:** Introduced the use of `clap`'s `Parser` and `Subcommand` traits to handle CLI commands more efficiently. This makes the CLI interface more user-friendly and robust.&#10;&#10;- **Command Structs:** Defined a `Cli` struct and a `Commands` enum to represent the different subcommands (`Benchmark`, `Stress`, `Scan`, `Overwatch`) available in the application.&#10;&#10;- **Subcommand Handling:** Implemented a match statement in the `main` function to handle each subcommand, linking them to their respective functionalities.&#10;&#10;- **Logging Integration:** Maintained and integrated the existing logging setup with the new CLI structure, ensuring that all operations are properly logged.&#10;&#10;- **Architecture-Based Binary Handling:** Continued the use of `StressNgArch` enum for deciding the appropriate `stress-ng` binary based on the operating system.&#10;&#10;These changes significantly enhance the command-line interface of the OneForAll application, making it more intuitive for users and aligning with modern Rust CLI practices.&#10;&#10;**Impact:**&#10;- Enhances user interaction with the application.&#10;- Streamlines command-line argument parsing.&#10;- Sets a foundation for further development and integration of CLI-based features." />
+    <MESSAGE value="commit Cargo.lock" />
+    <MESSAGE value="added &quot;plotters&quot; and &quot;wasm-pack&quot; and &quot;wasm-bindgen&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="added &quot;plotters&quot; and &quot;wasm-pack&quot; and &quot;wasm-bindgen&quot;" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
