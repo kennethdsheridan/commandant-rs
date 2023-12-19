@@ -113,12 +113,28 @@ fn main() {
             // Define the arguments for the stress-ng command
             let args = ["--cpu", "2", "--timeout", "60s"]; // Example arguments
 
+            // Number of retries
+            let mut retries = 2;
+
             // Execute the stress test using the stress_tester instance
-            match StressNgAdapter::execute_stress_ng_command(&logr, &args) {
-                Ok(()) => logr.log_info("CPU stress test executed successfully."),
-                Err(e) => logr.log_error(&format!("Error executing CPU stress test: {}", e)),
+            while retries >= 0 {
+                match StressNgAdapter::execute_stress_ng_command(&logr, &args) {
+                    Ok(()) => {
+                        logr.log_info("CPU stress test executed successfully.");
+                        break; // Exit the loop on successful execution
+                    }
+                    Err(e) => {
+                        if retries > 0 {
+                            logr.log_warning(&format!("Retrying CPU stress test. Attempts remaining: {}", retries));
+                        } else {
+                            logr.log_error(&format!("Error executing CPU stress test: {}", e));
+                        }
+                    }
+                }
+                retries -= 1; // Decrement the retry counter
             }
         }
+
         Commands::Discover => {
             // Implement discovery functionality.
             logr.log_info("System discovery functionality not yet implemented.");
