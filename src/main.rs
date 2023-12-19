@@ -125,7 +125,7 @@ fn main() {
                     }
                     Err(e) => {
                         if retries > 0 {
-                            logr.log_warning(&format!("Retrying CPU stress test. Attempts remaining: {}", retries));
+                            logr.log_warn(&format!("Retrying CPU stress test. Attempts remaining: {}", retries));
                         } else {
                             logr.log_error(&format!("Error executing CPU stress test: {}", e));
                         }

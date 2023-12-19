@@ -213,40 +213,69 @@ impl<'a> StressNgAdapter<'a> {
         }
         logger.log_debug(&format!("Executing stress-ng with args: {:?}", args));
 
+// Attempt to spawn the `stress-ng` command
         match command.spawn() {
+            // If the command spawns successfully...
             Ok(mut child) => {
+                // Wait for the command to complete and capture its output
                 match child.wait_with_output() {
+                    // If the command completes successfully...
                     Ok(output) => {
+                        // Log a debug message indicating successful execution
                         logger.log_debug("stress-ng command executed successfully");
 
-                        // Optionally log the output of the command
-                        logger.log_debug(&format!("stress-ng output: {:?}", output));
+                        // If there's any standard error output, log it as an error
+                        if !output.stderr.is_empty() {
+                            logger.log_error(&format!(
+                                "stress-ng encountered an error: {}",
+                                String::from_utf8_lossy(&output.stderr)
+                            ));
+                        }
 
-                        // Clean up by removing the stress-ng binary from the filesystem
-                        match StressNgAdapter::remove_stress_ng_binary(&binary_path) {
-                            Ok(()) => logger
-                                .log_debug(&format!("Successfully cleaned up {}", binary_path)),
+                        // If there's any standard output, log it; otherwise, log that there's no output
+                        if !output.stdout.is_empty() {
+                            logger.log_debug(&format!(
+                                "stress-ng output: {}",
+                                String::from_utf8_lossy(&output.stdout)
+                            ));
+                        } else {
+                            logger.log_debug("No output captured from stress-ng command");
+                        }
+
+                        // Clean up by removing the `stress-ng` binary from the filesystem
+                        match remove_stress_ng_binary(&binary_path) {
+                            Ok(()) => logger.log_debug(&format!("Successfully cleaned up {}", binary_path)),
                             Err(e) => {
                                 logger.log_error(&format!(
                                     "Failed to remove stress-ng binary at {}: {}",
                                     binary_path, e
                                 ));
+                                // Return an error if cleanup fails
                                 return Err(e);
                             }
                         }
 
+                        // Indicate successful execution of the whole process
                         Ok(())
-                    }
+                    },
+                    // If there's an error in executing the command...
                     Err(e) => {
-                        logger.log_error(&format!("Failed to wait for stress-ng command: {}", e));
-                        Err(format!("Failed to wait for stress-ng command: {}", e))
+                        // Log an error message with the failure details
+                        logger.log_error(&format!("Failed to execute stress-ng command: {}", e));
+                        // Return an error
+                        Err(e.to_string())
                     }
                 }
-            }
+            },
+            // If there's an error in spawning the command...
             Err(e) => {
-                logger.log_error(&format!("Failed to execute stress-ng command: {}", e));
-                Err(format!("Failed to execute stress-ng command: {}", e))
+                // Log an error message with the failure details
+                logger.log_error(&format!("Failed to spawn stress-ng command: {}", e));
+                // Return an error
+                Err(e.to_string())
             }
+        }
+
         }
     }
     // Other additional methods specific to the StressNgAdapter...
@@ -284,4 +313,4 @@ impl<'a> StressNgAdapter<'a> {
             }
         }
     }
-}
+
