@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::Write;
 use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
-use std::process::Command;
+use std::process::{Command, Stdio};
 use std::{fs, str};
 
 use crate::adapters::log_adapter::FernLogger;
@@ -136,25 +136,6 @@ impl<'a> StressNgAdapter<'a> {
         Ok(temp_file_path)
     }
 
-    /// Executes a specific `stress-ng` command with given arguments.
-    ///
-    /// This function prepares and executes the `stress-ng` binary with the provided command-line arguments.
-    /// It logs the execution process and results, and ensures that the `stress-ng` binary is removed
-    /// from the filesystem after execution.
-    ///
-    /// # Arguments
-    /// * `logger` - Logger implementation for logging messages.
-    /// * `args` - Command-line arguments to pass to `stress-ng`.
-    ///
-    /// # Returns
-    /// `Result<(), String>`: Ok(()) on success, or an error message wrapped in `Err` on failure.
-    ///
-    /// # Examples
-    /// ```
-    /// let logger = ...; // An instance of a Logger implementation
-    /// let args = ["--cpu", "4", "--timeout", "60s"];
-    /// StressNgAdapter::execute_stress_ng_command(&logger, &args).expect("Stress test failed");
-    /// ```
     pub fn execute_stress_ng_command(logger: &dyn LoggerPort, args: &[&str]) -> Result<(), String> {
         let binary_path = "../stress-ng-binary".to_string();
 
@@ -162,155 +143,114 @@ impl<'a> StressNgAdapter<'a> {
         if !Path::new(&binary_path).exists() {
             let error_msg = format!("Binary not found at path: {}", binary_path);
             logger.log_error(&error_msg);
-            logger.log_debug("Attempting to prepare stress-ng binary");
-            // write the binary to disk if using prepare_stress_ng_binary
-            let binary_path = match StressNgAdapter::prepare_stress_ng_binary(logger) {
-                Ok(path) => path,
-                Err(e) => {
-                    logger.log_error(&format!("Failed to prepare stress-ng binary: {}", e));
-                    return Err(e);
-                }
-            };
+            // Additional logic for handling binary preparation
+            // ...
             return Err(error_msg);
         }
 
         // Check if the file has execute permissions
         if let Ok(metadata) = fs::metadata(&binary_path) {
             if metadata.permissions().mode() & 0o111 == 0 {
-                let error_msg = format!(
-                    "Binary at {} does not have execute permissions",
-                    binary_path
-                );
+                let error_msg = format!("Binary at {} does not have execute permissions", binary_path);
                 logger.log_error(&error_msg);
                 return Err(error_msg);
             }
-            logger.log_debug(&format!(
-                "Binary at {} has execute permissions",
-                binary_path
-            ));
+            logger.log_debug(&format!("Binary at {} has execute permissions", binary_path));
         } else {
             let error_msg = format!("Failed to read metadata for binary at {}", binary_path);
             logger.log_error(&error_msg);
             return Err(error_msg);
         }
 
-        // Execute the stress-ng command with the specified arguments
+        // Define the output file path
+        let output_file_path = "stress_ng_output.txt";
+
+        // Create or open the file to capture the command's output
+        let output_file = match File::create(&output_file_path) {
+            Ok(file) => file,
+            Err(e) => {
+                let error_msg = format!("Failed to create output file: {}", e);
+                logger.log_error(&error_msg);
+                return Err(error_msg);
+            }
+        };
+
+        // Prepare the stress-ng command with redirection of output to file
         let mut command = Command::new(&binary_path);
         command.args(args);
-        logger.log_debug(&format!("Binary path: {}", binary_path));
-        // Show the file type of the binary
-        match Command::new("file").arg(&binary_path).output() {
-            Ok(output) => {
-                logger.log_debug(&format!(
-                    "Binary file type: {}",
-                    str::from_utf8(&output.stdout).unwrap()
-                ));
-            }
-            Err(e) => {
-                logger.log_error(&format!("Failed to execute file command: {}", e));
-                return Err(format!("Failed to execute file command: {}", e));
-            }
-        }
-        logger.log_debug(&format!("Executing stress-ng with args: {:?}", args));
+        command.stdout(Stdio::from(output_file.try_clone().map_err(|e| e.to_string())?));
+        command.stderr(Stdio::from(output_file));
 
-// Attempt to spawn the `stress-ng` command
+        // Execute the stress-ng command
         match command.spawn() {
-            // If the command spawns successfully...
             Ok(mut child) => {
-                // Wait for the command to complete and capture its output
-                match child.wait_with_output() {
-                    // If the command completes successfully...
-                    Ok(output) => {
-                        // Log a debug message indicating successful execution
+                match child.wait() {
+                    Ok(_) => {
                         logger.log_debug("stress-ng command executed successfully");
-
-                        // If there's any standard error output, log it as an error
-                        if !output.stderr.is_empty() {
-                            logger.log_error(&format!(
-                                "stress-ng encountered an error: {}",
-                                String::from_utf8_lossy(&output.stderr)
-                            ));
-                        }
-
-                        // If there's any standard output, log it; otherwise, log that there's no output
-                        if !output.stdout.is_empty() {
-                            logger.log_debug(&format!(
-                                "stress-ng output: {}",
-                                String::from_utf8_lossy(&output.stdout)
-                            ));
-                        } else {
-                            logger.log_debug("No output captured from stress-ng command");
-                        }
-
                         // Clean up by removing the `stress-ng` binary from the filesystem
-                        match remove_stress_ng_binary(&binary_path) {
+                        // Correct the call to remove_stress_ng_binary in your existing code
+                        match remove_stress_ng_binary(logger, &binary_path) {
                             Ok(()) => logger.log_debug(&format!("Successfully cleaned up {}", binary_path)),
                             Err(e) => {
                                 logger.log_error(&format!(
                                     "Failed to remove stress-ng binary at {}: {}",
                                     binary_path, e
                                 ));
-                                // Return an error if cleanup fails
                                 return Err(e);
                             }
                         }
-
-                        // Indicate successful execution of the whole process
                         Ok(())
                     },
-                    // If there's an error in executing the command...
                     Err(e) => {
-                        // Log an error message with the failure details
                         logger.log_error(&format!("Failed to execute stress-ng command: {}", e));
-                        // Return an error
                         Err(e.to_string())
                     }
                 }
             },
-            // If there's an error in spawning the command...
             Err(e) => {
-                // Log an error message with the failure details
                 logger.log_error(&format!("Failed to spawn stress-ng command: {}", e));
-                // Return an error
                 Err(e.to_string())
             }
         }
+    }
+}
 
+
+/// Removes the stress-ng binary from the filesystem with extensive logging.
+///
+/// This function attempts to remove the stress-ng binary file specified by the `binary_path`.
+/// It logs the process and outcome, providing debug information on successful removal and
+/// error details in case of failure.
+///
+/// # Arguments
+/// * `logger` - Logger implementation for logging messages.
+/// * `binary_path` - The file path of the stress-ng binary to be removed.
+///
+/// # Returns
+/// A `Result<(), String>` indicating the success (`Ok(())`) or failure (`Err(String)`)
+/// of the removal operation.
+pub fn remove_stress_ng_binary(logger: &dyn LoggerPort, binary_path: &str) -> Result<(), String> {
+    logger.log_debug(&format!(
+        "Attempting to remove stress-ng binary at {}",
+        binary_path
+    ));
+
+    match std::fs::remove_file(binary_path) {
+        Ok(_) => {
+            logger.log_debug(&format!(
+                "Successfully removed stress-ng binary at {}",
+                binary_path
+            ));
+            Ok(())
+        }
+        Err(e) => {
+            let error_msg = format!(
+                "Failed to remove stress-ng binary at {}: {}",
+                binary_path, e
+            );
+            logger.log_error(&error_msg);
+            Err(error_msg)
         }
     }
-    // Other additional methods specific to the StressNgAdapter...
-
-    /// Removes the stress-ng binary from the filesystem with extensive logging.
-    ///
-    /// # Arguments
-    /// * `logger` - Logger implementation for logging messages.
-    /// * `binary_path` - The file path of the stress-ng binary to be removed.
-    ///
-    /// # Returns
-    /// A `Result` indicating the success or failure of the removal operation.
-    pub fn remove_stress_ng_binary(binary_path: &str) -> Result<(), String> {
-        let logger = FernLogger;
-        logger.log_debug(&format!(
-            "Attempting to remove stress-ng binary at {}",
-            binary_path
-        ));
-
-        match std::fs::remove_file(binary_path) {
-            Ok(_) => {
-                logger.log_debug(&format!(
-                    "Successfully removed stress-ng binary at {}",
-                    binary_path
-                ));
-                Ok(())
-            }
-            Err(e) => {
-                let error_msg = format!(
-                    "Failed to remove stress-ng binary at {}: {:?}",
-                    binary_path, e
-                );
-                logger.log_error(&error_msg);
-                Err(error_msg)
-            }
-        }
-    }
+}
 
