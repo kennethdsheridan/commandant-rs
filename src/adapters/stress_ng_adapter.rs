@@ -1,9 +1,9 @@
-use std::fs::File;
+use std::fs::{File, OpenOptions};
 use std::io::Write;
 use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 use std::process::{Command, Stdio};
-use std::{fs, str};
+use std::{fs, io, str};
 
 use crate::adapters::log_adapter::FernLogger;
 // Assuming these are defined elsewhere in your project
@@ -252,5 +252,33 @@ pub fn remove_stress_ng_binary(logger: &dyn LoggerPort, binary_path: &str) -> Re
             Err(error_msg)
         }
     }
+}
+
+/// Writes binary data to a file if it doesn't already exist.
+///
+/// # Arguments
+///
+/// * `file_path` - The path to the file to write to.
+/// * `data` - The binary data to write to the file.
+///
+/// # Returns
+///
+/// A `Result` indicating the success or failure of the operation.
+pub fn write_binary(file_path: &str, data: &[u8]) -> io::Result<()> {
+    let path = Path::new(file_path);
+
+    // Check if the file already exists
+    if !path.exists() {
+        // Open the file in write-only mode, create it if it doesn't exist
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create_new(true) // Ensures a new file is created and fails if it exists
+            .open(file_path)?;
+
+        // Write the binary data to the file
+        file.write_all(data)?;
+    }
+
+    Ok(())
 }
 

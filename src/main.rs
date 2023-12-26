@@ -11,8 +11,10 @@ mod adapters;
 mod domain;
 mod ports;
 
-// Enumeration representing the supported architectures for the `stress-ng` binary.
-// This enum is used to select the correct binary for the running operating system.
+// Enumeration representing the supported architectures for the `stress-ng`
+// binary.
+// This enum is used to select the correct binary for the running operating
+// system.
 #[derive(Debug)]
 enum StressNgArch {
     Linux,
@@ -23,7 +25,9 @@ enum StressNgArch {
 // This struct represents the command-line interface of the application,
 // defining the available subcommands and their respective functionalities.
 #[derive(Parser, Debug)]
-#[clap(author = "Kenny Sheridan", version = "0.1 (Dev)", about = "OneForAll - An advanced tool for hardware performance testing and diagnostics.", long_about = long_description())]
+#[clap(author = "Kenny Sheridan", version = "0.1 (Dev)", about = "OneForAll -\
+ An advanced tool for hardware performance testing and diagnostics.",
+long_about = long_description())]
 struct Cli {
     #[clap(subcommand)]
     command: Commands,
@@ -47,27 +51,38 @@ enum Commands {
 }
 
 fn long_description() -> &'static str {
-    "\n\n\nOneForAll is a comprehensive tool designed for in-depth hardware performance analysis and diagnostics. \
-    It leverages advanced testing methodologies to provide users with detailed insights into their system's capabilities \
-    and bottlenecks. With OneForAll, you can run various tests, including benchmarks, stress tests, and hardware discovery, \
+    "\n\n\nOneForAll is a comprehensive tool designed for in-depth hardware \
+    performance analysis and diagnostics. \
+    It leverages advanced testing methodologies to provide users with \
+    detailed insights into their system's capabilities \
+    and bottlenecks. With OneForAll, you can run various tests, including \
+    benchmarks, stress tests, and hardware discovery, \
     to understand the full scope of your hardware's performance.\n\n\
-    The tool is structured into several modules, each targeting a specific aspect of hardware performance:\n\n\
+    The tool is structured into several modules, each targeting a specific \
+    aspect of hardware performance:\n\n\
     \
-    - Benchmark: Run extensive benchmarks to measure the speed and efficiency of your CPU, GPU, memory, and storage devices.\n\
+    - Benchmark: Run extensive benchmarks to measure the speed and efficiency\
+     of your CPU, GPU, memory, and storage devices.\n\
     
-    - Stress: Put your system under intense stress to test stability and endurance under heavy loads.\n\
+    - Stress: Put your system under intense stress to test stability and \
+    endurance under heavy loads.\n\
     \
-    - Discover: Analyze and report on the configuration and current state of your hardware components.\n\
+    - Discover: Analyze and report on the configuration and current state of \
+    your hardware components.\n\
     \
-    - Overwatch: Watch your system's performance in real-time, capturing critical metrics and providing live feedback.\n\n\
+    - Overwatch: Watch your system's performance in real-time, capturing \
+    critical metrics and providing live feedback.\n\n\
    
-    OneForAll is designed with both simplicity and power in mind, making it suitable for both casual users looking to \
-    check their system's performance and professionals requiring detailed hardware analysis."
+    OneForAll is designed with both simplicity and power in mind, making it \
+    suitable for both casual users looking to \
+    check their system's performance and professionals requiring detailed \
+    hardware analysis."
 }
 
 fn main() {
     // Initialize the logger for the application.
-    // The logger is set up to write to the "logs" directory with a level filter of Trace,
+    // The logger is set up to write to the "logs" directory with a level
+    // filter of Trace,
     // which means all log messages at Trace level or higher will be recorded.
     init("logs", log::LevelFilter::Trace);
     let logr = FernLogger;
@@ -100,10 +115,12 @@ fn main() {
         }
     */
     // Create an instance of the StressNgAdapter.
-    // This adapter is responsible for executing the stress tests using `stress-ng`.
+    // This adapter is responsible for executing the stress tests using
+    // `stress-ng`.
     let stress_tester = StressNgAdapter::new(&logr);
 
-    // Handle the parsed subcommands and execute the corresponding functionality.
+    // Handle the parsed subcommands and execute the corresponding
+    // functionality.
     match cli.command {
         Commands::Benchmark => {
             // Implement benchmark functionality.
@@ -111,7 +128,7 @@ fn main() {
         }
         Commands::Stress => {
             // Define the arguments for the stress-ng command
-            let args = ["--cpu", "2", "--timeout", "60s"]; // Example arguments
+            let args = ["--cpu", "2", "--timeout", "60s"];
 
             // Number of retries
             let mut retries = 2;
@@ -125,9 +142,11 @@ fn main() {
                     }
                     Err(e) => {
                         if retries > 0 {
-                            logr.log_warn(&format!("Retrying CPU stress test. Attempts remaining: {}", retries));
+                            logr.log_warn(&format!("Retrying CPU stress test.\
+                             Attempts remaining: {}", retries));
                         } else {
-                            logr.log_error(&format!("Error executing CPU stress test: {}", e));
+                            logr.log_error(&format!("Error executing CPU \
+                            stress test: {}", e));
                         }
                     }
                 }
@@ -137,11 +156,13 @@ fn main() {
 
         Commands::Discover => {
             // Implement discovery functionality.
-            logr.log_info("System discovery functionality not yet implemented.");
+            logr.log_info("System discovery functionality not yet implemented\
+            .");
         }
         Commands::Overwatch => {
             // Implement system overwatch functionality.
-            logr.log_info("System overwatch functionality not yet implemented.");
+            logr.log_info("System overwatch functionality not yet implemented\
+            .");
         }
     }
 }
