@@ -73,11 +73,6 @@ impl<'a> StressNgAdapter<'a> {
                 logger.log_debug("Selected stress-ng binary for MacOS");
                 STRESS_NG_MACOS
             }
-            _ => {
-                let error_msg = "Unsupported OS for stress-ng binary".to_string();
-                logger.log_error(&error_msg);
-                return Err(error_msg);
-            }
         };
 
         let temp_file_path = "../stress-ng-binary".to_string();
@@ -86,44 +81,33 @@ impl<'a> StressNgAdapter<'a> {
             temp_file_path
         ));
 
-        match File::create(&temp_file_path) {
-            Ok(mut file) => {
-                if let Err(e) = file.write_all(binary_data) {
+        // Use write_binary function to write data to the file
+        match StressNgAdapter::write_binary(&temp_file_path, binary_data) {
+            Ok(_) => logger.log_debug("stress-ng binary successfully written to disk"),
+            Err(e) => {
+                let error_msg = format!("Failed to write stress-ng binary: {:?}", e);
+                logger.log_error(&error_msg);
+                return Err(error_msg);
+            }
+        }
+
+        // Setting file permissions
+        match fs::metadata(&temp_file_path) {
+            Ok(metadata) => {
+                let mut perms = metadata.permissions();
+                perms.set_mode(0o755);
+                if let Err(e) = fs::set_permissions(&temp_file_path, perms) {
                     let error_msg = format!(
-                        "Failed to write stress-ng binary to {}: {:?}",
+                        "Failed to set executable permissions on {}: {:?}",
                         temp_file_path, e
                     );
                     logger.log_error(&error_msg);
                     return Err(error_msg);
                 }
-
-                logger.log_debug("stress-ng binary successfully written to disk");
-
-                // Setting file permissions
-                match fs::metadata(&temp_file_path) {
-                    Ok(metadata) => {
-                        let mut perms = metadata.permissions();
-                        perms.set_mode(0o755);
-                        if let Err(e) = fs::set_permissions(&temp_file_path, perms) {
-                            let error_msg = format!(
-                                "Failed to set executable permissions on {}: {:?}",
-                                temp_file_path, e
-                            );
-                            logger.log_error(&error_msg);
-                            return Err(error_msg);
-                        }
-                        logger.log_debug("Executable permissions set on stress-ng binary");
-                    }
-                    Err(e) => {
-                        let error_msg =
-                            format!("Failed to read metadata for {}: {:?}", temp_file_path, e);
-                        logger.log_error(&error_msg);
-                        return Err(error_msg);
-                    }
-                }
+                logger.log_debug("Executable permissions set on stress-ng binary");
             }
             Err(e) => {
-                let error_msg = format!("Failed to create file at {}: {:?}", temp_file_path, e);
+                let error_msg = format!("Failed to read metadata for {}: {:?}", temp_file_path, e);
                 logger.log_error(&error_msg);
                 return Err(error_msg);
             }
@@ -136,28 +120,36 @@ impl<'a> StressNgAdapter<'a> {
         Ok(temp_file_path)
     }
 
-    pub fn execute_stress_ng_command(logger: &dyn LoggerPort, args: &[&str]) -> Result<(), String> {
+    pub fn execute_stress_ng_command(logger: &dyn LoggerPort, args: &[&str])
+                                     -> Result<(), String> {
         let binary_path = "../stress-ng-binary".to_string();
 
         // Check if the binary exists and is executable
         if !Path::new(&binary_path).exists() {
-            let error_msg = format!("Binary not found at path: {}", binary_path);
-            logger.log_error(&error_msg);
-            // Additional logic for handling binary preparation
-            // ...
-            return Err(error_msg);
+            logger.log_debug(&format!(
+                "Binary not found at {}. Preparing binary...",
+                binary_path
+            ));
+
+            // Call the function to prepare the stress-ng binary
+            if let Err(e) = StressNgAdapter::prepare_stress_ng_binary(logger) {
+                return Err(e);
+            }
         }
 
         // Check if the file has execute permissions
         if let Ok(metadata) = fs::metadata(&binary_path) {
             if metadata.permissions().mode() & 0o111 == 0 {
-                let error_msg = format!("Binary at {} does not have execute permissions", binary_path);
+                let error_msg = format!("Binary at {} does not have execute \
+            permissions", binary_path);
                 logger.log_error(&error_msg);
                 return Err(error_msg);
             }
-            logger.log_debug(&format!("Binary at {} has execute permissions", binary_path));
+            logger.log_debug(&format!("Binary at {} has execute permissions",
+                                      binary_path));
         } else {
-            let error_msg = format!("Failed to read metadata for binary at {}", binary_path);
+            let error_msg = format!("Failed to read metadata for binary at \
+        {}", binary_path);
             logger.log_error(&error_msg);
             return Err(error_msg);
         }
@@ -166,7 +158,7 @@ impl<'a> StressNgAdapter<'a> {
         let output_file_path = "stress_ng_output.txt";
 
         // Create or open the file to capture the command's output
-        let output_file = match File::create(&output_file_path) {
+        let output_file = match File::create(output_file_path) {
             Ok(file) => file,
             Err(e) => {
                 let error_msg = format!("Failed to create output file: {}", e);
@@ -178,31 +170,41 @@ impl<'a> StressNgAdapter<'a> {
         // Prepare the stress-ng command with redirection of output to file
         let mut command = Command::new(&binary_path);
         command.args(args);
-        command.stdout(Stdio::from(output_file.try_clone().map_err(|e| e.to_string())?));
-        command.stderr(Stdio::from(output_file));
+        logger.log_debug(&format!("Preparing stress-ng command with args: {:?}", args));
 
-        // Execute the stress-ng command
+// Attempt to set up output redirection
+        match output_file.try_clone() {
+            Ok(output_file_clone) => {
+                command.stdout(Stdio::from(output_file_clone));
+                command.stderr(Stdio::from(output_file));
+            },
+            Err(e) => {
+                logger.log_warn(&format!("Failed to clone output file handle: {}", e));
+            }
+        }
+
+// Execute the stress-ng command
         match command.spawn() {
             Ok(mut child) => {
+                logger.log_debug("stress-ng command spawned, waiting for it to finish");
+
                 match child.wait() {
                     Ok(_) => {
-                        logger.log_debug("stress-ng command executed successfully");
-                        // Clean up by removing the `stress-ng` binary from the filesystem
-                        // Correct the call to remove_stress_ng_binary in your existing code
-                        match remove_stress_ng_binary(logger, &binary_path) {
-                            Ok(()) => logger.log_debug(&format!("Successfully cleaned up {}", binary_path)),
+                        logger.log_debug("stress-ng command finished successfully");
+
+                        // Attempting to clean up the binary
+                        match StressNgAdapter::remove_stress_ng_binary(logger,
+                                                          &binary_path) {
+                            Ok(()) => logger.log_debug(&format!("Cleaned up binary at {}", binary_path)),
                             Err(e) => {
-                                logger.log_error(&format!(
-                                    "Failed to remove stress-ng binary at {}: {}",
-                                    binary_path, e
-                                ));
+                                logger.log_error(&format!("Cleanup failed for binary at {}: {}", binary_path, e));
                                 return Err(e);
                             }
                         }
                         Ok(())
                     },
                     Err(e) => {
-                        logger.log_error(&format!("Failed to execute stress-ng command: {}", e));
+                        logger.log_error(&format!("Execution failed for stress-ng command: {}", e));
                         Err(e.to_string())
                     }
                 }
@@ -213,7 +215,6 @@ impl<'a> StressNgAdapter<'a> {
             }
         }
     }
-}
 
 
 /// Removes the stress-ng binary from the filesystem with extensive logging.
@@ -229,7 +230,8 @@ impl<'a> StressNgAdapter<'a> {
 /// # Returns
 /// A `Result<(), String>` indicating the success (`Ok(())`) or failure (`Err(String)`)
 /// of the removal operation.
-pub fn remove_stress_ng_binary(logger: &dyn LoggerPort, binary_path: &str) -> Result<(), String> {
+pub fn remove_stress_ng_binary(logger: &dyn LoggerPort, binary_path: &str)
+    ->Result<(), String> {
     logger.log_debug(&format!(
         "Attempting to remove stress-ng binary at {}",
         binary_path
@@ -272,7 +274,8 @@ pub fn write_binary(file_path: &str, data: &[u8]) -> io::Result<()> {
         // Open the file in write-only mode, create it if it doesn't exist
         let mut file = OpenOptions::new()
             .write(true)
-            .create_new(true) // Ensures a new file is created and fails if it exists
+            .create_new(true) // Ensures a new file is created
+            // it exists
             .open(file_path)?;
 
         // Write the binary data to the file
@@ -280,5 +283,5 @@ pub fn write_binary(file_path: &str, data: &[u8]) -> io::Result<()> {
     }
 
     Ok(())
-}
+}}
 
