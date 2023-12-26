@@ -5,11 +5,8 @@ use std::path::Path;
 use std::process::{Command, Stdio};
 use std::{fs, io, str};
 
-use crate::adapters::log_adapter::FernLogger;
-// Assuming these are defined elsewhere in your project
 use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
 use crate::domain::logging::LoggerPort;
-use crate::ports::stress_test::StressTest;
 use crate::StressNgArch;
 
 pub struct StressNgAdapter<'a> {
