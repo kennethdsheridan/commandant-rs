@@ -13,7 +13,7 @@ use fern::{log_file, Dispatch};
 use log::LevelFilter;
 
 // Import necessary modules and types from external crates and the standard library.
-use crate::domain::logging::LoggerPort;
+use crate::ports::log_port::LoggerPort;
 
 // For file operations like creating log files.
 
@@ -45,7 +45,7 @@ impl LoggerPort for FernLogger {
 }
 
 // Define a function to initialize the logging system.
-pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
+pub fn init(log_dir_path: &str, level_filter: LevelFilter) -> FernLogger {
     // Ensure the log directory exists, creating it if necessary.
     fs::create_dir_all(log_dir_path).expect("Failed to create log directory");
 
@@ -115,4 +115,6 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) {
     combined_config
         .apply()
         .expect("Failed to initialize logger.");
+    // Return the logger instance for use by other modules in the application.
+    FernLogger
 }

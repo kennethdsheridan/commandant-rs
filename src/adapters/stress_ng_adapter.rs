@@ -4,16 +4,19 @@ use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 use std::process::{Command, Stdio};
 use std::{fs, io, str};
+use std::sync::Arc;
+use crate::adapters::log_adapter::FernLogger;
 
 use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
-use crate::domain::logging::LoggerPort;
+use crate::ports::log_port::LoggerPort;
 use crate::StressNgArch;
 
-pub struct StressNgAdapter<'a> {
-    logger: &'a dyn LoggerPort,
+pub struct StressNgAdapter {
+    logger: Arc<dyn LoggerPort>,
 }
 
-impl<'a> StressNgAdapter<'a> {
+impl<'a> StressNgAdapter {
+
     /// Creates a new instance of `StressNgAdapter`.
     ///
     /// # Arguments
@@ -21,8 +24,9 @@ impl<'a> StressNgAdapter<'a> {
     ///
     /// # Returns
     /// An instance of `StressNgAdapter`.
-    pub fn new(logger: &'a dyn LoggerPort) -> Self {
-        Self { logger }
+    // setup the logging infrastructure
+    pub fn new(logger: Arc<dyn LoggerPort>) -> Self {
+        StressNgAdapter { logger }
     }
 
     /// Decides which `stress-ng` binary to use based on the operating system.
@@ -32,7 +36,7 @@ impl<'a> StressNgAdapter<'a> {
     ///
     /// # Returns
     /// `StressNgArch`: The architecture-specific enum variant for `stress-ng`.
-    pub fn decide_stress_ng_arch(logger: &dyn LoggerPort) -> StressNgArch {
+    pub fn decide_stress_ng_arch(logger: Arc<FernLogger>) -> StressNgArch {
         let arch = if cfg!(target_os = "linux") {
             logger.log_debug("Selected stress-ng binary for Linux");
             StressNgArch::Linux
@@ -55,11 +59,12 @@ impl<'a> StressNgAdapter<'a> {
     ///
     /// # Returns
     /// A `Result` indicating the success or failure of the operation.
-    pub fn prepare_stress_ng_binary(logger: &dyn LoggerPort) -> Result<String, String> {
+    pub fn prepare_stress_ng_binary(logger: Arc<FernLogger>) -> Result<String, String> {
         logger.log_debug("Starting preparation of stress-ng binary");
 
         let arch = StressNgAdapter::decide_stress_ng_arch(logger);
-        logger.log_debug(&format!("Determined system architecture: {:?}", arch));
+        // log the selected architecture
+        logger.log_debug(&format!("Selected architecture: {:?}", arch));
 
         let binary_data = match arch {
             StressNgArch::Linux => {
@@ -79,8 +84,9 @@ impl<'a> StressNgAdapter<'a> {
         ));
 
         // Use write_binary function to write data to the file
-        match StressNgAdapter::write_binary(&temp_file_path, binary_data) {
-            Ok(_) => logger.log_debug("stress-ng binary successfully written to disk"),
+        match StressNgAdapter::write_binary(&temp_file_path,
+                                            binary_data) {  Ok(_)
+        => logger.log_debug("stress-ng binary successfully written to disk"),
             Err(e) => {
                 let error_msg = format!("Failed to write stress-ng binary: {:?}", e);
                 logger.log_error(&error_msg);
@@ -91,13 +97,10 @@ impl<'a> StressNgAdapter<'a> {
         // Setting file permissions
         match fs::metadata(&temp_file_path) {
             Ok(metadata) => {
-                let mut perms = metadata.permissions();
-                perms.set_mode(0o755);
+                let mut perms = metadata.permissions(); perms.set_mode(0o755);
                 if let Err(e) = fs::set_permissions(&temp_file_path, perms) {
                     let error_msg = format!(
-                        "Failed to set executable permissions on {}: {:?}",
-                        temp_file_path, e
-                    );
+                        "Failed to set executable permissions on {}: {:?}", temp_file_path, e);
                     logger.log_error(&error_msg);
                     return Err(error_msg);
                 }
@@ -117,7 +120,7 @@ impl<'a> StressNgAdapter<'a> {
         Ok(temp_file_path)
     }
 
-    pub fn execute_stress_ng_command(logger: &dyn LoggerPort, args: &[&str])
+    pub fn execute_stress_ng_command(logger: Arc<FernLogger>, args: &[&str])
                                      -> Result<(), String> {
         let binary_path = "../stress-ng-binary".to_string();
 
@@ -137,13 +140,12 @@ impl<'a> StressNgAdapter<'a> {
         // Check if the file has execute permissions
         if let Ok(metadata) = fs::metadata(&binary_path) {
             if metadata.permissions().mode() & 0o111 == 0 {
-                let error_msg = format!("Binary at {} does not have execute \
-            permissions", binary_path);
+                let error_msg = format!("Binary at {} does not have execute permissions",
+                                        binary_path);
                 logger.log_error(&error_msg);
                 return Err(error_msg);
             }
-            logger.log_debug(&format!("Binary at {} has execute permissions",
-                                      binary_path));
+            logger.log_debug(&format!("Binary at {} has execute permissions", binary_path));
         } else {
             let error_msg = format!("Failed to read metadata for binary at \
         {}", binary_path);
@@ -190,11 +192,12 @@ impl<'a> StressNgAdapter<'a> {
                         logger.log_debug("stress-ng command finished successfully");
 
                         // Attempting to clean up the binary
-                        match StressNgAdapter::remove_stress_ng_binary(logger,
-                                                          &binary_path) {
-                            Ok(()) => logger.log_debug(&format!("Cleaned up binary at {}", binary_path)),
+                        match StressNgAdapter::remove_stress_ng_binary(logger, &binary_path)   {
+                            Ok(()) => logger.log_debug(&format!("Cleaned up binary at {}",
+                                                                binary_path)),
                             Err(e) => {
-                                logger.log_error(&format!("Cleanup failed for binary at {}: {}", binary_path, e));
+                                logger.log_error(&format!("Cleanup failed for binary at {}: {}",
+                                                          binary_path, e));
                                 return Err(e);
                             }
                         }
@@ -227,8 +230,8 @@ impl<'a> StressNgAdapter<'a> {
 /// # Returns
 /// A `Result<(), String>` indicating the success (`Ok(())`) or failure (`Err(String)`)
 /// of the removal operation.
-pub fn remove_stress_ng_binary(logger: &dyn LoggerPort, binary_path: &str)
-    ->Result<(), String> {
+pub fn remove_stress_ng_binary(logger: Arc<FernLogger>, binary_path: &str)
+                               ->Result<(), String> {
     logger.log_debug(&format!(
         "Attempting to remove stress-ng binary at {}",
         binary_path

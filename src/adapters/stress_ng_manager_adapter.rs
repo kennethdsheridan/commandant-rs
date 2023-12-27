@@ -2,9 +2,9 @@
 
 use std::fs::File;
 use std::io::{self, Write};
+use crate::ports::log_port::LoggerPort;
 
 // Required imports for file handling and IO operations.
-use crate::domain::logging::LoggerPort;
 
 // Constants holding the embedded binary data for stress-ng for different operating systems.
 // These binaries are included at compile time and used for stress testing.

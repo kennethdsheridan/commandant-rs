@@ -8,7 +8,7 @@ use crate::StressNgArch;
 ///
 /// Implementors can offer specific strategies for stress testing, adhering to
 /// the Dependency Inversion Principle for flexibility and loose coupling in application design.
-pub trait StressTest {
+pub trait StressTestPort {
     /// Executes CPU stress tests.
     ///
     /// Implement this method to perform stress testing on the CPU. The implementation

@@ -42,7 +42,11 @@ errno = "0.3.0"
 project-root = "0.2.2"
 # The actix-web crate is a web framework for Rust.
 actix-web = "4.0.0-beta.10"
-
+# The tokio crate provides asynchronous I/O for Rust.
+tokio = { version = "1", features = ["full"] }
+# The async-trait crate provides async versions of the standard library traits.
+async-trait = { version = "0.1.51", features = [] }
+serde = "1.0.193"
 # The [lib] section defines the configuration for building a library.
 
 
@@ -56,9 +60,9 @@ path = "src/main.rs"
 # For more information on the keys and their definitions, refer to the official Rust documentation:
 # https://doc.rust-lang.org/cargo/reference/manifest.html
 
-
 [workspace]
 members = [
     "fullstack_rust_app/frontend",
     "fullstack_rust_app/backend",
+    # Add other workspace members if any
 ]

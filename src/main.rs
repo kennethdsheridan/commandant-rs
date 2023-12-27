@@ -1,15 +1,15 @@
+mod adapters;
+mod ports;
+
 use clap::{Parser, Subcommand};
+use std::sync::Arc;
 
 use adapters::log_adapter::{init, FernLogger};
-use domain::logging::LoggerPort;
 
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
-use crate::ports::stress_test::StressTest;
-
-// Importing necessary modules and traits.
-mod adapters;
-mod domain;
-mod ports;
+use crate::adapters::web_server_adapter::WebServerAdapter;
+use crate::ports::log_port::LoggerPort;
+use crate::ports::web_server_port::WebServerPort;
 
 // Enumeration representing the supported architectures for the `stress-ng`
 // binary.
@@ -79,45 +79,22 @@ fn long_description() -> &'static str {
     hardware analysis."
 }
 
-fn main() {
-    // Initialize the logger for the application.
-    // The logger is set up to write to the "logs" directory with a level
-    // filter of Trace,
-    // which means all log messages at Trace level or higher will be recorded.
-    init("logs", log::LevelFilter::Trace);
-    let logger = FernLogger;
+#[tokio::main] // The tokio runtime is required for asynchronous operations.
+async fn main() {
+    let logger = init("logs", log::LevelFilter::Trace);
+    let logger_as_port: Arc<dyn LoggerPort> = Arc::new(logger);
+
+    // start an asynchronous web server
+    let web_server = WebServerAdapter::new(logger);
+    web_server.start_server().await.unwrap();
 
     // Parse the command-line arguments into the Cli struct using clap.
     let cli = Cli::parse();
 
-    /*// Decide which `stress-ng` binary to use based on the operating system.
-        // This decision is made using the decide_stress_ng_arch function,
-        // which returns an enum variant indicating the suitable binary.
-        let stress_ng_arch = StressNgAdapter::decide_stress_ng_arch();
-        let (binary_data, filename) = match stress_ng_arch {
-            StressNgArch::Linux => (STRESS_NG_LINUX, "stress-ng-linux"),
-            StressNgArch::MacOS => (STRESS_NG_MACOS, "stress-ng-macos"),
-        };
-
-        // Write the binary data to disk and log the outcome.
-        match write_binary_to_disk(binary_data, filename) {
-            Ok(_) => logr.log_debug(&format!(
-                "Successfully wrote stress-ng binary to disk: {}",
-                filename
-            )),
-            Err(e) => {
-                logr.log_error(&format!(
-                    "Failed to write stress-ng binary to disk: {:?}",
-                    e
-                ));
-                return;
-            }
-        }
-    */
     // Create an instance of the StressNgAdapter.
     // This adapter is responsible for executing the stress tests using
     // `stress-ng`.
-    let stress_tester = StressNgAdapter::new(&logger);
+    StressNgAdapter::new(Arc::clone(&logger_as_port));
 
     // Handle the parsed subcommands and execute the corresponding
     // functionality.
@@ -130,25 +107,31 @@ fn main() {
             // Define the arguments for the stress-ng command
             let args = ["--cpu", "2", "--timeout", "60s"];
 
-            // Number of retries
+            // Number of retries in case stress command fails
             let mut retries = 2;
 
             // Execute the stress test using the stress_tester instance
             while retries >= 0 {
                 // log the attempt
-                logger.log_info(&"Executing CPU stress test. Attempts".to_string();
-                match StressNgAdapter::execute_stress_ng_command(&logger, &args) {
+                logger.log_info(&"Executing CPU stress test. Attempts".to_string());
+                match StressNgAdapter::execute_stress_ng_command(logger, &args) {
                     Ok(()) => {
                         logger.log_info("CPU stress test executed successfully.");
                         break; // Exit the loop on successful execution
                     }
                     Err(e) => {
                         if retries > 0 {
-                            logger.log_warn(&format!("Retrying CPU stress test.\
-                             Attempts remaining: {}", retries));
+                            logger.log_warn(&format!(
+                                "Retrying CPU stress test.\
+                             Attempts remaining: {}",
+                                retries
+                            ));
                         } else {
-                            logger.log_error(&format!("Error executing CPU \
-                            stress test: {}", e));
+                            logger.log_error(&format!(
+                                "Error executing CPU \
+                            stress test: {}",
+                                e
+                            ));
                         }
                     }
                 }
@@ -158,13 +141,17 @@ fn main() {
 
         Commands::Discover => {
             // Implement discovery functionality.
-            logger.log_info("System discovery functionality not yet implemented\
-            .");
+            logger.log_info(
+                "Hardware discovery functionality not yet \
+            .",
+            );
         }
         Commands::Overwatch => {
             // Implement system overwatch functionality.
-            logger.log_info("System overwatch functionality not yet implemented\
-            .");
+            logger.log_info(
+                "System overwatch functionality not yet \
+            .",
+            );
         }
     }
 }
