@@ -2,6 +2,7 @@ mod adapters;
 mod ports;
 
 use clap::{Parser, Subcommand};
+use std::env::args;
 use std::sync::Arc;
 
 use adapters::log_adapter::{init, FernLogger};
@@ -81,11 +82,12 @@ fn long_description() -> &'static str {
 
 #[tokio::main] // The tokio runtime is required for asynchronous operations.
 async fn main() {
-    let logger = init("logs", log::LevelFilter::Trace);
-    let logger_as_port: Arc<dyn LoggerPort> = Arc::new(logger);
+    // Initialize the logging system.
+    let logger: Arc<FernLogger> = Arc::new(init("logs", log::LevelFilter::Trace));
+    let logger_as_port: Arc<dyn LoggerPort> = logger.clone();
 
     // start an asynchronous web server
-    let web_server = WebServerAdapter::new(logger);
+    let web_server = WebServerAdapter::new(Arc::clone(&logger));
     web_server.start_server().await.unwrap();
 
     // Parse the command-line arguments into the Cli struct using clap.
@@ -94,7 +96,7 @@ async fn main() {
     // Create an instance of the StressNgAdapter.
     // This adapter is responsible for executing the stress tests using
     // `stress-ng`.
-    StressNgAdapter::new(Arc::clone(&logger_as_port));
+    let stress_tester = StressNgAdapter::new(logger_as_port);
 
     // Handle the parsed subcommands and execute the corresponding
     // functionality.
@@ -113,8 +115,12 @@ async fn main() {
             // Execute the stress test using the stress_tester instance
             while retries >= 0 {
                 // log the attempt
-                logger.log_info(&"Executing CPU stress test. Attempts".to_string());
-                match StressNgAdapter::execute_stress_ng_command(logger, &args) {
+                logger.log_info(&format!(
+                    "Executing CPU stress test. Attempts remaining: {}",
+                    retries,
+                ));
+
+                match StressNgAdapter::execute_stress_ng_command(logger.clone(), &args).await {
                     Ok(()) => {
                         logger.log_info("CPU stress test executed successfully.");
                         break; // Exit the loop on successful execution
@@ -141,17 +147,11 @@ async fn main() {
 
         Commands::Discover => {
             // Implement discovery functionality.
-            logger.log_info(
-                "Hardware discovery functionality not yet \
-            .",
-            );
+            logger.log_info("Discovery functionality not yet implemented.");
         }
         Commands::Overwatch => {
             // Implement system overwatch functionality.
-            logger.log_info(
-                "System overwatch functionality not yet \
-            .",
-            );
+            logger.log_info("System overwatch functionality not yet implemented.");
         }
-    }
-}
+    } // End of match cli.command
+} // End of main()
