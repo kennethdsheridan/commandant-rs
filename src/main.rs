@@ -85,7 +85,7 @@ fn main() {
     // filter of Trace,
     // which means all log messages at Trace level or higher will be recorded.
     init("logs", log::LevelFilter::Trace);
-    let logr = FernLogger;
+    let logger = FernLogger;
 
     // Parse the command-line arguments into the Cli struct using clap.
     let cli = Cli::parse();
@@ -117,14 +117,14 @@ fn main() {
     // Create an instance of the StressNgAdapter.
     // This adapter is responsible for executing the stress tests using
     // `stress-ng`.
-    let stress_tester = StressNgAdapter::new(&logr);
+    let stress_tester = StressNgAdapter::new(&logger);
 
     // Handle the parsed subcommands and execute the corresponding
     // functionality.
     match cli.command {
         Commands::Benchmark => {
             // Implement benchmark functionality.
-            logr.log_info("Benchmarking functionality not yet implemented.");
+            logger.log_info("Benchmarking functionality not yet implemented.");
         }
         Commands::Stress => {
             // Define the arguments for the stress-ng command
@@ -135,17 +135,19 @@ fn main() {
 
             // Execute the stress test using the stress_tester instance
             while retries >= 0 {
-                match StressNgAdapter::execute_stress_ng_command(&logr, &args) {
+                // log the attempt
+                logger.log_info(&"Executing CPU stress test. Attempts".to_string();
+                match StressNgAdapter::execute_stress_ng_command(&logger, &args) {
                     Ok(()) => {
-                        logr.log_info("CPU stress test executed successfully.");
+                        logger.log_info("CPU stress test executed successfully.");
                         break; // Exit the loop on successful execution
                     }
                     Err(e) => {
                         if retries > 0 {
-                            logr.log_warn(&format!("Retrying CPU stress test.\
+                            logger.log_warn(&format!("Retrying CPU stress test.\
                              Attempts remaining: {}", retries));
                         } else {
-                            logr.log_error(&format!("Error executing CPU \
+                            logger.log_error(&format!("Error executing CPU \
                             stress test: {}", e));
                         }
                     }
@@ -156,12 +158,12 @@ fn main() {
 
         Commands::Discover => {
             // Implement discovery functionality.
-            logr.log_info("System discovery functionality not yet implemented\
+            logger.log_info("System discovery functionality not yet implemented\
             .");
         }
         Commands::Overwatch => {
             // Implement system overwatch functionality.
-            logr.log_info("System overwatch functionality not yet implemented\
+            logger.log_info("System overwatch functionality not yet implemented\
             .");
         }
     }
