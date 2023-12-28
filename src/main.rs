@@ -4,9 +4,11 @@ mod ports;
 use clap::{Parser, Subcommand};
 use std::sync::Arc;
 use tokio::time::{sleep, Duration};
+use tokio::{signal, spawn};
 
-use adapters::log_adapter::{init, FernLogger};
+use adapters::log_adapter::FernLogger;
 
+use crate::adapters::log_adapter::init;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::adapters::web_server_adapter::WebServerAdapter;
 use crate::ports::log_port::LoggerPort;
@@ -80,95 +82,147 @@ fn long_description() -> &'static str {
     hardware analysis."
 }
 
+// The entry point of the application using Actix's asynchronous runtime.
+// This runtime is essential for handling asynchronous tasks and is particularly suitable
+// for web applications and services.
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
-    // Initialize the logging system.
-    let logger: Arc<FernLogger> = Arc::new(init("logs", log::LevelFilter::Trace));
+    // Initialize the logging system with a specified directory and log level.
+    // This setup is critical for ensuring that all parts of the application
+    // can perform logging activities coherently. The logger is part of the
+    // "adapters" layer in the Ports and Adapters architecture, interfacing
+    // with the external logging framework.
+    let log_directory = "logs"; // Directory where log files will be stored.
+    let log_level = log::LevelFilter::Trace; // Log level indicating verbosity of the logs.
+    let logger = Arc::new(crate::adapters::log_adapter::init(log_directory, log_level));
+
+    // Clone the logger into an Arc<dyn LoggerPort> type. This abstraction (LoggerPort)
+    // allows different logging implementations to be plugged into the application without
+    // changing the core logic, adhering to the principles of the Ports and Adapters architecture.
     let logger_as_port: Arc<dyn LoggerPort> = logger.clone();
 
-    // Start an asynchronous web server on port 8000
+    // Initialize the web server adapter with the logger. This adapter is responsible for
+    // handling HTTP requests and serving web content. It represents the web server
+    // "adapter" in the architecture.
     let web_server = WebServerAdapter::new(logger.clone());
-    let server = web_server.start_server();
 
-    let ctrl_c = tokio::signal::ctrl_c();
+    // Spawn an asynchronous task to run the web server. This allows the server to operate
+    // concurrently with other parts of the application, like handling CLI commands or
+    // processing signals.
+    let server_handle = spawn(async move { web_server.start_server().await });
 
-    tokio::select! {
-    server = server => {
-        match server {
-          Ok(_) => logger.log_info("Server started successfully."),
-          Err(e) => logger.log_error(&format!("Failed to start the web server: {:?}", e)),
-        }
-    }
-    _ = ctrl_c => {
-        logger.log_info("Received Ctrl+C, shutting down.");
-          }
-      }
+    // Set up handling for the Ctrl+C (interrupt) signal in a separate async task.
+    // This approach enables the application to gracefully shut down in response to
+    // interrupt signals.
+    let ctrl_c_logger = logger.clone(); // Clone the logger for this specific task.
+    let ctrl_c_handle = spawn(async move {
+        signal::ctrl_c().await.expect("Failed to listen for Ctrl+C");
+        ctrl_c_logger.log_info("Received Ctrl+C, shutting down.");
+    });
 
-    // Parse the command-line arguments into the Cli struct using clap.
+    // Parse command-line arguments using the Cli struct, which is defined using the
+    // `clap` crate. This struct represents the command-line interface of the application,
+    // defining the available subcommands and their functionalities.
     let cli = Cli::parse();
 
-    // Create an instance of the StressNgAdapter.
-    // This adapter is responsible for executing the stress tests using
-    // `stress-ng`.
-    let stress_tester = StressNgAdapter::new(logger_as_port);
+    // Initialize the StressNgAdapter with the logger. This adapter is responsible for
+    // conducting stress tests on the system, utilizing tools like `stress-ng`.
+    let stress_tester = StressNgAdapter::new(logger_as_port.clone());
 
-    // Handle the parsed subcommands and execute the corresponding
-    // functionality.
-    match cli.command {
-        Commands::Benchmark => {
-            // Implement benchmark functionality.
-            logger.log_info("Benchmarking functionality not yet implemented.");
-        }
-        Commands::Stress => {
-            // Define the arguments for the stress-ng command
-            let args = ["--cpu", "2", "--timeout", "60s"];
+    // Handle different commands provided via CLI in an async task. This design allows
+    // the main thread to remain responsive and not blocked by long-running operations
+    // triggered by CLI commands.
+    let command_logger = logger.clone(); // Clone the logger for command handling.
+    let command_handle = spawn(async move {
+        match cli.command {
+            // Handle each CLI command by invoking the appropriate functionality
+            // and logging as needed. This part of the code can be seen as part of
+            // the application's "core" or "domain logic."
+            Commands::Benchmark => {
+                // Logic for handling the 'Benchmark' command.
+                command_logger.log_info("Benchmarking functionality not yet implemented.");
+            }
+            Commands::Stress => {
+                // Define the arguments for the stress test.
+                // Here, "--cpu 2" specifies that the stress test should use 2 CPU cores,
+                // and "--timeout 60s" sets the test to run for 60 seconds.
+                let args = ["--cpu", "2", "--timeout", "60s"];
 
-            // Number of retries in case stress command fails
-            let mut retries = 2;
+                // Initialize the retry mechanism. This allows the stress test to be retried
+                // a specified number of times in case of failure. In this case, the test
+                // will be attempted up to 3 times (initial try + 2 retries).
+                let mut retries = 2;
 
-            // Execute the stress test using the stress_tester instance
-            while retries >= 0 {
-                // log the attempt
-                logger.log_info(&format!(
-                    "Executing CPU stress test. Attempts remaining: {}",
-                    retries,
-                ));
+                // Start a loop for executing the stress test with retries.
+                while retries >= 0 {
+                    // Log the start of a stress test attempt. This is useful for monitoring
+                    // and debugging purposes, allowing users to track the test's progress
+                    // and retries.
+                    command_logger.log_info(&format!(
+                        "Executing CPU stress test. Attempts remaining: {}",
+                        retries,
+                    ));
 
-                match StressNgAdapter::execute_stress_ng_command(logger.clone(), &args).await {
-                    Ok(()) => {
-                        logger.log_info("CPU stress test executed successfully.");
-                        break; // Exit the loop on successful execution
-                    }
-                    Err(e) => {
-                        if retries > 0 {
-                            logger.log_warn(&format!(
-                                "Retrying CPU stress test.\
-                             Attempts remaining: {}",
-                                retries
-                            ));
-                            sleep(Duration::from_secs(10)).await; // Add an awaitable delay here
-                        } else {
-                            logger.log_error(&format!(
-                                "Error executing CPU \
-                            stress test: {}",
-                                e
-                            ));
+                    // Execute the stress test command asynchronously.
+                    // `StressNgAdapter::execute_stress_ng_command` is responsible for running
+                    // the stress test using the `stress-ng` tool. The command is awaited
+                    // to ensure the execution is complete before proceeding.
+                    match StressNgAdapter::execute_stress_ng_command(command_logger.clone(), &args)
+                        .await
+                    {
+                        // In case of a successful execution, log the success and exit the loop.
+                        // This indicates that the stress test was completed without errors.
+                        Ok(()) => {
+                            command_logger.log_info("CPU stress test executed successfully.");
+                            break;
+                        }
+                        // In case of an error, handle the retry mechanism.
+                        Err(e) => {
+                            // If there are retries left, log a warning and decrement the retry counter.
+                            // The `sleep` call introduces a delay before the next attempt, giving
+                            // the system some time to stabilize.
+                            if retries > 0 {
+                                command_logger.log_warn(&format!(
+                                    "Retrying CPU stress test. Attempts remaining: {}",
+                                    retries
+                                ));
+                                sleep(Duration::from_secs(10)).await;
+                            } else {
+                                // If there are no retries left, log the error and exit the loop.
+                                // This indicates that all attempts to run the stress test have failed.
+                                command_logger
+                                    .log_error(&format!("Error executing CPU stress test: {}", e));
+                            }
                         }
                     }
+                    // Decrement the retry counter after each attempt.
+                    retries -= 1;
                 }
-                retries -= 1; // Decrement the retry counter
+            }
+
+            Commands::Discover => {
+                // Logic for handling the 'Discover' command.
+                command_logger.log_info("Discovery functionality not yet implemented.");
+            }
+            Commands::Overwatch => {
+                // Logic for handling the 'Overwatch' command.
+                command_logger.log_info("System overwatch functionality not yet implemented.");
             }
         }
+    });
 
-        Commands::Discover => {
-            // Implement discovery functionality.
-            logger.log_info("Discovery functionality not yet implemented.");
+    // Await the completion of either the web server task or the Ctrl+C signal handling.
+    // This is achieved using `tokio::select!`, which waits for multiple asynchronous
+    // operations, proceeding when one of them completes. This is crucial for responsive
+    // multitasking in asynchronous applications.
+    tokio::select! {
+        _ = server_handle => {
+            logger.log_info("Server started successfully.");
         }
-        Commands::Overwatch => {
-            // Implement system overwatch functionality.
-            logger.log_info("System overwatch functionality not yet implemented.");
+        _ = ctrl_c_handle => {
+            // Ctrl+C handling is already logged in its task.
         }
-    } // End of match cli.command
+    }
 
-    Ok(()) // Return a successful result
-} // End of main()
+    Ok(())
+}

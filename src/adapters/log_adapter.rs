@@ -23,6 +23,13 @@ pub struct FernLogger;
 // Implement the Sync trait for the FernLogger struct.
 unsafe impl Sync for FernLogger {}
 
+// Implement the Send trait for the FernLogger struct.
+impl FernLogger {
+    pub fn new() -> Self {
+        FernLogger
+    }
+}
+
 // Implement the LoggerPort trait for the FernLogger struct.
 impl LoggerPort for FernLogger {
     // Define methods for logging messages at different severity levels.
