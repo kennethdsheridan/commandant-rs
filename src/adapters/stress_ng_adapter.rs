@@ -59,12 +59,10 @@ impl<'a> StressNgAdapter {
     /// # Returns
     /// A `Result` indicating the success or failure of the operation.
     pub fn prepare_stress_ng_binary(logger: Arc<FernLogger>) -> Result<String, String> {
-        logger.log_debug("Starting preparation of stress-ng binary");
-
-        let arch = StressNgAdapter::decide_stress_ng_arch(logger);
+        let logger_clone = Arc::clone(&logger);
+        let arch = StressNgAdapter::decide_stress_ng_arch(logger_clone);
         // log the selected architecture
         logger.log_debug(&format!("Selected architecture: {:?}", arch));
-
         let binary_data = match arch {
             StressNgArch::Linux => {
                 logger.log_debug("Selected stress-ng binary for Linux");
@@ -181,26 +179,29 @@ impl<'a> StressNgAdapter {
             args
         ));
 
-        command
-            .stdout(tokio::io::stdout().from(output_file.try_clone().map_err(|e| e.to_string())?));
-        command.stderr(tokio::io::stderr().from(output_file));
+        // Setup the output redirection
+        logger.log_debug(&format!(
+            "Redirecting stress-ng output to {}",
+            output_file_path
+        ));
+        command.stdout(Stdio::from(output_file.try_clone().unwrap()));
+        command.stderr(Stdio::from(output_file));
 
         // Execute the stress-ng command
         match command.spawn() {
             Ok(mut child) => {
                 logger.log_debug("stress-ng command spawned, waiting for it to finish");
 
-                match child.wait().await {
+                match child.wait() {
                     Ok(_) => {
-                        logger.log_debug("stress-ng command executed successfully");
+                        logger.log_debug("stress-ng command finished successfully");
 
                         // Attempting to clean up the binary
                         match StressNgAdapter::remove_stress_ng_binary(logger.clone(), &binary_path)
                         {
-                            Ok(()) => logger.log_debug(&format!(
-                                "Successfully cleaned up binary at {}",
-                                binary_path
-                            )),
+                            Ok(()) => {
+                                logger.log_debug(&format!("Cleaned up binary at {}", binary_path))
+                            }
                             Err(e) => {
                                 logger.log_error(&format!(
                                     "Cleanup failed for binary at {}: {}",
@@ -212,7 +213,7 @@ impl<'a> StressNgAdapter {
                         Ok(())
                     }
                     Err(e) => {
-                        logger.log_error(&format!("Failed to execute stress-ng command: {}", e));
+                        logger.log_error(&format!("Execution failed for stress-ng command: {}", e));
                         Err(e.to_string())
                     }
                 }
@@ -223,6 +224,7 @@ impl<'a> StressNgAdapter {
             }
         }
     }
+
     /// Removes the stress-ng binary from the filesystem with extensive logging.
     ///
     /// This function attempts to remove the stress-ng binary file specified by the `binary_path`.

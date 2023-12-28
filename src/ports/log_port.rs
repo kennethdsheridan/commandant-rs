@@ -2,7 +2,7 @@
 /// It defines a standard interface for logging functionality.
 /// This abstraction allows for different logging implementations
 /// that can be plugged into the application as needed.
-pub trait LoggerPort {
+pub trait LoggerPort: Sync + Send {
     /// Logs an informational message.
     ///
     /// # Arguments

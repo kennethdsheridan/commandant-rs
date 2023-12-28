@@ -1,54 +1,56 @@
-use actix_web::{web, App, HttpServer, HttpResponse, Responder};
-use std::sync::Arc;
-use crate::adapters::log_adapter::FernLogger;
+// web_server_adapter.rs
 use crate::ports::log_port::LoggerPort;
 use crate::ports::web_server_port::WebServerPort;
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use async_trait::async_trait;
-use std::io;
-use serde::Serialize;
+use std::sync::Arc;
+use std::thread;
+use tokio::io;
+use tokio::task::LocalSet;
 
-#[derive(Serialize)]
-struct Status {
-    status: String,
-    uptime: u64,  // example field, replace with actual calculation
-}
-
+/// WebServerAdapter
+///
+/// Adapter for the web server, integrating a logging facility.
 pub struct WebServerAdapter {
-    logger: Arc<FernLogger>,
+    logger: Arc<dyn LoggerPort>, // Use LoggerPort trait for the logger
 }
 
+// Implement the Sync trait for the WebServerAdapter struct.
 impl WebServerAdapter {
-    /// Creates a new WebServerAdapter instance.
-    pub fn new(logger: Arc<FernLogger>) -> Self {
-        WebServerAdapter { logger: Arc::clone(&logger) }
-    }
-
-    /// An asynchronous function that serves as the handler for status endpoint.
-    async fn get_status() -> impl Responder {
-        HttpResponse::Ok()
-            .json(Status {
-                status: "OK".to_string(),
-                uptime: 5000,  // replace with actual calculation
-            })
+    /// new
+    ///
+    /// Constructs a new WebServerAdapter instance.
+    pub fn new(logger: Arc<dyn LoggerPort>) -> Self {
+        Self { logger }
     }
 }
 
-#[async_trait]
+/// get_status
+///
+/// A simple endpoint to check the server's status. It responds with "Server is running"
+/// when the server is operational.
+/// // Define the get_status handler function
+async fn get_status() -> impl Responder {
+    HttpResponse::Ok().body("Server is running")
+}
+
+// Implement the WebServerPort trait for the WebServerAdapter struct.
+#[async_trait::async_trait]
 impl WebServerPort for WebServerAdapter {
     async fn start_server(&self) -> io::Result<()> {
-        let logger = Arc::clone(&self.logger);
-        logger.log_info("Starting Actix-web server...");
-
-        // Ensure the closure and all resources it captures are thread-safe
-        HttpServer::new(move || {
-            App::new().route("/status", web::get().to(WebServerAdapter::get_status))
+        let server = HttpServer::new(|| {
+            App::new()
+                .route("/", web::get().to(HttpResponse::Ok)) // Default route
+                .route("/status", web::get().to(get_status)) // Route for get_status
         })
-            .bind("127.0.0.1:8000")?
-            .run()
-            .await
-            .map_err(move |e| {
-                logger.log_error(&format!("Failed to start Actix-web server: {}", e));
-                std::io::Error::new(std::io::ErrorKind::Other, e)
-            })
+        .bind("127.0.0.1:8000")?
+        .run();
+
+        tokio::spawn(server);
+
+        // Wait indefinitely, or until you have another condition to close the application
+        futures::future::pending::<()>().await;
+
+        Ok(())
     }
 }

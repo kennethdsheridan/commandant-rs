@@ -72,7 +72,7 @@ fn long_description() -> &'static str {
     your hardware components.\n\
     \
     - Overwatch: Watch your system's performance in real-time, capturing \
-    critical metrics and providing live feedback.\n\n\
+    critical metrics and providing live feedback.\n
    
     OneForAll is designed with both simplicity and power in mind, making it \
     suitable for both casual users looking to \
@@ -80,14 +80,14 @@ fn long_description() -> &'static str {
     hardware analysis."
 }
 
-#[tokio::main] // The tokio runtime is required for asynchronous operations.
+#[actix_rt::main]
 async fn main() {
     // Initialize the logging system.
     let logger: Arc<FernLogger> = Arc::new(init("logs", log::LevelFilter::Trace));
     let logger_as_port: Arc<dyn LoggerPort> = logger.clone();
 
-    // start an asynchronous web server
-    let web_server = WebServerAdapter::new(Arc::clone(&logger));
+    // Start an asynchronous web server on port 8000
+    let web_server = WebServerAdapter::new(logger.clone());
     web_server.start_server().await.unwrap();
 
     // Parse the command-line arguments into the Cli struct using clap.

@@ -41,13 +41,16 @@ errno = "0.3.0"
 # The libc crate provides a way to call C functions from Rust.
 project-root = "0.2.2"
 # The actix-web crate is a web framework for Rust.
-actix-web = "4.0.0-beta.10"
+actix-web = "4.4.1"
 # The tokio crate provides asynchronous I/O for Rust.
 tokio = { version = "1", features = ["full"] }
 # The async-trait crate provides async versions of the standard library traits.
 async-trait = { version = "0.1.51", features = [] }
+# The serde crate provides a framework for serializing and deserializing Rust data structures.
 serde = "1.0.193"
-# The [lib] section defines the configuration for building a library.
+# Tokio-based single-threaded async runtime for the Actix ecosystem.
+actix-rt = "2.9.0"
+futures = "0.3.30"
 
 
 # The [[bin]] section defines the configuration for building one or more binary executables.

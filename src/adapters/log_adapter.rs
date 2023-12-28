@@ -20,6 +20,9 @@ use crate::ports::log_port::LoggerPort;
 // Define a struct that will implement the LoggerPort trait.
 pub struct FernLogger;
 
+// Implement the Sync trait for the FernLogger struct.
+unsafe impl Sync for FernLogger {}
+
 // Implement the LoggerPort trait for the FernLogger struct.
 impl LoggerPort for FernLogger {
     // Define methods for logging messages at different severity levels.
