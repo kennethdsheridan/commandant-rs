@@ -2,8 +2,8 @@ mod adapters;
 mod ports;
 
 use clap::{Parser, Subcommand};
-use std::env::args;
 use std::sync::Arc;
+use tokio::time::{sleep, Duration};
 
 use adapters::log_adapter::{init, FernLogger};
 
@@ -81,14 +81,28 @@ fn long_description() -> &'static str {
 }
 
 #[actix_rt::main]
-async fn main() {
+async fn main() -> std::io::Result<()> {
     // Initialize the logging system.
     let logger: Arc<FernLogger> = Arc::new(init("logs", log::LevelFilter::Trace));
     let logger_as_port: Arc<dyn LoggerPort> = logger.clone();
 
     // Start an asynchronous web server on port 8000
     let web_server = WebServerAdapter::new(logger.clone());
-    web_server.start_server().await.unwrap();
+    let server = web_server.start_server();
+
+    let ctrl_c = tokio::signal::ctrl_c();
+
+    tokio::select! {
+    server = server => {
+        match server {
+          Ok(_) => logger.log_info("Server started successfully."),
+          Err(e) => logger.log_error(&format!("Failed to start the web server: {:?}", e)),
+        }
+    }
+    _ = ctrl_c => {
+        logger.log_info("Received Ctrl+C, shutting down.");
+          }
+      }
 
     // Parse the command-line arguments into the Cli struct using clap.
     let cli = Cli::parse();
@@ -132,6 +146,7 @@ async fn main() {
                              Attempts remaining: {}",
                                 retries
                             ));
+                            sleep(Duration::from_secs(10)).await; // Add an awaitable delay here
                         } else {
                             logger.log_error(&format!(
                                 "Error executing CPU \
@@ -154,4 +169,6 @@ async fn main() {
             logger.log_info("System overwatch functionality not yet implemented.");
         }
     } // End of match cli.command
+
+    Ok(()) // Return a successful result
 } // End of main()
