@@ -144,9 +144,38 @@ async fn main() -> std::io::Result<()> {
             }
             Commands::Stress => {
                 // Define the arguments for the stress test.
-                // Here, "--cpu 2" specifies that the stress test should use 2 CPU cores,
-                // and "--timeout 60s" sets the test to run for 60 seconds.
-                let args = ["--cpu", "2", "--timeout", "60s"];
+                // The arguments are modified to create a more comprehensive and informative CPU stress test.
+
+                // "--cpu 4" specifies that the stress test should use 4 CPU cores instead of 2.
+                // This increases the load on the CPU for a more intensive stress test.
+                let cpu_cores = "--cpu";
+                let number_of_cores = "4";
+
+                // "--timeout 120s" sets the test to run for 120 seconds, doubling the duration of the test
+                // compared to the initial 60 seconds. This allows for a longer observation of CPU behavior
+                // under stress.
+                let timeout = "--timeout";
+                let duration = "120s";
+
+                // "--metrics-brief" outputs brief metrics about the stress test upon completion.
+                // This option provides a summary of how the system responded to the stress test.
+                let metrics = "--metrics-brief";
+
+                // "--verbose" increases the verbosity of the output. This is useful for getting detailed
+                // information about the stress test's operation and can aid in diagnosing issues or
+                // understanding the system's behavior under load.
+                let verbose = "--verbose";
+
+                // Combine all the arguments into an array. These arguments will configure the behavior
+                // of the `stress-ng` command to perform a more extensive and detailed stress test.
+                let args = [
+                    cpu_cores,
+                    number_of_cores,
+                    timeout,
+                    duration,
+                    metrics,
+                    verbose,
+                ];
 
                 // Initialize the retry mechanism. This allows the stress test to be retried
                 // a specified number of times in case of failure. In this case, the test
