@@ -83,6 +83,7 @@ impl PsCommandPort for PsAdapter {
             }
         }
     }
+
     /// Periodically executes the `ps` command to gather CPU statistics and writes to a file.
     ///
     /// # Arguments
