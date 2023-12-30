@@ -9,9 +9,11 @@ use tokio::{signal, spawn};
 use adapters::log_adapter::FernLogger;
 
 use crate::adapters::log_adapter::init;
+use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::adapters::web_server_adapter::WebServerAdapter;
 use crate::ports::log_port::LoggerPort;
+use crate::ports::ps_command_port::PsCommandPort;
 use crate::ports::web_server_port::WebServerPort;
 
 // Enumeration representing the supported architectures for the `stress-ng`
@@ -119,6 +121,9 @@ async fn main() -> std::io::Result<()> {
         signal::ctrl_c().await.expect("Failed to listen for Ctrl+C");
         ctrl_c_logger.log_info("Received Ctrl+C, shutting down.");
     });
+
+    // Initialize the PsAdapter with the logger for process monitoring and CPU usage analysis.
+    let ps_adapter = PsAdapter::new(logger.clone());
 
     // Parse command-line arguments using the Cli struct, which is defined using the
     // `clap` crate. This struct represents the command-line interface of the application,
@@ -234,8 +239,19 @@ async fn main() -> std::io::Result<()> {
                 command_logger.log_info("Discovery functionality not yet implemented.");
             }
             Commands::Overwatch => {
-                // Logic for handling the 'Overwatch' command.
-                command_logger.log_info("System overwatch functionality not yet implemented.");
+                command_logger.log_info("System overwatch functionality started.");
+
+                // Specify the output file path for CPU statistics
+                let output_file_path = "cpu_stats.txt";
+
+                // Spawn a new thread to run the process monitoring task
+                // This allows the Overwatch functionality to operate in the background
+                // without blocking the main async executor
+                std::thread::spawn(move || {
+                    ps_adapter.collect_cpu_statistics(output_file_path);
+                });
+
+                command_logger.log_info("Monitoring CPU usage and top processes.");
             }
         }
     });
