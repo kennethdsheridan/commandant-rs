@@ -13,6 +13,16 @@ use std::{fs, thread};
 use crate::ports::log_port::LoggerPort;
 use crate::ports::ps_command_port::PsCommandPort;
 
+// The ProcessData struct represents a single process and its CPU usage percentage.
+// This struct is used to parse the output of the `ps` command and extract the CPU usage
+// percentage for each process.
+struct ProcessData {
+    user: String,
+    cpu_usage: f32,
+    memory_usage: f32,
+    command: String,
+}
+
 /// Represents the `ps` command adapter.
 /// This struct is used to execute the `ps` command and manage its output.
 pub struct PsAdapter {
