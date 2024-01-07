@@ -7,8 +7,8 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::process::Command;
 use std::sync::Arc;
+use std::thread;
 use std::time::Duration;
-use std::{fs, thread};
 
 use crate::ports::log_port::LoggerPort;
 use crate::ports::ps_command_port::PsCommandPort;
