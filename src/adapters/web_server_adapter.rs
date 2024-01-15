@@ -2,11 +2,10 @@
 use crate::ports::log_port::LoggerPort;
 use crate::ports::web_server_port::WebServerPort;
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
-use async_trait::async_trait;
+
 use std::sync::Arc;
-use std::thread;
+
 use tokio::io;
-use tokio::task::LocalSet;
 
 /// WebServerAdapter
 ///
@@ -23,6 +22,37 @@ impl WebServerAdapter {
     pub fn new(logger: Arc<dyn LoggerPort>) -> Self {
         Self { logger }
     }
+}
+// show_dashboard
+///
+/// A comprehensive dashboard for the OneForAll application. It displays the current
+/// status of the server, the current stress test, and the current processes.
+/// // Define the show_dashboard handler function
+/// // This function returns a String, which is the HTML content for the dashboard.
+/// // The HTML content is hardcoded in this example, but it can be generated dynamically
+/// // using a templating engine such as Handlebars.
+/// // The show_dashboard function is defined as an async function, which allows it to
+/// // perform asynchronous operations such as reading from a database or making an HTTP request.
+async fn show_dashboard() -> impl Responder {
+    // Return the HTML content for the dashboard
+    HttpResponse::Ok().body(
+        r#"
+        <html>
+            <head>
+                <title>OneForAll Dashboard</title>
+            </head>
+            <body>
+                <h1>OneForAll Dashboard</h1>
+                <h2>Server Status</h2>
+                <p>Server is running</p>
+                <h2>Current Stress Test</h2>
+                <p>None</p>
+                <h2>Current Processes</h2>
+                <p>None</p>
+            </body>
+        </html>
+        "#,
+    )
 }
 
 /// get_status

@@ -1,5 +1,5 @@
 use crate::adapters::log_adapter::FernLogger;
-use std::fs::{File, OpenOptions};
+use std::fs::{OpenOptions};
 use std::io::Write;
 use std::os::unix::fs::PermissionsExt;
 use std::path::Path;

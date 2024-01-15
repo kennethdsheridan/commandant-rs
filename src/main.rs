@@ -6,9 +6,9 @@ use std::sync::Arc;
 use tokio::time::{sleep, Duration};
 use tokio::{signal, spawn};
 
-use adapters::log_adapter::FernLogger;
 
-use crate::adapters::log_adapter::init;
+
+
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::adapters::web_server_adapter::WebServerAdapter;
@@ -132,13 +132,13 @@ async fn main() -> std::io::Result<()> {
 
     // Initialize the StressNgAdapter with the logger. This adapter is responsible for
     // conducting stress tests on the system, utilizing tools like `stress-ng`.
-    let stress_tester = StressNgAdapter::new(logger_as_port.clone());
+    let _stress_tester = StressNgAdapter::new(logger_as_port.clone());
 
     // Handle different commands provided via CLI in an async task. This design allows
     // the main thread to remain responsive and not blocked by long-running operations
     // triggered by CLI commands.
     let command_logger = logger.clone(); // Clone the logger for command handling.
-    let command_handle = spawn(async move {
+    let _command_handle = spawn(async move {
         match cli.command {
             // Handle each CLI command by invoking the appropriate functionality
             // and logging as needed. This part of the code can be seen as part of
@@ -186,7 +186,6 @@ async fn main() -> std::io::Result<()> {
                 // a specified number of times in case of failure. In this case, the test
                 // will be attempted up to 3 times (initial try + 2 retries).
                 let mut retries = 2;
-
                 // Start a loop for executing the stress test with retries.
                 while retries >= 0 {
                     // Log the start of a stress test attempt. This is useful for monitoring
