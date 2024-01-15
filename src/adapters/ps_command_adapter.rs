@@ -76,6 +76,29 @@ impl PsCommandPort for PsAdapter {
         Ok(output_str) // Return `Ok` to indicate success
     }
 
+    /// write_to_db writes the output of the `ps` command to a database.
+    /// # Arguments
+    /// * `output` - The output string from the `ps` command.
+    /// * `db` - The database where the output should be written.
+    /// # Returns
+    /// A `Result` indicating the success or failure of the write operation.
+    /// This method writes the output of the `ps` command to a database.
+    /// This can be useful for logging, analysis, or real-time monitoring purposes.
+    fn write_to_db(&self, output: String, key: &[u8]) -> Result<(), String> {
+        // Convert the output to bytes
+        let output_bytes = output.as_bytes();
+
+        // Write the output to the database
+        match self.db.insert(key, output_bytes) {
+            Ok(_) => Ok(()),
+            Err(e) => {
+                let error_message = format!("Failed to write to database: {}", e);
+                self.logger.log_error(&error_message);
+                Err(error_message)
+            }
+        }
+    }
+
     /// Writes the output of the `ps` command to a specified file.
     fn write_to_file(&self, output: String, file_path: &str) -> Result<(), String> {
         match OpenOptions::new() // Create a new `OpenOptions` instance
