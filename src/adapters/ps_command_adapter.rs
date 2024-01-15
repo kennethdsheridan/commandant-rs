@@ -15,7 +15,8 @@ use crate::ports::ps_command_port::PsCommandPort;
 
 // The ProcessData struct represents a single process and its CPU usage percentage.
 // This struct is used to parse the output of the `ps` command and extract the CPU usage
-// percentage for each process.
+// percentage for each process in the list. The `ps` command outputs a list of processes
+// sorted by CPU usage, and this struct is used to parse each line of the output.
 struct ProcessData {
     user: String,
     cpu_usage: f32,
