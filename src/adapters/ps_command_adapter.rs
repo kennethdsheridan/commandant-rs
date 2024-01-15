@@ -3,6 +3,7 @@
 //! This module provides an adapter for the `ps` command, a tool for monitoring
 //! process statuses and CPU usage on Unix-based systems.
 
+use crate::ports::database_port::DatabasePort;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::process::Command;
@@ -27,7 +28,8 @@ struct ProcessData {
 /// Represents the `ps` command adapter.
 /// This struct is used to execute the `ps` command and manage its output.
 pub struct PsAdapter {
-    logger: Arc<dyn LoggerPort>,
+    logger: Arc<dyn LoggerPort>, // inject the logger port
+    db: Arc<dyn DatabasePort>,   // inject the database port
 }
 
 impl PsAdapter {
@@ -38,9 +40,9 @@ impl PsAdapter {
     ///
     /// # Returns
     /// An instance of `PsAdapter`.
-    pub fn new(logger: Arc<dyn LoggerPort>) -> Self {
+    pub fn new(logger: Arc<dyn LoggerPort>, db: Arc<dyn DatabasePort>) -> Self {
         // Implement the `new` method for `PsAdapter`
-        PsAdapter { logger } // Return a new instance of `PsAdapter` with the specified logger
+        PsAdapter { logger, db } // Return a new instance of `PsAdapter` with the specified logger
     }
 }
 
