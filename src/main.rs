@@ -1,17 +1,17 @@
 mod adapters;
 mod ports;
 
+use crate::adapters::database_adapter::DatabaseAdapter;
 use clap::{Parser, Subcommand};
 use std::sync::Arc;
 use tokio::time::{sleep, Duration};
 use tokio::{signal, spawn};
 
-
-
-
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::adapters::web_server_adapter::WebServerAdapter;
+
+use crate::ports::database_port::DatabasePort;
 use crate::ports::log_port::LoggerPort;
 use crate::ports::ps_command_port::PsCommandPort;
 use crate::ports::web_server_port::WebServerPort;
@@ -122,8 +122,21 @@ async fn main() -> std::io::Result<()> {
         ctrl_c_logger.log_info("Received Ctrl+C, shutting down.");
     });
 
-    // Initialize the PsAdapter with the logger for process monitoring and CPU usage analysis.
-    let ps_adapter = PsAdapter::new(logger.clone());
+    // Attempt to create a new DatabaseAdapter
+    let db_adapter_result = DatabaseAdapter::new(logger.clone());
+
+    // Handle the Result and create an Arc<dyn DatabasePort> if successful
+    let db_adapter: Arc<dyn DatabasePort> = match db_adapter_result {
+        Ok(adapter) => Arc::new(adapter), // Cast the DatabaseAdapter to a trait object
+        Err(e) => {
+            // Handle the error, e.g., log it or panic
+            panic!("Failed to create DatabaseAdapter: {}", e);
+        }
+    };
+
+    // Initialize the PsAdapter with the logger and the DbAdapter for process monitoring and CPU usage analysis.
+    let ps_adapter =
+        Arc::new(PsAdapter::new(logger.clone(), db_adapter.clone())) as Arc<dyn PsCommandPort>;
 
     // Parse command-line arguments using the Cli struct, which is defined using the
     // `clap` crate. This struct represents the command-line interface of the application,

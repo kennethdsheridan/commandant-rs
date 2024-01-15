@@ -6,7 +6,7 @@ use std::error::Error;
 /// Defines an interface for interacting with a database. This trait abstracts the functionality
 /// for performing basic CRUD operations, allowing different implementations to tailor database
 /// interactions.
-pub trait DatabasePort {
+pub trait DatabasePort: Send + Sync {
     fn insert(&self, key: &[u8], value: &[u8]) -> Result<Option<IVec>, Box<dyn Error>>;
     fn get(&self, key: &[u8]) -> Result<Option<IVec>, Box<dyn Error>>;
     fn remove(&self, key: &[u8]) -> Result<Option<IVec>, Box<dyn Error>>;
