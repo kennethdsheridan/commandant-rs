@@ -1,0 +1,184 @@
+# Define the stages in the pipeline
+stages:
+  - clear_cache
+  - build
+  - test
+  - document
+  - deploy
+
+
+# Set global variables
+variables:
+  BIN_NAME: one_for_all
+  ARTIFACTS_DIR: artifacts
+  RUST_PROJECT: gitlab.com/kennethdashensheridan/oneforall
+
+# Clear the cargo cache before each job
+clear_cache:
+  stage: build
+  script:
+    - echo "Changing to the one_for_all directory"
+    - cd /builds/kennethdsheridan/oneforall/  # Adjust this path as needed
+    - echo "Current working directory:"
+    - pwd
+    - echo "Clearing the Cargo build cache"
+    - cargo clean
+  when: always
+  allow_failure: true
+
+# Define the base image and settings for all jobs
+before_script:
+  - mkdir -p ${ARTIFACTS_DIR}
+  - apt-get update && apt-get install -y curl git gcc make
+  - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  - source $HOME/.cargo/env
+  - rustup default stable
+  - echo "Changing to the one_for_all directory"
+  - pwd
+  - ls -la
+  - cargo fetch
+
+# Build the application for Linux
+build_linux:
+  stage: build
+  needs: [ "clear_cache" ]
+  script:
+    - echo "Preparing to build for Linux..."
+    - echo "Checking for Rust and Cargo..."
+    - which rustc && rustc --version || { echo "Rust not found, installing..."; curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; source $HOME/.cargo/env; }
+    - which cargo && cargo --version || echo "Cargo not found, but it should have been installed with Rust."
+
+    - echo "Changing to the one_for_all directory for Linux build"
+    - pwd
+    - ls -la
+    - echo "Listing contents of src directory:"
+    - ls -la src/
+
+    - echo "Building for Linux..."
+    - mkdir -p /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux
+    - cargo build --release --target x86_64-unknown-linux-gnu || { echo "Cargo build failed. Exiting build."; exit 1; }
+
+    - echo "Listing contents of the Linux release directory:"
+    - ls -la target/x86_64-unknown-linux-gnu/release/
+
+    - cp target/x86_64-unknown-linux-gnu/release/${BIN_NAME} /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux || { echo "Failed to copy binary to artifacts directory. Exiting build."; exit 1; }
+
+  artifacts:
+    paths:
+      - /builds/kennethdsheridan/oneforall/${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux
+    expire_in: 1 week
+
+
+
+# Build the application for macOS (Intel)
+build_macos:
+  image: shell:latest
+  stage: build
+  needs: [ "clear_cache" ]
+  tags:
+    - macos # Specify the macOS runner
+  script:
+    - echo "Preparing to build for macOS..."
+    - echo "Checking for Rust and Cargo..."
+    - which rustc && rustc --version || { echo "Rust not found, installing..."; curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; source $HOME/.cargo/env; }
+    - which cargo && cargo --version || echo "Cargo not found, but it should have been installed with Rust."
+
+    - echo "Changing to the one_for_all directory for macOS build"
+    - pwd
+    - ls -la
+    - echo "Listing contents of src directory:"
+    - ls -la src/
+
+    - echo "Building for macOS..."
+    - cargo build --release --target x86_64-apple-darwin
+
+    - echo "Listing contents of the macOS release directory:"
+    - ls -la target/x86_64-apple-darwin/release/
+
+    # Use a writable directory for artifacts
+    - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos
+    - cp target/x86_64-apple-darwin/release/${BIN_NAME} ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
+
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos
+    expire_in: 1 week
+
+
+
+# Testing after both Linux and macOS builds
+test:
+  stage: test
+  needs: [ "build_linux", "build_macos" ]  # Include build_macos
+  script:
+    - echo "Changing to the one_for_all directory for test"
+    - pwd
+    - ls -la
+    - cargo test --verbose
+
+
+# Generate Documentation
+document:
+  stage: document
+  script:
+    - echo "Generating documentation with cargo doc..."
+    - cargo doc --no-deps || { echo "cargo doc failed"; exit 1; }
+
+    - ARTIFACTS_DIR_RELATIVE="${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc"
+    - echo "Checking if target/doc exists..."
+    - if [ -d "target/doc" ]; then
+      echo "target/doc directory found. Proceeding with moving files...";
+      mkdir -p "${ARTIFACTS_DIR_RELATIVE}" || { echo "Failed to create artifacts directory"; exit 1; };
+      mv target/doc/* "${ARTIFACTS_DIR_RELATIVE}/" || { echo "Failed to move documentation files"; exit 1; };
+      echo "Documentation files moved to ${ARTIFACTS_DIR_RELATIVE}";
+      else
+      echo "target/doc directory not found. Documentation generation failed.";
+      exit 1;
+      fi
+
+    - echo "Listing contents of ${ARTIFACTS_DIR_RELATIVE}..."
+    - ls -la "${ARTIFACTS_DIR_RELATIVE}"
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/doc
+    expire_in: 1 week
+
+
+
+deploy:
+  stage: deploy
+  needs: [ "build_linux", "build_macos", "document" ]
+  script:
+    - echo "Deploying Linux binary..."
+    - LINUX_ARTIFACT="${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux"
+    - |
+      if [ -f "${LINUX_ARTIFACT}" ]; then
+        echo "Linux artifact found, deploying..."
+        # Linux deployment commands
+      else
+        echo "Linux artifact not found."
+        exit 1
+      fi
+    - echo "Deploying macOS binary..."
+    - MACOS_ARTIFACT="${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos"
+    - |
+      if [ -f "${MACOS_ARTIFACT}" ]; then
+        echo "macOS artifact found, deploying..."
+        # macOS deployment commands
+      else
+        echo "macOS artifact not found."
+        exit 1
+      fi
+  artifacts:
+    paths:
+      - ${ARTIFACTS_DIR}/linux/${BIN_NAME}-linux  # Relative path
+      - ${ARTIFACTS_DIR}/macos/${BIN_NAME}-macos  # Relative path
+      - ${ARTIFACTS_DIR}/doc                      # Relative path
+
+# Cache the Cargo dependencies to speed up builds
+cache:
+  key: "${CI_COMMIT_REF_SLUG}-cargo"
+  paths:
+    - Cargo.lock
+    - target
+    - $CARGO_HOME/registry
