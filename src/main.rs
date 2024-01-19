@@ -4,6 +4,7 @@ mod ports;
 use crate::adapters::database_adapter::DatabaseAdapter;
 use actix_web::web::to;
 use clap::{Parser, Subcommand};
+use sled::Db;
 use std::sync::Arc;
 use tokio::time::{sleep, timeout, Duration};
 use tokio::{signal, spawn};
@@ -281,6 +282,11 @@ async fn main() -> std::io::Result<()> {
             Commands::DatabaseOps => {
                 // Logic for handling the 'DatabaseOps' command.
                 command_logger.log_info("Database operations functionality not yet implemented.");
+
+                match get_all_keys() {
+                    Ok(_) => println!("Successfully retrieved all keys"),
+                    Err(e) => eprintln!("Error retrieving keys: {:?}", e),
+                }
             }
         }
     });
@@ -296,6 +302,23 @@ async fn main() -> std::io::Result<()> {
         _ = ctrl_c_handle => {
             // Ctrl+C handling is already logged in its task.
         }
+    }
+
+    Ok(())
+}
+
+// Function for testing the database adapter.
+fn get_all_keys() -> Result<(), Box<dyn LoggerPort>> {
+    // Open the Sled database
+    let db: Db = sled::open("OneForAll_database_file.db")?;
+
+    // Create an iterator over all key-value pairs in the database
+    let mut iter = db.iter();
+
+    // Iterate over all keys
+    while let Some(Ok((key, _))) = iter.next() {
+        // Print the key
+        println!("Key: {:?}", key);
     }
 
     Ok(())
