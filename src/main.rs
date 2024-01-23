@@ -2,7 +2,6 @@ mod adapters;
 mod ports;
 
 use crate::adapters::database_adapter::DatabaseAdapter;
-use actix_web::web::to;
 use clap::{Parser, Subcommand};
 use sled::Db;
 use std::sync::Arc;

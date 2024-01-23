@@ -61,6 +61,9 @@ impl LoggerPort for FernLogger {
     fn log_trace(&self, message: &str) {
         log::trace!("{}", message);
     }
+    fn log_sled_error(&self, message: &str, error: sled::Error) {
+        log::error!("{}: {}", message, error);
+    }
 }
 
 // Define a function to initialize the logging system.
@@ -98,11 +101,11 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) -> FernLogger {
         .level(level_filter); // Apply the specified level filter to the logger.
 
     // Set up individual log files for each log level.
-    let error_log = log_file(&format!("{}/error.log", log_dir_path)).unwrap();
-    let warn_log = log_file(&format!("{}/warn.log", log_dir_path)).unwrap();
-    let info_log = log_file(&format!("{}/info.log", log_dir_path)).unwrap();
-    let debug_log = log_file(&format!("{}/debug.log", log_dir_path)).unwrap();
-    let trace_log = log_file(&format!("{}/trace.log", log_dir_path)).unwrap();
+    let error_log = log_file(&format!("{}/one_4_all_error.log", log_dir_path)).unwrap();
+    let warn_log = log_file(&format!("{}/one_4_all_warn.log", log_dir_path)).unwrap();
+    let info_log = log_file(&format!("{}/one_4_all_info.log", log_dir_path)).unwrap();
+    let debug_log = log_file(&format!("{}/one_4_all_debug.log", log_dir_path)).unwrap();
+    let trace_log = log_file(&format!("{}/one_4_all_trace.log", log_dir_path)).unwrap();
 
     // Create dispatch configurations for each log level, filtering and chaining to the respective log file.
     let error_dispatch = Dispatch::new()
