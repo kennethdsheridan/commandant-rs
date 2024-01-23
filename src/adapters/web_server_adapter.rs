@@ -37,20 +37,106 @@ async fn show_dashboard() -> impl Responder {
     // Return the HTML content for the dashboard
     HttpResponse::Ok().body(
         r#"
-        <html>
-            <head>
-                <title>OneForAll Dashboard</title>
-            </head>
-            <body>
-                <h1>OneForAll Dashboard</h1>
-                <h2>Server Status</h2>
-                <p>Server is running</p>
-                <h2>Current Stress Test</h2>
-                <p>None</p>
-                <h2>Current Processes</h2>
-                <p>None</p>
-            </body>
-        </html>
+        <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Diagnostics Dashboard - Dark Mode</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Dark mode styles */
+        body {
+            background-color: #1A1A1A; /* Dark background for body */
+            color: #CCCCCC; /* Light text color for body */
+        }
+
+        .gradient-background {
+            background: linear-gradient(145deg, #4C0099 0%, #190033 100%);
+        }
+
+        .text-color {
+            color: #BB86FC; /* Light purple text color for better visibility in dark mode */
+        }
+
+        .card {
+            background: #242424; /* Darker background for cards */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* Darker shadow for cards */
+            padding: 1.5rem;
+            border: none; /* Remove border for dark mode */
+        }
+
+        .button {
+            background-color: #BB86FC; /* Light purple background for buttons */
+            color: #1A1A1A; /* Dark text color for buttons */
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            border: none; /* Remove border for buttons */
+        }
+
+        .chart-placeholder {
+            background-color: #333333; /* Darker background for chart placeholders */
+            border: 1px solid #444444; /* Slight border for chart placeholders */
+        }
+    </style>
+</head>
+<body class="font-sans leading-normal tracking-normal">
+<div class="container mx-auto px-4">
+    <div class="py-8">
+        <div class="gradient-background text-white p-8 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold leading-tight">System Diagnostics Dashboard</h2>
+        </div>
+        <div class="mt-6">
+            <div class="card">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Power Utilization -->
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-semibold text-color">Power Utilization</h3>
+                        <p id="power-util" class="mt-1 text-sm">Loading...</p>
+                        <button class="button mt-2">View Details</button>
+                    </div>
+                    <!-- Memory Utilization -->
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-semibold text-color">Memory Utilization</h3>
+                        <p id="memory-util" class="mt-1 text-sm">Loading...</p>
+                        <button class="button mt-2">View Details</button>
+                    </div>
+                    <!-- CPU/GPU Utilization -->
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-semibold text-color">CPU/GPU Utilization</h3>
+                        <p id="cpu-gpu-util" class="mt-1 text-sm">Loading...</p>
+                        <button class="button mt-2">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6">
+            <div class="card">
+                <h3 class="text-lg font-semibold text-color">Real-time Graphs</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+                    <!-- Power Chart Placeholder -->
+                    <div class="rounded-lg h-64 chart-placeholder"></div>
+                    <!-- Memory Chart Placeholder -->
+                    <div class="rounded-lg h-64 chart-placeholder"></div>
+                    <!-- CPU/GPU Chart Placeholder -->
+                    <div class="rounded-lg h-64 chart-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Placeholder for JavaScript to fetch and update real-time data
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('power-util').textContent = '50% (50W)';
+        document.getElementById('memory-util').textContent = '75% (12GB / 16GB)';
+        document.getElementById('cpu-gpu-util').textContent = 'CPU: 60%, GPU: 40%';
+    });
+</script>
+</body>
+</html>
         "#,
     )
 }
@@ -72,6 +158,7 @@ impl WebServerPort for WebServerAdapter {
             App::new()
                 .route("/", web::get().to(HttpResponse::Ok)) // Default route
                 .route("/status", web::get().to(get_status)) // Route for get_status
+                .route("/dashboard", web::get().to(show_dashboard)) // Route for show_dashboard
         })
         .bind("127.0.0.1:8000")?
         .run();
