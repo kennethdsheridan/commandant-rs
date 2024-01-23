@@ -106,6 +106,7 @@ impl PsCommandPort for PsAdapter {
     /// * `output_file_path` - The path to the file where the command output will be saved.
     fn collect_cpu_statistics(&self, key: &str) {
         loop {
+            // Loop forever
             match self.execute_ps_command() {
                 Ok(output) => {
                     // write to the database if the command was successful and the output is not

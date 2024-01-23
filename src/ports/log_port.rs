@@ -48,8 +48,3 @@ pub trait LoggerPort: Sync + Send + Debug {
     /// * `error` - The `sled::Error` to be logged.
     fn log_sled_error(&self, message: &str, error: sled::Error);
 }
-
-impl From<sled::Error> for Box<dyn LoggerPort> {
-
-    }
-}

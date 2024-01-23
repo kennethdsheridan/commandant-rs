@@ -129,7 +129,7 @@ async fn main() -> std::io::Result<()> {
     let db_logger = logger.clone(); // Clone the logger for database handling.
 
     // Attempt to create a new DatabaseAdapter
-    let path_to_db = "OneForAll_database_file.db"; // replace this with your actual database path
+    let path_to_db = "OneForAll_database_file.db"; // database path
     let db_adapter_result = DatabaseAdapter::new(path_to_db, db_logger.clone());
 
     // Handle the Result and create an Arc<dyn DatabasePort> if successful
@@ -279,10 +279,11 @@ async fn main() -> std::io::Result<()> {
                 command_logger.log_info("Monitoring CPU usage and top processes.");
             }
             Commands::DatabaseOps => {
-                // Logic for handling the 'DatabaseOps' command.
+                // Assuming `db_logger` is a reference to an implementation of `LoggerPort`
                 command_logger.log_info("Database operations functionality not yet implemented.");
 
-                match get_all_keys() {
+                match get_all_keys(logger.clone()) {
+                    // Pass a reference, not a clone
                     Ok(_) => println!("Successfully retrieved all keys"),
                     Err(e) => eprintln!("Error retrieving keys: {:?}", e),
                 }
@@ -290,26 +291,39 @@ async fn main() -> std::io::Result<()> {
         }
     });
 
+    // Initialize signal handling for graceful shutdown.
+    let ctrl_c_signal = async {
+        tokio::signal::ctrl_c()
+            .await
+            .expect("Failed to listen for Ctrl+C");
+        println!("Received Ctrl+C, initiating shutdown...");
+    };
+
+    // Clone the logger for Ctrl+C handling message.
+    let (shutdown_sender, mut shutdown_receiver) = tokio::sync::mpsc::channel::<()>(1);
+
     // Await the completion of either the web server task or the Ctrl+C signal handling.
     // This is achieved using `tokio::select!`, which waits for multiple asynchronous
     // operations, proceeding when one of them completes. This is crucial for responsive
     // multitasking in asynchronous applications.
+    // Await the completion of either the web server task or the Ctrl+C signal handling
     tokio::select! {
         _ = server_handle => {
-            logger.log_info("Server started successfully.");
-        }
+            println!("Web server has stopped.");
+        },
         _ = ctrl_c_handle => {
-            // Ctrl+C handling is already logged in its task.
-        }
+            println!("Shutdown initiated by Ctrl+C.");
+        },
     }
 
+    println!("Application is shutting down.");
     Ok(())
 }
 
 // Function for testing the database adapter.
-fn get_all_keys() -> Result<(), Box<dyn LoggerPort>> {
+/*fn get_all_keys() -> Result<(), Box<dyn LoggerPort>> {
     // Open the Sled database
-    let db: Db = sled::open("OneForAll_database_file.db")?;
+    let db: Db = sled::open("OneForAll_database_file.db").unwrap();
 
     // Create an iterator over all key-value pairs in the database
     let mut iter = db.iter();
@@ -319,6 +333,51 @@ fn get_all_keys() -> Result<(), Box<dyn LoggerPort>> {
         // Print the key
         println!("Key: {:?}", key);
     }
+
+    Ok(())
+}*/
+fn get_all_keys(logger: Arc<dyn LoggerPort>) -> Result<(), sled::Error> {
+    logger.log_info("Attempting to open the Sled database.");
+
+    // Attempt to open the Sled database, gracefully handling errors.
+    let db = match sled::open("OneForAll_database_file.db") {
+        Ok(db) => {
+            logger.log_info("Database opened successfully.");
+            db
+        }
+        Err(e) => {
+            logger.log_error(&format!("Error opening database: {}", e));
+            return Err(e);
+        }
+    };
+
+    logger.log_debug("Creating an iterator over all key-value pairs in the database.");
+
+    // Create an iterator over all key-value pairs in the database
+    let mut iter = db.iter();
+    let mut key_count = 0;
+
+    // Iterate over all keys
+    while let Some(result) = iter.next() {
+        match result {
+            Ok((key, _)) => {
+                // Increment key count
+                key_count += 1;
+
+                // Debug log for each key
+                logger.log_debug(&format!("Key: {:?}", key));
+            }
+            Err(e) => {
+                logger.log_error(&format!("Error iterating over keys: {}", e));
+                return Err(e);
+            }
+        }
+    }
+
+    logger.log_info(&format!(
+        "Successfully iterated over all keys. Total keys found: {}",
+        key_count
+    ));
 
     Ok(())
 }
