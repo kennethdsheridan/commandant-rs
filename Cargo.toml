@@ -3,7 +3,7 @@
 # The name of your package.
 name = "one_for_all"
 # The version of your package following Semantic Versioning (https://semver.org/).
-version = "0.1.0"
+version = "1.75.0"
 # The edition of Rust you are using, which can affect the syntax and compiler features.
 edition = "2021"
 # The path to your main source file, which can be either main.rs for binaries or lib.rs for libraries.
@@ -52,7 +52,6 @@ serde = "1.0.193"
 actix-rt = "2.9.0"
 futures = "0.3.30"
 sled = "0.34.7"
-
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]
