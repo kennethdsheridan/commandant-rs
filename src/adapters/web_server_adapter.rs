@@ -36,108 +36,199 @@ impl WebServerAdapter {
 async fn show_dashboard() -> impl Responder {
     // Return the HTML content for the dashboard
     HttpResponse::Ok().body(
-        r#"
-        <html lang="en">
+        r#"<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Diagnostics Dashboard - Dark Mode</title>
+    <title>System Diagnostics</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        /* Dark mode styles */
+        :root {
+            --background-color: #121212; /* Dark background */
+            --card-background-color: #1F1F1F; /* Darker card background */
+            --highlight-color: #5D55FA; /* Highlight color */
+            --text-color: #FFFFFF; /* Text color */
+            --status-up-color: #48BB78; /* Status up color */
+            --status-down-color: #F56565; /* Status down color */
+            --glow-color: #7F9CF5; /* Glow color */
+        }
         body {
-            background-color: #1A1A1A; /* Dark background for body */
-            color: #CCCCCC; /* Light text color for body */
+            background: var(--background-color);
+            color: var(--text-color);
         }
-
-        .gradient-background {
-            background: linear-gradient(145deg, #4C0099 0%, #190033 100%);
-        }
-
-        .text-color {
-            color: #BB86FC; /* Light purple text color for better visibility in dark mode */
-        }
-
         .card {
-            background: #242424; /* Darker background for cards */
+            background: var(--card-background-color);
             border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* Darker shadow for cards */
             padding: 1.5rem;
-            border: none; /* Remove border for dark mode */
+            /* Removed margin-bottom to manage spacing with grid gap */
+            position: relative;
+            overflow: hidden;
         }
-
-        .button {
-            background-color: #BB86FC; /* Light purple background for buttons */
-            color: #1A1A1A; /* Dark text color for buttons */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            bottom: -50%;
+            left: -50%;
+            z-index: -1;
+            background: var(--glow-color);
+            border-radius: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card h2 {
+            color: var(--highlight-color);
+        }
+        .status-indicator {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        .status-up {
+            background-color: var(--status-up-color);
+        }
+        .status-down {
+            background-color: var(--status-down-color);
+        }
+        .refresh-button {
+            background-color: var(--highlight-color);
+            color: var(--text-color);
             padding: 0.5rem 1rem;
             border-radius: 0.375rem;
             font-weight: 600;
-            border: none; /* Remove border for buttons */
-        }
-
-        .chart-placeholder {
-            background-color: #333333; /* Darker background for chart placeholders */
-            border: 1px solid #444444; /* Slight border for chart placeholders */
+            margin-left: auto;
+            display: block;
+            cursor: pointer;
         }
     </style>
 </head>
 <body class="font-sans leading-normal tracking-normal">
-<div class="container mx-auto px-4">
-    <div class="py-8">
-        <div class="gradient-background text-white p-8 rounded-lg shadow-md">
-            <h2 class="text-3xl font-semibold leading-tight">System Diagnostics Dashboard</h2>
-        </div>
-        <div class="mt-6">
-            <div class="card">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Power Utilization -->
-                    <div class="md:col-span-1">
-                        <h3 class="text-lg font-semibold text-color">Power Utilization</h3>
-                        <p id="power-util" class="mt-1 text-sm">Loading...</p>
-                        <button class="button mt-2">View Details</button>
-                    </div>
-                    <!-- Memory Utilization -->
-                    <div class="md:col-span-1">
-                        <h3 class="text-lg font-semibold text-color">Memory Utilization</h3>
-                        <p id="memory-util" class="mt-1 text-sm">Loading...</p>
-                        <button class="button mt-2">View Details</button>
-                    </div>
-                    <!-- CPU/GPU Utilization -->
-                    <div class="md:col-span-1">
-                        <h3 class="text-lg font-semibold text-color">CPU/GPU Utilization</h3>
-                        <p id="cpu-gpu-util" class="mt-1 text-sm">Loading...</p>
-                        <button class="button mt-2">View Details</button>
-                    </div>
-                </div>
+<div class="flex flex-wrap">
+    <!-- Sidebar -->
+    <div class="sidebar w-full md:w-1/4 p-4">
+        <h2 class="font-semibold text-lg mb-4">System Info</h2>
+        <p>Hostname: <span>example-host</span></p>
+        <p>IP: <span>192.168.1.1</span></p>
+        <h2 class="font-semibold text-lg mt-4 mb-2">Ledger Status</h2>
+        <p>Hedera DLT: <span class="status-indicator status-up"></span>Connected</p>
+        <p>Cardano: <span class="status-indicator status-down"></span>Disconnected</p>
+        <p>Bitcoin: <span class="status-indicator status-up"></span>Connected</p>
+        <p>Ether: <span class="status-indicator status-down"></span>Disconnected</p>
+    </div>
+<div class="container mx-auto px-4 py-5">
+    <!-- Grid container with 3 columns -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Memory Card -->
+        <div class="card">
+            <h2 class="font-semibold text-lg">Memory Info</h2>
+            <div class="flex items-center mt-2">
+                <span class="status-indicator status-up"></span>
+                <span class="ml-2">16GB Used / 32GB Total</span>
             </div>
+            <p class="mt-2">Swap Usage: 2GB / 4GB</p>
         </div>
-        <div class="mt-6">
-            <div class="card">
-                <h3 class="text-lg font-semibold text-color">Real-time Graphs</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-                    <!-- Power Chart Placeholder -->
-                    <div class="rounded-lg h-64 chart-placeholder"></div>
-                    <!-- Memory Chart Placeholder -->
-                    <div class="rounded-lg h-64 chart-placeholder"></div>
-                    <!-- CPU/GPU Chart Placeholder -->
-                    <div class="rounded-lg h-64 chart-placeholder"></div>
-                </div>
+        
+        <!-- Storage Device Card -->
+<div class="card">
+    <h2 class="font-semibold text-lg">Storage Device Info</h2>
+    <p class="mt-2">Device Model: Kingston NVMe SSD</p>
+    <div class="flex items-center mt-2">
+        <span class="status-indicator status-up"></span>
+        <span class="ml-2">Read Speed: 3.5 GB/s</span>
+    </div>
+    <div class="flex items-center mt-2">
+        <span class="status-indicator status-up"></span>
+        <span class="ml-2">Write Speed: 2.8 GB/s</span>
+    </div>
+    <div class="flex items-center mt-2">
+        <span class="status-indicator status-up"></span>
+        <span class="ml-2">IOPS: 1,000,000</span>
+    </div>
+    <div class="flex items-center mt-2">
+        <span class="status-indicator status-up"></span>
+        <span class="ml-2">Capacity: 2 TB</span>
+    </div>
+</div>
+
+        <!-- CPU Card -->
+        <div class="card">
+            <h2 class="font-semibold text-lg">CPU Usage</h2>
+            <div class="flex items-center mt-2">
+                <span class="status-indicator status-up"></span>
+                <span class="ml-2">35% Load</span>
             </div>
+            <p class="mt-2">Processor Info: Intel Xeon E5-2678 v3 @ 2.50GHz</p>
         </div>
+
+        <!-- GPU Card -->
+        <div class="card">
+            <h2 class="font-semibold text-lg">GPU Load</h2>
+            <div class="flex items-center mt-2">
+                <span class="status-indicator status-up"></span>
+                <span class="ml-2">NVIDIA RTX 3080: 60% Load</span>
+            </div>
+            <p class="mt-2">GPU Info: 10GB GDDR6X, 8704 CUDA cores</p>
+        </div>
+
+        <!-- Network Bandwidth Card -->
+        <div class="card">
+            <h2 class="font-semibold text-lg">Network Bandwidth</h2>
+            <div class="flex items-center mt-2">
+                <span class="status-indicator status-up"></span>
+                <span class="ml-2">500Mbps In / 250Mbps Out</span>
+            </div>
+            <p class="mt-2">Network Speed: 1Gbps link</p>
+        </div>
+
+        <!-- Public Network Availability Status Card -->
+        <div class="card">
+            <h2 class="font-semibold text-lg">Public Network Status</h2>
+            <div class="flex items-center mt-2">
+                <span class="status-indicator status-up"></span>
+                <span class="ml-2">Online</span>
+            </div>
+            <p class="mt-2">No interruptions detected</p>
+        </div>
+
+        <!-- Operating System Information Card -->
+        <div class="card">
+            <h2 class="font-semibold text-lg">Operating System</h2>
+            <div class="flex items-center mt-2">
+                <span class="status-indicator status-up"></span>
+                <span class="ml-2">Ubuntu 20.04 LTS</span>
+            </div>
+            <p class="mt-2">Kernel version: 5.4.0-42-generic</p>
+        </div>
+
+        <!-- Motherboard Information Card -->
+        <div class="card">
+            <h2 class="font-semibold text-lg">Motherboard Information</h2>
+            <div class="flex items-center mt-2">
+                <span class="status-indicator status-up"></span>
+                <span class="ml-2">ASUS ROG STRIX Z390-E</span>
+            </div>
+            <p class="mt-2">BIOS version: 1302, Release Date: 05/10/2019</p>
+        </div>
+
+        <!-- Other cards follow the same structure -->
+        <!-- ... -->
     </div>
 </div>
 
 <script>
-    // Placeholder for JavaScript to fetch and update real-time data
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('power-util').textContent = '50% (50W)';
-        document.getElementById('memory-util').textContent = '75% (12GB / 16GB)';
-        document.getElementById('cpu-gpu-util').textContent = 'CPU: 60%, GPU: 40%';
-    });
+    // JavaScript for dynamic updates and interactions can be added here
 </script>
 </body>
 </html>
-        "#,
+"#,
     )
 }
 
