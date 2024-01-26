@@ -13,6 +13,7 @@ use std::time::Duration;
 
 use crate::ports::log_port::LoggerPort;
 use crate::ports::ps_command_port::PsCommandPort;
+use crate::fullstack_rust_app::frontend::src::adapters::ps_wasm_adapter;
 
 /// The ProcessData struct represents a single process and its CPU usage percentage.
 /// This struct is used to parse the output of the `ps` command and extract the CPU usage
@@ -53,32 +54,22 @@ impl PsAdapter {
 // as a port in the application, and it also provides a concrete implementation of the
 // `PsCommandPort` interface.
 impl PsCommandPort for PsAdapter {
-    /// Executes the `ps` command to gather CPU statistics and writes to a file.
     fn execute_ps_command(&self) -> Result<String, String> {
         // Execute the `ps` command
-        let output = Command::new("sh") // Create a new `Command` instance
-            .arg("-c") // Add an argument to the command
-            .arg("ps aux | sort -nrk 3,3 | head -n 10") // Add an argument to the command
-            .output() // output() returns a `std::process::Output` instance containing the command output
-            .map_err(|e| e.to_string())?; // Convert the `std::io::Error` to a `String`
+        let output = Command::new("sh")
+            .arg("-c")
+            .arg("ps aux | sort -nrk 3,3 | head -n 10")
+            .output()
+            .expect("Failed to execute command");
 
-        if !output.status.success() {
-            // Check if the command was successful
-            let error_message = format!(
-                "Failed to execute `ps` command: {}",
-                String::from_utf8_lossy(&output.stderr) // Convert the byte array to a string slice
-            );
-            self.logger.log_error(&error_message);
-            return Err(error_message); // Return `Err` to indicate failure
-        }
+        // Convert the output to a string
+        let output_str = String::from_utf8_lossy(&output.stdout).to_string();
 
-        // Convert the byte array to a string and return it as a `Result`
-        // The `?` operator will return an error if the conversion fails
-        let output_str = String::from_utf8(output.stdout).map_err(|e| e.to_string())?;
+        // Call the WASM serialization function from ps_wasm_adapter.rs
+        let wasm_output = ps_wasm_adapter::serialize_to_wasm(output_str)?;
 
-        Ok(output_str) // Return `Ok` to indicate success
+        Ok(wasm_output)
     }
-
     /// Writes the output of the `ps` command to a specified file.
     fn write_to_file(&self, output: String, file_path: &str) -> Result<(), String> {
         match OpenOptions::new() // Create a new `OpenOptions` instance

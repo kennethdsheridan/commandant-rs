@@ -33,7 +33,7 @@ impl WebServerAdapter {
 /// // using a templating engine such as Handlebars.
 /// // The show_dashboard function is defined as an async function, which allows it to
 /// // perform asynchronous operations such as reading from a database or making an HTTP request.
-async fn show_dashboard() -> impl Responder {
+async fn show_console() -> impl Responder {
     // Return the HTML content for the dashboard
     HttpResponse::Ok().body(
         r#"<!DOCTYPE html>
@@ -249,7 +249,7 @@ impl WebServerPort for WebServerAdapter {
             App::new()
                 .route("/", web::get().to(HttpResponse::Ok)) // Default route
                 .route("/status", web::get().to(get_status)) // Route for get_status
-                .route("/dashboard", web::get().to(show_dashboard)) // Route for show_dashboard
+                .route("/console", web::get().to(show_console)) // Route for show console
         })
         .bind("127.0.0.1:8000")?
         .run();
