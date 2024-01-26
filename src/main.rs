@@ -10,7 +10,8 @@ use tokio::{signal, spawn};
 
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
-use crate:::WebServerAdapter;
+// import the web server adapter from the frontend
+use crate::adapters::web_server_adapter::WebServerAdapter;
 
 use crate::ports::database_port::DatabasePort;
 use crate::ports::log_port::LoggerPort;
@@ -71,7 +72,7 @@ fn long_description() -> &'static str {
     aspect of hardware performance:\n\n\
     \
     - Benchmark: Run extensive benchmarks to measure the speed and efficiency\
-     of your CPU, GPU, memory, and storage devices.\n\
+      of your CPU, GPU, memory, and storage devices.\n
     
     - Stress: Put your system under intense stress to test stability and \
     endurance under heavy loads.\n\

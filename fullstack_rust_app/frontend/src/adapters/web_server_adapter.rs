@@ -1,6 +1,6 @@
 // web_server_adapter.rs
-use crate::ports::log_port::LoggerPort;
 use crate::ports::web_server_port::WebServerPort;
+use crate::src::ports::logger_port::LoggerPort;
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 
 use std::sync::Arc;
