@@ -9,7 +9,7 @@ use std::{fs, io, str};
 
 use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
 use crate::ports::log_port::LoggerPort;
-use crate::StressNgArch;
+use crate::{ConsoleLogger, StressNgArch};
 
 pub struct StressNgAdapter {
     logger: Arc<dyn LoggerPort>,
@@ -120,7 +120,7 @@ impl<'a> StressNgAdapter {
     }
 
     pub async fn execute_stress_ng_command(
-        logger: Arc<FernLogger>,
+        logger: Arc<ConsoleLogger>,
         args: &[&str],
     ) -> Result<(), String> {
         let binary_path = "../stress-ng-binary".to_string();

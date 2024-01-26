@@ -2,6 +2,7 @@ mod adapters;
 mod ports;
 
 use crate::adapters::database_adapter::DatabaseAdapter;
+use async_trait::async_trait;
 use clap::{Parser, Subcommand};
 use sled::Db;
 use std::sync::Arc;
@@ -11,12 +12,10 @@ use tokio::{signal, spawn};
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 // import the web server adapter from the frontend
-use crate::adapters::web_server_adapter::WebServerAdapter;
 
 use crate::ports::database_port::DatabasePort;
 use crate::ports::log_port::LoggerPort;
 use crate::ports::ps_command_port::PsCommandPort;
-use crate::ports::web_server_port::WebServerPort;
 
 // Enumeration representing the supported architectures for the `stress-ng`
 // binary.
@@ -89,6 +88,15 @@ fn long_description() -> &'static str {
     hardware analysis."
 }
 
+struct ConsoleLogger;
+
+#[async_trait]
+impl Logger for ConsoleLogger {
+    async fn log(&self, message: &str) {
+        println!("{}", message);
+    }
+}
+
 // The entry point of the application using Actix's asynchronous runtime.
 // This runtime is essential for handling asynchronous tasks and is particularly suitable
 // for web applications and services.
@@ -101,7 +109,9 @@ async fn main() -> std::io::Result<()> {
     // with the external logging framework.
     let log_directory = "logs"; // Directory where log files will be stored.
     let log_level = log::LevelFilter::Trace; // Log level indicating verbosity of the logs.
-    let logger = Arc::new(crate::adapters::log_adapter::init(log_directory, log_level));
+                                             //let logger = Arc::new(crate::adapters::log_adapter::init(log_directory, log_level));
+
+    let logger = ConsoleLogger;
 
     // Clone the logger into an Arc<dyn LoggerPort> type. This abstraction (LoggerPort)
     // allows different logging implementations to be plugged into the application without
