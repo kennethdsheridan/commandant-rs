@@ -10,7 +10,7 @@ use tokio::{signal, spawn};
 
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
-use crate::adapters::web_server_adapter::WebServerAdapter;
+use crate:::WebServerAdapter;
 
 use crate::ports::database_port::DatabasePort;
 use crate::ports::log_port::LoggerPort;
