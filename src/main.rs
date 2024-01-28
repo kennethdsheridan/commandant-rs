@@ -98,7 +98,7 @@ fn long_description() -> &'static str {
     The tool is structured into several modules, each targeting a specific \
     aspect of hardware performance:\n\n\
     \
-    - Benchmark: Run extensive benchmarks to measure the speed and efficiency\
+    - Benchmark: Run extensive benchmarks to measure the speed and efficiency \
       of your CPU, GPU, memory, and storage devices.\n
     
     - Stress: Put your system under intense stress to test stability and \
@@ -107,7 +107,7 @@ fn long_description() -> &'static str {
     - Discover: Analyze and report on the configuration and current state of \
     your hardware components.\n\
     \
-    - Overwatch: Watch your system's performance in real-time, capturing \
+    - Overwatch: Watch your system's performance in real-time from the web browser, capturing \
     critical metrics and providing live feedback.\n
    
     OneForAll is designed with both simplicity and power in mind, making it \
@@ -123,9 +123,9 @@ struct ConsoleLogger {} // Struct for logging to the console
 
 #[async_trait]
 impl Logger for ConsoleLogger {
-    fn log_debug(&self, msg: &str) {
+    /*    fn log(&self, msg: &str) {
         println!("{}", msg);
-    }
+    }*/
 
     fn log_error(&self, msg: &str) {
         println!("{}", msg);
@@ -136,6 +136,10 @@ impl Logger for ConsoleLogger {
     }
 
     fn log_info(&self, msg: &str) {
+        println!("{}", msg);
+    }
+
+    fn log_debug(&self, msg: &str) {
         println!("{}", msg);
     }
 }

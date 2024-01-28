@@ -1,5 +1,4 @@
 use async_trait::async_trait;
-use std::println;
 
 /// The `Logger` trait defines the behavior for async logging messages.
 ///
@@ -8,7 +7,6 @@ use std::println;
 /// # Example
 ///
 /// ```
-/// use crate::Logger;
 /// use async_trait::async_trait;
 ///
 /// struct ConsoleLogger;
@@ -28,9 +26,10 @@ use std::println;
 /// ```
 #[async_trait]
 pub trait Logger {
-    async fn log(&self, message: &str);
+    /*   async fn log(&self, message: &str);*/
     // Add other async methods as needed
-    fn log_error(&self, msg: &str) -> ();
-    fn log_warn(&self, msg: &str) -> ();
-    fn log_info(&self, msg: &str) -> ();
+    fn log_error(&self, msg: &str);
+    fn log_warn(&self, msg: &str);
+    fn log_info(&self, msg: &str);
+    fn log_debug(&self, msg: &str);
 }
