@@ -11,7 +11,6 @@ use tokio::{signal, spawn};
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use common::Logger;
-// import the web server adapter from the frontend
 
 use crate::ports::database_port::DatabasePort;
 use crate::ports::log_port::LoggerPort;
@@ -59,6 +58,35 @@ enum Commands {
     DatabaseOps,
 }
 
+/// # OneForAll
+///
+/// OneForAll is a comprehensive tool designed for in-depth hardware
+/// performance analysis and diagnostics. It leverages advanced testing
+/// methodologies to provide users with detailed insights into their
+/// system's capabilities and bottlenecks. With OneForAll, you can run
+/// various tests, including benchmarks, stress tests, and hardware
+/// discovery, to understand the full scope of your hardware's performance.
+///
+/// ## Modules
+///
+/// The tool is structured into several modules, each targeting a specific
+/// aspect of hardware performance:
+///
+/// - **Benchmark**: Run extensive benchmarks to measure the speed and efficiency
+///   of your CPU, GPU, memory, and storage devices.
+///
+/// - **Stress**: Put your system under intense stress to test stability and
+///   endurance under heavy loads.
+///
+/// - **Discover**: Analyze and report on the configuration and current state of
+///   your hardware components.
+///
+/// - **Overwatch**: Watch your system's performance in real-time, capturing
+///   critical metrics and providing live feedback.
+///
+/// OneForAll is designed with both simplicity and power in mind, making it
+/// suitable for both casual users looking to check their system's performance
+/// and professionals requiring detailed hardware analysis.
 fn long_description() -> &'static str {
     "\n\n\nOneForAll is a comprehensive tool designed for in-depth hardware \
     performance analysis and diagnostics. \
@@ -88,6 +116,9 @@ fn long_description() -> &'static str {
     hardware analysis."
 }
 
+///
+/// ConsoleLogger is a struct representing a console logger.
+///
 struct ConsoleLogger {} // Struct for logging to the console
 
 #[async_trait]
@@ -343,60 +374,62 @@ async fn main() -> std::io::Result<()> {
     Ok(())
 }
 
-// Function for testing the database adapter.
-/*fn get_all_keys() -> Result<(), Box<dyn LoggerPort>> {
-    // Open the Sled database
-    let db: Db = sled::open("OneForAll_database_file.db").unwrap();
-
-    // Create an iterator over all key-value pairs in the database
-    let mut iter = db.iter();
-
-    // Iterate over all keys
-    while let Some(Ok((key, _))) = iter.next() {
-        // Print the key
-        println!("Key: {:?}", key);
-    }
-
-    Ok(())
-}*/
+/// Retrieves all keys from the Sled database.
+///
+/// This function attempts to open the Sled database and create an iterator over all key-value pairs.
+/// It logs the process and counts the total number of keys found.
+///
+/// # Arguments
+///
+/// * `logger` - An Arc-wrapped LoggerPort trait object for logging.
+///
+/// # Returns
+///
+/// * `Result<(), sled::Error>` - Returns Ok(()) if successful, or an Err containing the sled::Error if an error occurred.
 fn get_all_keys(logger: Arc<dyn LoggerPort>) -> Result<(), sled::Error> {
+    // Log the attempt to open the Sled database.
     logger.log_info("Attempting to open the Sled database.");
 
     // Attempt to open the Sled database, gracefully handling errors.
     let db = match sled::open("OneForAll_database_file.db") {
         Ok(db) => {
+            // Log the successful opening of the database.
             logger.log_info("Database opened successfully.");
             db
         }
         Err(e) => {
+            // Log the error and return it if the database fails to open.
             logger.log_error(&format!("Error opening database: {}", e));
             return Err(e);
         }
     };
 
+    // Log the creation of an iterator over all key-value pairs in the database.
     logger.log_debug("Creating an iterator over all key-value pairs in the database.");
 
-    // Create an iterator over all key-value pairs in the database
+    // Create an iterator over all key-value pairs in the database.
     let mut iter = db.iter();
     let mut key_count = 0;
 
-    // Iterate over all keys
+    // Iterate over all keys.
     while let Some(result) = iter.next() {
         match result {
             Ok((key, _)) => {
-                // Increment key count
+                // Increment key count.
                 key_count += 1;
 
-                // Debug log for each key
+                // Log each key.
                 logger.log_debug(&format!("Key: {:?}", key));
             }
             Err(e) => {
+                // Log the error and return it if an error occurs while iterating over the keys.
                 logger.log_error(&format!("Error iterating over keys: {}", e));
                 return Err(e);
             }
         }
     }
 
+    // Log the total number of keys found.
     logger.log_info(&format!(
         "Successfully iterated over all keys. Total keys found: {}",
         key_count
