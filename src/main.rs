@@ -4,13 +4,13 @@ mod ports;
 use crate::adapters::database_adapter::DatabaseAdapter;
 use async_trait::async_trait;
 use clap::{Parser, Subcommand};
-use sled::Db;
 use std::sync::Arc;
 use tokio::time::{sleep, timeout, Duration};
 use tokio::{signal, spawn};
 
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
+use common::Logger;
 // import the web server adapter from the frontend
 
 use crate::ports::database_port::DatabasePort;
@@ -88,12 +88,24 @@ fn long_description() -> &'static str {
     hardware analysis."
 }
 
-struct ConsoleLogger;
+struct ConsoleLogger {} // Struct for logging to the console
 
 #[async_trait]
 impl Logger for ConsoleLogger {
-    async fn log(&self, message: &str) {
-        println!("{}", message);
+    fn log_debug(&self, msg: &str) {
+        println!("{}", msg);
+    }
+
+    fn log_error(&self, msg: &str) {
+        println!("{}", msg);
+    }
+
+    fn log_warn(&self, msg: &str) {
+        println!("{}", msg);
+    }
+
+    fn log_info(&self, msg: &str) {
+        println!("{}", msg);
     }
 }
 
@@ -109,9 +121,9 @@ async fn main() -> std::io::Result<()> {
     // with the external logging framework.
     let log_directory = "logs"; // Directory where log files will be stored.
     let log_level = log::LevelFilter::Trace; // Log level indicating verbosity of the logs.
-                                             //let logger = Arc::new(crate::adapters::log_adapter::init(log_directory, log_level));
+    let logger = Arc::new(crate::adapters::log_adapter::init(log_directory, log_level));
 
-    let logger = ConsoleLogger;
+    let logger = Arc::new(ConsoleLogger {});
 
     // Clone the logger into an Arc<dyn LoggerPort> type. This abstraction (LoggerPort)
     // allows different logging implementations to be plugged into the application without

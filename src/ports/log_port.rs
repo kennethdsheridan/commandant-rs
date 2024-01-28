@@ -4,6 +4,19 @@ use std::fmt::Debug;
 /// It defines a standard interface for logging functionality.
 /// This abstraction allows for different logging implementations
 /// that can be plugged into the application as needed.
+///
+/// # Trait `LoggerPort`
+///
+/// This trait provides a set of methods for logging different types of messages.
+/// It is designed to be flexible and adaptable to different logging implementations.
+///
+/// It includes the following methods:
+/// - `log_info`: Logs an informational message.
+/// - `log_warn`: Logs a warning message.
+/// - `log_error`: Logs an error message.
+/// - `log_debug`: Logs a debug message.
+/// - `log_trace`: Logs a trace message.
+/// - `log_sled_error`: Logs an error message with an associated `sled::Error`.
 pub trait LoggerPort: Sync + Send + Debug {
     /// Logs an informational message.
     ///
@@ -43,7 +56,7 @@ pub trait LoggerPort: Sync + Send + Debug {
     /// Logs an error message with an associated `sled::Error`.
     ///
     /// # Arguments
-    ///     
+    ///
     /// * `message` - The error message to be logged.
     /// * `error` - The `sled::Error` to be logged.
     fn log_sled_error(&self, message: &str, error: sled::Error);
