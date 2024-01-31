@@ -50,12 +50,15 @@ async-trait = { version = "0.1.51", features = [] }
 serde = "1.0.193"
 # Tokio-based single-threaded async runtime for the Actix ecosystem.
 actix-rt = "2.9.0"
+# The futures crate provides a framework for asynchronous programming.
 futures = "0.3.30"
+# The sled crate provides an embedded database.
 sled = "0.34.7"
-## add common
+
+# The `common` dependency is a local package that resides in the same project.
+# The `path` key specifies the relative path to the local package from the root of the current package.
+# In this case, the `common` package is located in the `./common` directory relative to the `Cargo.toml` file.
 common = { path = "./common" }
-
-
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]

@@ -2,15 +2,14 @@ mod adapters;
 mod ports;
 
 use crate::adapters::database_adapter::DatabaseAdapter;
-use async_trait::async_trait;
 use clap::{Parser, Subcommand};
 use std::sync::Arc;
-use tokio::time::{sleep, timeout, Duration};
+use tokio::time::{sleep, Duration};
 use tokio::{signal, spawn};
 
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
-use common::Logger;
+use common::LoggerPort;
 
 use crate::ports::database_port::DatabasePort;
 use crate::ports::log_port::LoggerPort;
@@ -120,29 +119,6 @@ fn long_description() -> &'static str {
 /// ConsoleLogger is a struct representing a console logger.
 ///
 struct ConsoleLogger {} // Struct for logging to the console
-
-#[async_trait]
-impl Logger for ConsoleLogger {
-    /*    fn log(&self, msg: &str) {
-        println!("{}", msg);
-    }*/
-
-    fn log_error(&self, msg: &str) {
-        println!("{}", msg);
-    }
-
-    fn log_warn(&self, msg: &str) {
-        println!("{}", msg);
-    }
-
-    fn log_info(&self, msg: &str) {
-        println!("{}", msg);
-    }
-
-    fn log_debug(&self, msg: &str) {
-        println!("{}", msg);
-    }
-}
 
 // The entry point of the application using Actix's asynchronous runtime.
 // This runtime is essential for handling asynchronous tasks and is particularly suitable
