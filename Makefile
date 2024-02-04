@@ -3,6 +3,7 @@
 # Set the binary name
 BINARY_NAME := one_for_all
 
+
 # Set the output directory
 OUTPUT_DIR := ./target/release
 
