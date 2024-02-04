@@ -54,10 +54,7 @@ actix-rt = "2.9.0"
 futures = "0.3.30"
 # The sled crate provides an embedded database.
 sled = "0.34.7"
-
-# The `common` dependency is a local package that resides in the same project.
-# The `path` key specifies the relative path to the local package from the root of the current package.
-# In this case, the `common` package is located in the `./common` directory relative to the `Cargo.toml` file.
+# The common crate is a library that contains shared code.
 common = { path = "./common" }
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
@@ -72,7 +69,7 @@ path = "src/main.rs"
 
 [workspace]
 members = [
-    "fullstack_rust_app/frontend",
-    "fullstack_rust_app/backend",
+    "fullstack_rust_app",
+    "common"
     # Add other workspace members if any
 ]
