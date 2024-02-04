@@ -1,4 +1,4 @@
-use std::fmt::Debug;
+/*use std::fmt::Debug;
 
 /// The `LoggerPort` trait acts as a port in the hexagonal architecture.
 /// It defines a standard interface for logging functionality.
@@ -61,3 +61,4 @@ pub trait LoggerPort: Sync + Send + Debug {
     /// * `error` - The `sled::Error` to be logged.
     fn log_database_error(&self, message: &str, error: sled::Error);
 }
+*/

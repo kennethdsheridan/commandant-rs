@@ -1,6 +1,3 @@
-mod adapters;
-mod ports;
-
 // Defines the `MyApp` struct which will represent our application.
 struct MyApp {
     // A field of the struct

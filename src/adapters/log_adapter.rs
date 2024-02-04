@@ -1,4 +1,4 @@
-// Importing the necessary modules and types from external crates and the standard library.
+/*// Importing the necessary modules and types from external crates and the standard library.
 use std::fmt;
 use std::fs;
 // For filesystem operations like creating directories.
@@ -187,3 +187,4 @@ pub fn init(log_dir_path: &str, level_filter: LevelFilter) -> FernLogger {
     // Return the logger instance for use by other modules in the application.
     FernLogger
 }
+*/

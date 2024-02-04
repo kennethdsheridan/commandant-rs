@@ -1,7 +1,7 @@
+use common::ports::log_port::LoggerPort;
+
 use crate::ports::database_port::DatabasePort;
-use crate::ports::log_port::LoggerPort;
 use crate::StressNgArch;
-use sled::IVec;
 
 /// `StressTestPort` Trait
 ///

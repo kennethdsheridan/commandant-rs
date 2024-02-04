@@ -9,9 +9,10 @@ use chrono::Local;
 use colored::*;
 // To colorize log messages based on their severity level.
 use fern::{log_file, Dispatch};
+use log::LevelFilter;
+
 // For setting up the logging infrastructure.
 use crate::ports::log_port::LoggerPort;
-use log::LevelFilter;
 
 // For file operations like creating log files. // For formatting.
 
@@ -90,16 +91,6 @@ impl LoggerPort for FernLogger {
     /// * `message` - The message to log.
     fn log_trace(&self, message: &str) {
         log::trace!("{}", message);
-    }
-
-    /// Logs an error message from the database.
-    ///
-    /// # Arguments
-    ///
-    /// * `message` - The message to log.
-    /// * `error` - The error from the sled database.
-    fn log_database_error(&self, message: &str, error: sled::Error) {
-        log::error!("{}: {}", message, error);
     }
 }
 

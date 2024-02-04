@@ -9,8 +9,8 @@ use async_trait::async_trait;
 use crate::adapters::log_adapter::FernLogger;
 use crate::ports::log_port::LoggerPort;
 
-mod adapters;
-mod ports;
+pub mod adapters;
+pub mod ports;
 
 /// This module provides a console logger that can be used across the frontend, primary, and backends of the application.
 /// The logger is implemented as an async resource, which is a good practice for logging in concurrent applications.

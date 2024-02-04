@@ -1,8 +1,9 @@
 // stress_ng_manager.rs
 
-use crate::ports::log_port::LoggerPort;
 use std::fs::File;
 use std::io::{self, Write};
+
+use common::ports::log_port::LoggerPort;
 
 // Required imports for file handling and IO operations.
 

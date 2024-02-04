@@ -1,8 +1,11 @@
-use crate::ports::database_port::DatabasePort;
-use crate::ports::log_port::LoggerPort;
-use sled::{Db, IVec};
 use std::error::Error;
 use std::sync::Arc;
+
+use sled::{Db, IVec};
+
+use common::ports::log_port::LoggerPort;
+
+use crate::ports::database_port::DatabasePort;
 
 /// A struct that serves as an adapter for the `DatabasePort` trait using the Sled embedded database.
 pub struct DatabaseAdapter {

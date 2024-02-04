@@ -3,7 +3,6 @@
 //! This module provides an adapter for the `ps` command, a tool for monitoring
 //! process statuses and CPU usage on Unix-based systems.
 
-use crate::ports::database_port::DatabasePort;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::process::Command;
@@ -11,9 +10,11 @@ use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 
-use crate::ports::log_port::LoggerPort;
+use common::adapters::ps_wasm_adapter;
+use common::ports::log_port::LoggerPort;
+
+use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
-use crate::fullstack_rust_app::frontend::src::adapters::ps_wasm_adapter;
 
 /// The ProcessData struct represents a single process and its CPU usage percentage.
 /// This struct is used to parse the output of the `ps` command and extract the CPU usage

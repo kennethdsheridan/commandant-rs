@@ -23,26 +23,32 @@ impl ProcessData {
     }
 }
 
-// The `write_to_wasm` function takes the output of the `ps` command as a string
-// and writes it to WASM storage. This function is exposed to JavaScript using the
-// `#[wasm_bindgen]` attribute, allowing it to be called from the JavaScript context.
+/// The `write_to_wasm` function is a public function that takes a string output from the `ps` command,
+/// parses it into process data, serializes the process data into a JSON string, and then converts the JSON string
+/// into a `JsValue` that can be passed to the WebAssembly context.
+///
+/// # Arguments
+///
+/// * `output` - A string that holds the output of the `ps` command.
+///
+/// # Returns
+///
+/// * `Ok(JsValue)` - If the function executes successfully, it returns a `JsValue` that contains the serialized process data.
+/// * `Err(JsValue)` - If an error occurs during the execution of the function, it returns an `Err` result with a `JsValue` that contains the error message.
 #[wasm_bindgen]
-pub fn write_to_wasm(output: String) -> Result<(), JsValue> {
+pub fn write_to_wasm(output: String) -> Result<JsValue, JsValue> {
     // Parse the output of the `ps` command to extract process data.
-    // This is a simplified example and assumes the output is in a specific format.
     let process_data = parse_ps_output(&output)?;
 
-    // Here you would write the `process_data` to WASM storage.
-    // The actual implementation of writing to WASM storage will depend on your specific use case.
-    // For demonstration purposes, we'll just log the data to the console using `web_sys`.
-    // See https://rustwasm.github.io/docs/wasm-bindgen/examples/console-log.html for more details.
-    web_sys::console::log_1(&JsValue::from_str(&format!(
-        "Process data: {:?}",
-        process_data
-    )));
+    // Serialize the `process_data` to a JSON string.
+    let json = serde_json::to_string(&process_data)
+        .map_err(|_| JsValue::from_str("Failed to serialize process data"))?;
 
-    // Return `Ok` to indicate success.
-    Ok(())
+    // Convert the JSON string to a `JsValue`.
+    let js_value = JsValue::from_str(&json);
+
+    // Return the `JsValue`.
+    Ok(js_value)
 }
 
 // A helper function to parse the `ps` command output and create a `ProcessData` instance.

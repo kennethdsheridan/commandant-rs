@@ -6,7 +6,7 @@ name = "one_for_all"
 version = "1.75.0"
 # The edition of Rust you are using, which can affect the syntax and compiler features.
 edition = "2021"
-# The path to your main source file, which can be either main.rs for binaries or lib.rs for libraries.
+# The path to your main source file, which can be either lib for binaries or lib.rs for libraries.
 # This key is not standard and will be ignored by Cargo.
 src = "src/main"
 
@@ -15,7 +15,7 @@ src = "src/main"
 # The log crate provides a logging abstraction layer.
 log = "0.4.14"
 # The env_logger crate provides a logger implementation that can be configured via environment variables.
-env_logger = "0.10.1"
+env_logger = "0.11.1"
 # The fern crate allows you to configure your own logger.
 fern = "0.6.0"
 # The chrono crate provides date and time functionality.
@@ -56,6 +56,8 @@ futures = "0.3.30"
 sled = "0.34.7"
 # The common crate is a library that contains shared code.
 common = { path = "./common" }
+# The fullstack_rust_app crate is a library that contains the application code.
+fullstack_rust_app = { path = "./fullstack_rust_app" }
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]

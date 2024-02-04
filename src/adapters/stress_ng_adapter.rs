@@ -1,5 +1,4 @@
-use crate::adapters::log_adapter::FernLogger;
-use std::fs::{OpenOptions};
+use std::fs::OpenOptions;
 use std::io::Write;
 use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
@@ -7,8 +6,9 @@ use std::process::{Command, Stdio};
 use std::sync::Arc;
 use std::{fs, io, str};
 
+use common::ports::log_port::LoggerPort;
+
 use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
-use crate::ports::log_port::LoggerPort;
 use crate::{ConsoleLogger, StressNgArch};
 
 pub struct StressNgAdapter {
@@ -35,7 +35,7 @@ impl<'a> StressNgAdapter {
     ///
     /// # Returns
     /// `StressNgArch`: The architecture-specific enum variant for `stress-ng`.
-    pub fn decide_stress_ng_arch(logger: Arc<FernLogger>) -> StressNgArch {
+    pub fn decide_stress_ng_arch(logger: Arc<ConsoleLogger>) -> StressNgArch {
         let arch = if cfg!(target_os = "linux") {
             logger.log_debug("Selected stress-ng binary for Linux");
             StressNgArch::Linux
@@ -58,7 +58,7 @@ impl<'a> StressNgAdapter {
     ///
     /// # Returns
     /// A `Result` indicating the success or failure of the operation.
-    pub fn prepare_stress_ng_binary(logger: Arc<FernLogger>) -> Result<String, String> {
+    pub fn prepare_stress_ng_binary(logger: Arc<ConsoleLogger>) -> Result<String, String> {
         let logger_clone = Arc::clone(&logger);
         let arch = StressNgAdapter::decide_stress_ng_arch(logger_clone);
         // log the selected architecture
@@ -239,7 +239,7 @@ impl<'a> StressNgAdapter {
     /// A `Result<(), String>` indicating the success (`Ok(())`) or failure (`Err(String)`)
     /// of the removal operation.
     pub fn remove_stress_ng_binary(
-        logger: Arc<FernLogger>,
+        logger: Arc<ConsoleLogger>,
         binary_path: &str,
     ) -> Result<(), String> {
         logger.log_debug(&format!(
