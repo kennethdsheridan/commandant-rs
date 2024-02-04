@@ -59,5 +59,5 @@ pub trait LoggerPort: Sync + Send + Debug {
     ///
     /// * `message` - The error message to be logged.
     /// * `error` - The `sled::Error` to be logged.
-    fn log_sled_error(&self, message: &str, error: sled::Error);
+    fn log_database_error(&self, message: &str, error: sled::Error);
 }

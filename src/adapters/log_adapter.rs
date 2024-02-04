@@ -93,13 +93,13 @@ impl LoggerPort for FernLogger {
         log::trace!("{}", message);
     }
 
-    /// Logs an error message from the sled database.
+    /// Logs an error message from the database.
     ///
     /// # Arguments
     ///
     /// * `message` - The message to log.
     /// * `error` - The error from the sled database.
-    fn log_sled_error(&self, message: &str, error: sled::Error) {
+    fn log_database_error(&self, message: &str, error: sled::Error) {
         log::error!("{}: {}", message, error);
     }
 }
