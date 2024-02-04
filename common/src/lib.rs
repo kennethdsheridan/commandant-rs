@@ -1,20 +1,16 @@
 // common/src/lib.rs
 
-// The `async_trait` crate is used to enable async functions in traits, which is not natively supported in Rust.
+// Importing the `async_trait` crate. This crate is used to enable async functions in traits,
+// which is not natively supported in Rust.
 use async_trait::async_trait;
 
-// The `LoggerPort` trait defines the logging interface that our `ConsoleLogger` struct will implement.
-use crate::adapters::log_adapter::FernLogger;
-use crate::ports::log_port::LoggerPort;
-
-mod adapters;
-
-// This module provides a console logger that can be used across the frontend, primary, and backends of the application.
-// The logger is implemented as an async resource, which is a good practice for logging in concurrent applications.
+/// This module provides a console logger that can be used across the frontend, primary, and backends of the application.
+/// The logger is implemented as an async resource, which is a good practice for logging in concurrent applications.
 
 /// A struct representing a console logger.
 ///
 /// This struct implements the `LoggerPort` trait, providing methods for logging messages at various levels (info, warning, error, debug).
+/// It uses an instance of `FernLogger` for the actual logging, allowing it to leverage all the capabilities of `FernLogger`.
 pub struct ConsoleLogger {
     fern_logger: FernLogger,
 }
@@ -32,6 +28,7 @@ impl ConsoleLogger {
     }
 }
 
+// Implementing the `LoggerPort` trait for `ConsoleLogger`.
 #[async_trait]
 impl LoggerPort for ConsoleLogger {
     /// Logs an informational message.
@@ -70,6 +67,8 @@ impl LoggerPort for ConsoleLogger {
         self.fern_logger.log_debug(message);
     }
 }
+
+// The main function where the `ConsoleLogger` is used.
 #[actix_rt::main]
 async fn main() {
     // Create a new `ConsoleLogger` instance.

@@ -1,11 +1,9 @@
-// To filter log messages based on their severity level.
+// Importing the necessary modules and types from external crates and the standard library.
+use std::fmt;
 use std::fs;
 // For filesystem operations like creating directories.
 use std::fs::File;
-// For formatting
-use std::fmt;
 
-// Custom trait for logging functionality.
 use chrono::Local;
 // For timestamping log messages with the current local time.
 use colored::*;
@@ -14,20 +12,28 @@ use fern::{log_file, Dispatch};
 // For setting up the logging infrastructure.
 use log::LevelFilter;
 
-// Import necessary modules and types from external crates and the standard library.
 use crate::ports::log_port::LoggerPort;
 
-// For file operations like creating log files.
+// For file operations like creating log files. // For formatting.
 
-// Define a struct that will implement the LoggerPort trait.
+// To filter log messages based on their severity level.
+
+// Custom trait for logging functionality.
+
+/// `FernLogger` is a struct that implements the `LoggerPort` trait.
+/// It is thread-safe due to the implementation of `Sync` and `Send` traits.
 pub struct FernLogger;
 
-// Implement the Sync trait for the FernLogger struct. And
-// allow the struct to be sent between threads safely.
+// Implement the Sync trait for the FernLogger struct. This allows the struct to be sent between threads safely.
 unsafe impl Sync for FernLogger {}
 
 // Implement the Send trait for the FernLogger struct.
 impl FernLogger {
+    /// Creates a new instance of `FernLogger`.
+    ///
+    /// # Returns
+    ///
+    /// * `FernLogger` - The new `FernLogger` instance.
     pub fn new() -> Self {
         FernLogger
     }
@@ -42,32 +48,72 @@ impl fmt::Debug for FernLogger {
 
 // Implement the LoggerPort trait for the FernLogger struct.
 impl LoggerPort for FernLogger {
-    // Define methods for logging messages at different severity levels.
+    /// Logs an informational message.
+    ///
+    /// # Arguments
+    ///
+    /// * `message` - The message to log.
     fn log_info(&self, message: &str) {
         log::info!("{}", message);
     }
 
+    /// Logs a warning message.
+    ///
+    /// # Arguments
+    ///
+    /// * `message` - The message to log.
     fn log_warn(&self, message: &str) {
         log::warn!("{}", message);
     }
 
+    /// Logs an error message.
+    ///
+    /// # Arguments
+    ///
+    /// * `message` - The message to log.
     fn log_error(&self, message: &str) {
         log::error!("{}", message);
     }
 
+    /// Logs a debug message.
+    ///
+    /// # Arguments
+    ///
+    /// * `message` - The message to log.
     fn log_debug(&self, message: &str) {
         log::debug!("{}", message);
     }
 
+    /// Logs a trace message.
+    ///
+    /// # Arguments
+    ///
+    /// * `message` - The message to log.
     fn log_trace(&self, message: &str) {
         log::trace!("{}", message);
     }
+
+    /// Logs an error message from the sled database.
+    ///
+    /// # Arguments
+    ///
+    /// * `message` - The message to log.
+    /// * `error` - The error from the sled database.
     fn log_sled_error(&self, message: &str, error: sled::Error) {
         log::error!("{}: {}", message, error);
     }
 }
 
-// Define a function to initialize the logging system.
+/// Initializes the logging system.
+///
+/// # Arguments
+///
+/// * `log_dir_path` - The path to the directory where the log files will be stored.
+/// * `level_filter` - The minimum severity level of log messages that should be logged.
+///
+/// # Returns
+///
+/// * `FernLogger` - The initialized `FernLogger` instance.
 pub fn init(log_dir_path: &str, level_filter: LevelFilter) -> FernLogger {
     // Ensure the log directory exists, creating it if necessary.
     fs::create_dir_all(log_dir_path).expect("Failed to create log directory");
