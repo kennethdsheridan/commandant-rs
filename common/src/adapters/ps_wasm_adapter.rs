@@ -1,9 +1,11 @@
+use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
+
 
 // Define a struct to hold process data for demonstration purposes.
 // In a real-world scenario, this would be replaced with appropriate data structures.
 #[wasm_bindgen]
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ProcessData {
     cpu_usage: f32,
     memory_usage: f32,
@@ -51,30 +53,49 @@ pub fn write_to_wasm(output: String) -> Result<JsValue, JsValue> {
     Ok(js_value)
 }
 
-// A helper function to parse the `ps` command output and create a `ProcessData` instance.
-// This function is private and not exposed to JavaScript.
+/// Parses the output of the `ps` command and returns a `ProcessData` instance.
+///
+/// This function iterates over each line of the `ps` command output, splits each line into whitespace-separated fields,
+/// and attempts to create a `ProcessData` instance from these fields. If the line has more than 10 fields and the fields
+/// can be successfully parsed into the appropriate data types, a `ProcessData` instance is created and returned.
+///
+/// # Arguments
+///
+/// * `output` - A string slice that holds the output of the `ps` command.
+///
+/// # Returns
+///
+/// * `Ok(ProcessData)` - If the function executes successfully, it returns a `ProcessData` instance.
+/// * `Err(JsValue)` - If an error occurs during the execution of the function, it returns an `Err` result with a `JsValue` that contains the error message.
 fn parse_ps_output(output: &str) -> Result<ProcessData, JsValue> {
-    // Split the output into lines and iterate over them.
-    // In a real-world scenario, you would have more complex parsing logic here.
+    // Iterate over each line in the output
     for line in output.lines() {
-        // Split each line into whitespace-separated fields.
+        // Split the line into whitespace-separated fields
         let fields: Vec<&str> = line.split_whitespace().collect();
+        // Check if the line has more than 10 fields
         if fields.len() > 10 {
-            // Create a `ProcessData` instance from the fields.
+            // Attempt to create a `ProcessData` instance from the fields
             let process_data = ProcessData::new(
-                fields[0].to_string().parse().unwrap(),
+                // Parse the first field into an integer
+                fields[0]
+                    .to_string()
+                    .parse()
+                    .map_err(|_| JsValue::from_str("Error parsing field[0]"))?,
+                // Parse the third field into a float
                 fields[2]
                     .parse()
                     .map_err(|_| JsValue::from_str("Error parsing CPU usage"))?,
+                // Parse the fourth field into a float
                 fields[3]
                     .parse()
                     .map_err(|_| JsValue::from_str("Error parsing memory usage"))?,
+                // Join the remaining fields into a single string
                 fields[10..].join(" "),
             );
-            // Return the `ProcessData` instance.
+            // Return the `ProcessData` instance
             return Ok(process_data);
         }
     }
-    // If no data could be parsed, return an error.
+    // If no data could be parsed, return an error
     Err(JsValue::from_str("No process data found"))
 }

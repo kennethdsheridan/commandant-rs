@@ -14,6 +14,7 @@ pub const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
 
 /// Enumeration to represent the different architectures for stress-ng.
 /// This helps in determining the correct binary to use based on the operating system.
+#[derive(Debug)]
 pub enum StressNgArch {
     Linux,
     MacOS,

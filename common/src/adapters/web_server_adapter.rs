@@ -1,11 +1,12 @@
-// web_server_adapter.rs
-use crate::ports::web_server_port::WebServerPort;
-use crate::src::ports::logger_port::LoggerPort;
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
-
+use std::future;
 use std::sync::Arc;
 
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use tokio::io;
+
+use crate::ports::log_port::LoggerPort;
+// web_server_adapter.rs
+use crate::ports::web_server_port::WebServerPort;
 
 /// WebServerAdapter
 ///
@@ -257,7 +258,7 @@ impl WebServerPort for WebServerAdapter {
         tokio::spawn(server);
 
         // Wait indefinitely, or until you have another condition to close the application
-        futures::future::pending::<()>().await;
+        future::pending::<()>().await;
 
         Ok(())
     }

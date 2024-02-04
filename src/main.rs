@@ -1,17 +1,20 @@
 use std::sync::Arc;
 
 use clap::{Parser, Subcommand};
-use common::adapters::web_server_adapter::WebServerAdapter;
-use tokio::time::{sleep, Duration};
+use futures::SinkExt;
 use tokio::{signal, spawn};
+use tokio::time::{Duration, sleep};
 
+use common::adapters::web_server_adapter::WebServerAdapter;
 use common::ports::log_port::LoggerPort;
+use common::ports::web_server_port::WebServerPort;
 
 use crate::adapters::database_adapter::DatabaseAdapter;
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
+
 
 mod adapters;
 mod ports;
@@ -116,15 +119,10 @@ fn long_description() -> &'static str {
     hardware analysis."
 }
 
-///
-/// ConsoleLogger is a struct representing a console logger.
-///
-struct ConsoleLogger {} // Struct for logging to the console
-
 // The entry point of the application using Actix's asynchronous runtime.
 // This runtime is essential for handling asynchronous tasks and is particularly suitable
 // for web applications and services.
-#[actix_rt::main]
+#[tokio::main]
 async fn main() -> std::io::Result<()> {
     // Initialize the logging system with a specified directory and log level.
     // This setup is critical for ensuring that all parts of the application
@@ -138,8 +136,6 @@ async fn main() -> std::io::Result<()> {
         log_level,
     ));
 
-    let logger = Arc::new(ConsoleLogger {});
-
     // Clone the logger into an Arc<dyn LoggerPort> type. This abstraction (LoggerPort)
     // allows different logging implementations to be plugged into the application without
     // changing the core logic, adhering to the principles of the Ports and Adapters architecture.
@@ -149,20 +145,6 @@ async fn main() -> std::io::Result<()> {
     // handling HTTP requests and serving web content. It represents the web server
     // "adapter" in the architecture.
     let web_server = WebServerAdapter::new(logger.clone());
-
-    // Spawn an asynchronous task to run the web server. This allows the server to operate
-    // concurrently with other parts of the application, like handling CLI commands or
-    // processing signals.
-    let server_handle = spawn(async move { web_server.start_server().await });
-
-    // Set up handling for the Ctrl+C (interrupt) signal in a separate async task.
-    // This approach enables the application to gracefully shut down in response to
-    // interrupt signals.
-    let ctrl_c_logger = logger.clone(); // Clone the logger for this specific task.
-    let ctrl_c_handle = spawn(async move {
-        signal::ctrl_c().await.expect("Failed to listen for Ctrl+C");
-        ctrl_c_logger.log_info("Received Ctrl+C, shutting down.");
-    });
 
     let db_logger = logger.clone(); // Clone the logger for database handling.
 
@@ -202,6 +184,30 @@ async fn main() -> std::io::Result<()> {
     // the main thread to remain responsive and not blocked by long-running operations
     // triggered by CLI commands.
     let command_logger = logger.clone(); // Clone the logger for command handling.
+
+    let ctrl_c_logger = logger.clone(); // Clone the logger for this specific task.
+
+    let server_handle_logger = logger.clone(); // Clone the logger for the web server task.
+
+    let (mut shutdown_sender, shutdown_receiver) = tokio::sync::mpsc::channel::<()>(1);
+
+    // Set up handling for the Ctrl+C (interrupt) signal in a separate async task.
+    // This approach enables the application to gracefully shut down in response to
+    // interrupt signals.
+    let ctrl_c_logger = logger.clone(); // Clone the logger for this specific task.
+    let ctrl_c_handle = spawn(async move {
+        signal::ctrl_c().await.expect("Failed to listen for Ctrl+C");
+        ctrl_c_logger.log_info("Received Ctrl+C, shutting down.");
+        // Send a shutdown signal to the web server task.
+        let _ = shutdown_sender.send(()).await;
+    });
+
+    let db_logger = logger.clone(); // Clone the logger for database handling.
+
+    // Attempt to create a new DatabaseAdapter
+    let path_to_db = "OneForAll_database_file.db"; // database path
+    let db_adapter_result = DatabaseAdapter::new(path_to_db, db_logger.clone());
+
     let _command_handle = spawn(async move {
         match cli.command {
             // Handle each CLI command by invoking the appropriate functionality
@@ -330,15 +336,15 @@ async fn main() -> std::io::Result<()> {
     });
 
     // Initialize signal handling for graceful shutdown.
-    let ctrl_c_signal = async {
-        tokio::signal::ctrl_c()
-            .await
-            .expect("Failed to listen for Ctrl+C");
-        println!("Received Ctrl+C, initiating shutdown...");
-    };
+    let ctrl_c_signal = signal::ctrl_c();
 
-    // Clone the logger for Ctrl+C handling message.
-    let (shutdown_sender, mut shutdown_receiver) = tokio::sync::mpsc::channel::<()>(1);
+    // Start the web server and await its completion.
+    let server_handle = spawn(async move {
+        // Start the web server and await its completion.
+        if let Err(e) = web_server.start_server().await {
+            // Log an error if the web server fails to start.
+        }
+    });
 
     // Await the completion of either the web server task or the Ctrl+C signal handling.
     // This is achieved using `tokio::select!`, which waits for multiple asynchronous

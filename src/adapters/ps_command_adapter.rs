@@ -16,6 +16,7 @@ use common::ports::log_port::LoggerPort;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
 
+
 /// The ProcessData struct represents a single process and its CPU usage percentage.
 /// This struct is used to parse the output of the `ps` command and extract the CPU usage
 /// percentage for each process in the list. The `ps` command outputs a list of processes
@@ -67,9 +68,9 @@ impl PsCommandPort for PsAdapter {
         let output_str = String::from_utf8_lossy(&output.stdout).to_string();
 
         // Call the WASM serialization function from ps_wasm_adapter.rs
-        let wasm_output = ps_wasm_adapter::serialize_to_wasm(output_str)?;
+        let wasm_output = ps_wasm_adapter::write_to_wasm(output_str).unwrap();
 
-        Ok(wasm_output)
+        Ok(String::try_from(wasm_output).unwrap()) // Return the output as a `String`
     }
     /// Writes the output of the `ps` command to a specified file.
     fn write_to_file(&self, output: String, file_path: &str) -> Result<(), String> {

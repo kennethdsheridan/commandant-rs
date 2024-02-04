@@ -8,8 +8,8 @@ use std::{fs, io, str};
 
 use common::ports::log_port::LoggerPort;
 
+use crate::adapters::stress_ng_manager_adapter::StressNgArch;
 use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
-use crate::{ConsoleLogger, StressNgArch};
 
 pub struct StressNgAdapter {
     logger: Arc<dyn LoggerPort>,
@@ -35,7 +35,7 @@ impl<'a> StressNgAdapter {
     ///
     /// # Returns
     /// `StressNgArch`: The architecture-specific enum variant for `stress-ng`.
-    pub fn decide_stress_ng_arch(logger: Arc<ConsoleLogger>) -> StressNgArch {
+    pub fn decide_stress_ng_arch(logger: Arc<dyn LoggerPort>) -> StressNgArch {
         let arch = if cfg!(target_os = "linux") {
             logger.log_debug("Selected stress-ng binary for Linux");
             StressNgArch::Linux
@@ -58,7 +58,7 @@ impl<'a> StressNgAdapter {
     ///
     /// # Returns
     /// A `Result` indicating the success or failure of the operation.
-    pub fn prepare_stress_ng_binary(logger: Arc<ConsoleLogger>) -> Result<String, String> {
+    pub fn prepare_stress_ng_binary(logger: Arc<dyn LoggerPort>) -> Result<String, String> {
         let logger_clone = Arc::clone(&logger);
         let arch = StressNgAdapter::decide_stress_ng_arch(logger_clone);
         // log the selected architecture
@@ -120,7 +120,7 @@ impl<'a> StressNgAdapter {
     }
 
     pub async fn execute_stress_ng_command(
-        logger: Arc<ConsoleLogger>,
+        logger: Arc<dyn LoggerPort>,
         args: &[&str],
     ) -> Result<(), String> {
         let binary_path = "../stress-ng-binary".to_string();
@@ -239,7 +239,7 @@ impl<'a> StressNgAdapter {
     /// A `Result<(), String>` indicating the success (`Ok(())`) or failure (`Err(String)`)
     /// of the removal operation.
     pub fn remove_stress_ng_binary(
-        logger: Arc<ConsoleLogger>,
+        logger: Arc<dyn LoggerPort>,
         binary_path: &str,
     ) -> Result<(), String> {
         logger.log_debug(&format!(
