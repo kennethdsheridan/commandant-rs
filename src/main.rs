@@ -2,8 +2,8 @@ use std::sync::Arc;
 
 use clap::{Parser, Subcommand};
 use futures::SinkExt;
+use tokio::time::{sleep, Duration};
 use tokio::{signal, spawn};
-use tokio::time::{Duration, sleep};
 
 use common::adapters::web_server_adapter::WebServerAdapter;
 use common::ports::log_port::LoggerPort;
@@ -14,7 +14,6 @@ use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
-
 
 mod adapters;
 mod ports;
@@ -189,7 +188,7 @@ async fn main() -> std::io::Result<()> {
 
     let server_handle_logger = logger.clone(); // Clone the logger for the web server task.
 
-    let (mut shutdown_sender, shutdown_receiver) = tokio::sync::mpsc::channel::<()>(1);
+    let (shutdown_sender, shutdown_receiver) = tokio::sync::mpsc::channel::<()>(1);
 
     // Set up handling for the Ctrl+C (interrupt) signal in a separate async task.
     // This approach enables the application to gracefully shut down in response to
