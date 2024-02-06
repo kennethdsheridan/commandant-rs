@@ -5,7 +5,7 @@
 > of now, not all
 > functionalities are fully operational, and the toolset is evolving continuously.
 
-## OneForAll: The Enterprise Hardware Infrastructure Performance & Diagnostic Kit (For Engineers and Gamers)
+## OneForAll: The Enterprise Hardware Infrastructure Performance Benchmarking & Diagnostic Kit (For Engineers and Gamers)
 
 **Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** OneForAll is an innovative
 toolkit, meticulously crafted to revolutionize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
