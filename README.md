@@ -1,7 +1,8 @@
 
 # In Development
 
-> **⚠️ Important Notice:** OneForAll is a dynamic project currently under active development. As of now, not all
+> **🦀 Important Notice:** OneForAll is a dynamic project currently under active development. As 
+> of now, not all
 > functionalities are fully operational, and the toolset is evolving continuously.
 
 ## Welcome to OneForAll: Enterprise Hardware Infrastructure Performance & Reliability Engineering Kit
@@ -62,7 +63,7 @@ across California and the Pacific Northwest, combined with the resilience and te
 with the US Marine Corps, that teaches to "leave things better than how you found it". OneForAll is my contribution to
 making an improvement in the industry I work.
 
-## Real-Time Metrics and System Health Monitoring with WebAssembly
+## View Real-Time System Diagnostics in the Browser with WebAssembly
 
 ### Ultra-Low Resource Utilization and Latency
 
@@ -72,6 +73,8 @@ OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide rea
 
 
 - **System Health Checks:** Keep an eye on the pulse of your hardware's health with live diagnostics, including thermal statistics, storage device longevity, and more.
+
+![](/Users/kennethsheridan/Desktop/Screenshot 2024-02-06 at 12.45.28 PM.png "RealtimeInBrowserDiagnostics")
 
 ### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
 
