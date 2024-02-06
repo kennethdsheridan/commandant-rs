@@ -62,7 +62,43 @@ across California and the Pacific Northwest, combined with the resilience and te
 with the US Marine Corps, that teaches to "leave things better than how you found it". OneForAll is my contribution to
 making an improvement in the industry I work.
 
-## Why OneForAll?
+## Real-Time Metrics and System Health Monitoring with WebAssembly
+
+### Ultra-Low Resource Utilization and Latency
+
+OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide real-time system performance and health monitoring with an incredibly low overhead. Developed in Rust 🦀, OneForAll capitalizes on Rust's compatibility with WebAssembly to bring you a seamless, in-browser experience that is both resource-efficient and offers minimal latency.
+
+- **Real-Time System Metrics:** Monitor CPU, memory, GPU, and network usage in real time, ensuring that you are constantly aware of your system's performance.
+
+
+- **System Health Checks:** Keep an eye on the pulse of your hardware's health with live diagnostics, including thermal statistics, storage device longevity, and more.
+
+### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
+
+- **Predictable Performance:** With Rust's no garbage collection and zero-cost abstractions, OneForAll ensures predictable performance, a non-negotiable in low-level hardware tests.
+
+
+- **Concurrent Processing:** Rust's superior concurrency model allows OneForAll to handle multiple streams of data and metrics efficiently, making real-time updates a reality.
+
+
+- **Safety and Security:** Rust's strict type system and ownership model eliminate a whole class of runtime errors, providing high assurance in the reliability of the tests and the integrity of the monitoring system.
+
+
+- **Near-Native Speed:** WebAssembly runs with near-native performance, and when combined with Rust's already impressive performance characteristics, it provides an optimal solution for high-stakes, low-level hardware testing environments.
+
+
+- **Cross-Platform Support:** WebAssembly facilitates the deployment of OneForAll across various platforms without sacrificing performance, broadening accessibility.
+
+
+- **Resource-Efficient Monitoring:** By compiling to WebAssembly, OneForAll can run within the browser with minimal resource footprint, freeing up system resources for critical tasks.
+
+
+By harnessing the power of Rust and WebAssembly, OneForAll ensures that the monitoring and 
+testing of your enterprise hardware infrastructure is not only comprehensive but also executed 
+with unparalleled efficiency and precision. This approach allows for real-time monitoring and 
+without impacting the underlying tests and diagnostics.
+
+
 
 ### Embracing Open-Source Tools
 
