@@ -14,7 +14,6 @@ This tool is born from a blending of my 8-year journey in enterprise SaaS across
 and the Pacific Northwest; and the characteristics developed from my 8 years in US Marine Corps. 
 
 <!-- TOC -->
-  * [OneForAll: The Enterprise Hardware Infrastructure Performance & Diagnostic Kit](#oneforall-the-enterprise-hardware-infrastructure-performance--diagnostic-kit)
   * [View Real-Time System Diagnostics in the Browser with WebAssembly](#view-real-time-system-diagnostics-in-the-browser-with-webassembly)
     * [Ultra-Low Resource Utilization and Latency](#ultra-low-resource-utilization-and-latency)
     * [Addressing Key Enterprise Concerns](#addressing-key-enterprise-concerns)
