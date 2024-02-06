@@ -106,15 +106,6 @@ Options:
 
 ```
 
-### Making a Difference in the Industry
-
-OneForAll is a visionary toolkit under development, specifically designed to enhance Enterprise Hardware Infrastructure
-Performance & Reliability Engineering. This tool is the culmination of my 8 years of experience in enterprise SaaS
-across California and the Pacific Northwest, combined with the resilience and tenacity instilled in me during my service
-with the US Marine Corps, that teaches to "leave things better than how you found it". OneForAll is my contribution to
-making an improvement in the industry I work.
-
-
 ### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
 
 - **Predictable Performance:** With Rust's no garbage collection and zero-cost abstractions, OneForAll ensures predictable performance, a non-negotiable in low-level hardware tests.
@@ -135,13 +126,6 @@ making an improvement in the industry I work.
 - **Resource-Efficient Monitoring:** By compiling to WebAssembly, OneForAll can run within the browser with minimal resource footprint, freeing up system resources for critical tasks.
 
 
-By harnessing the power of Rust and WebAssembly, OneForAll ensures that the monitoring and 
-testing of your enterprise hardware infrastructure is not only comprehensive but also executed 
-with unparalleled efficiency and precision. This approach allows for real-time monitoring and 
-without impacting the underlying tests and diagnostics.
-
-
-
 ### Embracing Open-Source Tools
 
 Recognizing the absence of a comprehensive, all-in-one tool for backend engineers, OneForAll fills this gap effectively. It
@@ -160,26 +144,8 @@ seamlessly incorporates essential open-source tools such as:
 **stress-ng**: A tool for stress testing systems, vital for evaluating hardware robustness. Advantages of Building in
 Rust
 
-### Engineered in Rust 🦀, a decision driven by several key benefits:
 
-**WebAssembly Support:** Rust's WebAssembly support enables the ability to show performance metrics in a web browser,
-enhancing accessibility and usability. This is crucial for real-time monitoring and analysis with low resource cost.
-
-**Low Latency:** Rust's lack of a garbage collector translates to predictable, low-latency operation, crucial for
-real-time applications.
-
-**Performance:** Rust provides performance close to low-level languages like C, making it ideal for backend systems
-where efficiency is paramount.
-
-**Memory Safety:** Rust's ownership model ensures memory safety, preventing common bugs and security vulnerabilities.
-
-**Concurrency Support:** Rust's advanced concurrency features enable efficient and safe handling of parallel tasks, a
-necessity in modern backend systems.
-
-The additional engineering effort in developing with Rust is justified by these substantial advantages, especially in
-terms of performance and latency improvements over garbage-collected and interpreted languages.
-
-### Adapters Architecture:
+### Highly Maintainable Adapters Architecture:
 
 OneForAll employs a modular adapters architecture, offering several long-term maintenance benefits:
 
