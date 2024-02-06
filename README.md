@@ -12,6 +12,8 @@ toolkit, meticulously crafted to revolutionize Enterprise Hardware Infrastructur
 This state-of-the-art tool is born from a synthesis of my extensive 8-year journey in enterprise SaaS across California
 and the Pacific Northwest.
 
+![](web_console.png)
+
 ### Addressing Key Enterprise Concerns
 
 - **Performance vs. Expenditure:**
@@ -74,7 +76,7 @@ OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide rea
 
 - **System Health Checks:** Keep an eye on the pulse of your hardware's health with live diagnostics, including thermal statistics, storage device longevity, and more.
 
-![](web_console.png)
+
 
 ### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
 
