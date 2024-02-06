@@ -1,7 +1,8 @@
-.PHONY: all build build_linux build_macos clean test fmt check lint help
+.PHONY: all build build_linux build_macos build_wasm clean test fmt check lint help
 
 # Set the binary name
 BINARY_NAME := one_for_all
+
 
 # Set the output directory
 OUTPUT_DIR := ./target/release
@@ -9,9 +10,10 @@ OUTPUT_DIR := ./target/release
 # Determine the operating system
 OS := $(shell uname -s)
 
-# Set the output paths for Linux and macOS binaries
+# Set the output paths for Linux, macOS, and WASM binaries
 BINARY_LINUX := $(OUTPUT_DIR)/linux/$(BINARY_NAME)
 BINARY_MACOS := $(OUTPUT_DIR)/macos/$(BINARY_NAME)
+BINARY_WASM := $(OUTPUT_DIR)/wasm/$(BINARY_NAME)
 
 # Default target: build for the detected OS
 all: build
@@ -37,6 +39,12 @@ build_macos:
 	cargo build --release --target x86_64-apple-darwin
 	mkdir -p $(BINARY_MACOS)
 	cp ./target/x86_64-apple-darwin/release/$(BINARY_NAME) $(BINARY_MACOS)
+
+# Build the WASM binary
+build_wasm:
+	cargo build --release --target wasm32-unknown-unknown
+	mkdir -p $(OUTPUT_DIR)/wasm
+	cp ./target/wasm32-unknown-unknown/release/$(BINARY_NAME) $(OUTPUT_DIR)/wasm/
 
 # Clean the generated binaries and other build artifacts
 clean:
@@ -66,6 +74,7 @@ help:
 	@echo "  build       Alias for 'all'"
 	@echo "  build_linux Build the project for Linux"
 	@echo "  build_macos Build the project for macOS"
+	@echo "  build_wasm  Build the project for WebAssembly"
 	@echo "  clean       Remove build artifacts"
 	@echo "  test        Run tests"
 	@echo "  fmt         Format the code"

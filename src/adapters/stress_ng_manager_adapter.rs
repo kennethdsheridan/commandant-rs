@@ -3,8 +3,9 @@
 use std::fs::File;
 use std::io::{self, Write};
 
+use common::ports::log_port::LoggerPort;
+
 // Required imports for file handling and IO operations.
-use crate::domain::logging::LoggerPort;
 
 // Constants holding the embedded binary data for stress-ng for different operating systems.
 // These binaries are included at compile time and used for stress testing.
@@ -13,6 +14,7 @@ pub const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
 
 /// Enumeration to represent the different architectures for stress-ng.
 /// This helps in determining the correct binary to use based on the operating system.
+#[derive(Debug)]
 pub enum StressNgArch {
     Linux,
     MacOS,

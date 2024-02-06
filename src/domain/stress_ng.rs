@@ -66,7 +66,7 @@ impl StressNgConfig {
     /// // Use `config` to run a stress-ng test
     /// ```
     pub fn new(
-        cpu_load: u32,
+        cpu_load: u32, //
         memory_load: u32,
         timeout: u32,
         aggressive: bool,
@@ -74,7 +74,9 @@ impl StressNgConfig {
         log_brief: bool,
         taskset: Option<HashSet<u32>>,
     ) -> Self {
+        // Implement the `new` method for `StressNgConfig`
         Self {
+            // Return a new instance of `StressNgConfig` with the specified parameters
             cpu_load,
             memory_load,
             timeout,

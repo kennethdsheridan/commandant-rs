@@ -3,10 +3,10 @@
 # The name of your package.
 name = "one_for_all"
 # The version of your package following Semantic Versioning (https://semver.org/).
-version = "0.1.0"
+version = "1.75.0"
 # The edition of Rust you are using, which can affect the syntax and compiler features.
 edition = "2021"
-# The path to your main source file, which can be either main.rs for binaries or lib.rs for libraries.
+# The path to your main source file, which can be either lib for binaries or lib.rs for libraries.
 # This key is not standard and will be ignored by Cargo.
 src = "src/main"
 
@@ -15,7 +15,7 @@ src = "src/main"
 # The log crate provides a logging abstraction layer.
 log = "0.4.14"
 # The env_logger crate provides a logger implementation that can be configured via environment variables.
-env_logger = "0.10.1"
+env_logger = "0.11.1"
 # The fern crate allows you to configure your own logger.
 fern = "0.6.0"
 # The chrono crate provides date and time functionality.
@@ -38,10 +38,26 @@ getrandom = { version = "0.2.11", features = ["js"] }
 bzip2 = "0.4.2"
 # The errono crate provides a way to convert errno values to strings.
 errno = "0.3.0"
+# The libc crate provides a way to call C functions from Rust.
 project-root = "0.2.2"
-
-# The [lib] section defines the configuration for building a library.
-
+# The actix-web crate is a web framework for Rust.
+actix-web = "4.4.1"
+# The tokio crate provides asynchronous I/O for Rust.
+tokio = { version = "1", features = ["full"] }
+# The async-trait crate provides async versions of the standard library traits.
+async-trait = { version = "0.1.51", features = [] }
+# The serde crate provides a framework for serializing and deserializing Rust data structures.
+serde = "1.0.193"
+# Tokio-based single-threaded async runtime for the Actix ecosystem.
+actix-rt = "2.9.0"
+# The futures crate provides a framework for asynchronous programming.
+futures = "0.3.30"
+# The sled crate provides an embedded database.
+sled = "0.34.7"
+# The common crate is a library that contains shared code.
+common = { path = "./common" }
+# The fullstack_rust_app crate is a library that contains the application code.
+fullstack_rust_app = { path = "./fullstack_rust_app" }
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]
@@ -52,3 +68,10 @@ path = "src/main.rs"
 
 # For more information on the keys and their definitions, refer to the official Rust documentation:
 # https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = [
+    "fullstack_rust_app",
+    "common"
+    # Add other workspace members if any
+]
