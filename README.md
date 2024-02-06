@@ -74,7 +74,7 @@ OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide rea
 
 - **System Health Checks:** Keep an eye on the pulse of your hardware's health with live diagnostics, including thermal statistics, storage device longevity, and more.
 
-![](/Users/kennethsheridan/Desktop/Screenshot 2024-02-06 at 12.45.28 PM.png "RealtimeInBrowserDiagnostics")
+![](web_console.png)
 
 ### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
 
