@@ -18,7 +18,7 @@ and the Pacific Northwest.
 
 ### Ultra-Low Resource Utilization and Latency
 
-OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide real-time system performance and health monitoring with an incredibly low overhead. Developed in Rust 🦀, OneForAll capitalizes on Rust's compatibility with WebAssembly to bring you a seamless, in-browser experience that is both resource-efficient and offers minimal latency.
+OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide real-time system performance and health monitoring with an incredibly low overhead. Developed in Rust, OneForAll capitalizes on the languages affinity with WebAssembly to bring you a seamless, in-browser experience that is both resource-efficient and offers minimal latency.
 
 - **Real-Time System Metrics:** Monitor CPU, memory, GPU, and network usage in real time, ensuring that you are constantly aware of your system's performance.
 
