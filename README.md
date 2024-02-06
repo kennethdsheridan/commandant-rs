@@ -6,7 +6,9 @@
 > of now, not all
 > functionalities are fully operational, and the toolset is evolving continuously.
 
-**Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** OneForAll is an web (and CLI)
+**Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** 
+
+OneForAll is an web (and CLI)
 toolkit, designed to modernize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
 This tool is born from a blending of my 8-year journey in enterprise SaaS across California
 and the Pacific Northwest.
