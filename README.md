@@ -11,7 +11,7 @@
 OneForAll is an web (and CLI)
 toolkit, designed to modernize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
 This tool is born from a blending of my 8-year journey in enterprise SaaS across California
-and the Pacific Northwest.
+and the Pacific Northwest; and the characteristics developed from my 8 years in US Marine Corps. 
 
 ## View Real-Time System Diagnostics in the Browser with WebAssembly
 ![](web_console.png)
