@@ -5,14 +5,25 @@
 > of now, not all
 > functionalities are fully operational, and the toolset is evolving continuously.
 
-## Welcome to OneForAll: Enterprise Hardware Infrastructure Performance & Reliability Engineering Kit
+## OneForAll: The Enterprise Hardware Infrastructure Performance & Diagnostic Kit (For Engineers and Gamers)
 
 **Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** OneForAll is an innovative
 toolkit, meticulously crafted to revolutionize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
-This tool is born from a synthesis of my extensive 8-year journey in enterprise SaaS across California
+This state-of-the-art tool is born from a synthesis of my extensive 8-year journey in enterprise SaaS across California
 and the Pacific Northwest.
 
+## View Real-Time System Diagnostics in the Browser with WebAssembly
 ![](web_console.png)
+
+### Ultra-Low Resource Utilization and Latency
+
+OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide real-time system performance and health monitoring with an incredibly low overhead. Developed in Rust 🦀, OneForAll capitalizes on Rust's compatibility with WebAssembly to bring you a seamless, in-browser experience that is both resource-efficient and offers minimal latency.
+
+- **Real-Time System Metrics:** Monitor CPU, memory, GPU, and network usage in real time, ensuring that you are constantly aware of your system's performance.
+
+
+- **System Health Checks:** Keep an eye on the pulse of your hardware's health with live diagnostics, including thermal statistics, storage device longevity, and more.
+
 
 ### Addressing Key Enterprise Concerns
 
@@ -57,6 +68,43 @@ and the Pacific Northwest.
   - **OneForAll's Role:** Assessing thermal behavior under various conditions, ensuring hardware reliability and
     preventing downtime.
 
+```console
+kennethsheridan@Kenneths-Macbook-Prolocal oneforall % ./oneforall --help 
+
+OneForAll is a comprehensive tool designed for in-depth hardware performance analysis and 
+diagnostics. It leverages advanced testing methodologies to provide users with detailed insights into their system's capabilities and bottlenecks. With OneForAll, you can run various tests, including benchmarks, stress tests, and hardware discovery, to understand the full scope of your hardware's performance.
+
+The tool is structured into several modules, each targeting a specific aspect of hardware performance:
+
+- Benchmark: Run extensive benchmarks to measure the speed and efficiency of your CPU, GPU, memory, and storage devices.
+- Stress: Put your system under intense stress to test stability and endurance under heavy loads.
+- Discover: Analyze and report on the configuration and current state of your hardware components.
+- Overwatch: Watch your systems performance in real-time from the web browser, capturing critical metrics and providing live feedback.
+- Database: Traditional database operations for hardware performance and reliability engineering.
+- Blockchain: Distributed database (blockchain) operations for hardware performance and reliability 
+engineering.
+- Help: Print this message or the help of the given subcommand(s).
+
+Usage: one_for_all <COMMAND>
+
+Commands:
+  benchmark     
+  stress        
+  discover      
+  overwatch     
+  database
+  blockchain
+  help          Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
+
+```
+
 ### Making a Difference in the Industry
 
 OneForAll is a visionary toolkit under development, specifically designed to enhance Enterprise Hardware Infrastructure
@@ -64,18 +112,6 @@ Performance & Reliability Engineering. This tool is the culmination of my 8 year
 across California and the Pacific Northwest, combined with the resilience and tenacity instilled in me during my service
 with the US Marine Corps, that teaches to "leave things better than how you found it". OneForAll is my contribution to
 making an improvement in the industry I work.
-
-## View Real-Time System Diagnostics in the Browser with WebAssembly
-
-### Ultra-Low Resource Utilization and Latency
-
-OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide real-time system performance and health monitoring with an incredibly low overhead. Developed in Rust 🦀, OneForAll capitalizes on Rust's compatibility with WebAssembly to bring you a seamless, in-browser experience that is both resource-efficient and offers minimal latency.
-
-- **Real-Time System Metrics:** Monitor CPU, memory, GPU, and network usage in real time, ensuring that you are constantly aware of your system's performance.
-
-
-- **System Health Checks:** Keep an eye on the pulse of your hardware's health with live diagnostics, including thermal statistics, storage device longevity, and more.
-
 
 
 ### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
