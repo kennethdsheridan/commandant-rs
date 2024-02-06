@@ -13,6 +13,35 @@ toolkit, designed to modernize Enterprise Hardware Infrastructure Performance & 
 This tool is born from a blending of my 8-year journey in enterprise SaaS across California
 and the Pacific Northwest; and the characteristics developed from my 8 years in US Marine Corps. 
 
+<!-- TOC -->
+  * [OneForAll: The Enterprise Hardware Infrastructure Performance & Diagnostic Kit](#oneforall-the-enterprise-hardware-infrastructure-performance--diagnostic-kit)
+  * [View Real-Time System Diagnostics in the Browser with WebAssembly](#view-real-time-system-diagnostics-in-the-browser-with-webassembly)
+    * [Ultra-Low Resource Utilization and Latency](#ultra-low-resource-utilization-and-latency)
+    * [Addressing Key Enterprise Concerns](#addressing-key-enterprise-concerns)
+    * [Making a Difference in the Industry](#making-a-difference-in-the-industry)
+    * [Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?](#why-rust-and-webassembly-for-high-assurance-in-low-level-hardware-tests)
+    * [Embracing Open-Source Tools](#embracing-open-source-tools)
+    * [Engineered in Rust 🦀, a decision driven by several key benefits:](#engineered-in-rust--a-decision-driven-by-several-key-benefits)
+    * [Adapters Architecture:](#adapters-architecture)
+  * [Storage Performance Testing](#storage-performance-testing)
+    * [Storage Test Checklists](#storage-test-checklists)
+    * [Workload Types and Significance](#workload-types-and-significance)
+  * [Network Performance Testing with Iperf3](#network-performance-testing-with-iperf3)
+    * [Network Test Checklists](#network-test-checklists)
+    * [Workload Types and Network Significance](#workload-types-and-network-significance)
+  * [GPU-Centric Performance Testing](#gpu-centric-performance-testing)
+    * [GPU Test Checklists](#gpu-test-checklists)
+    * [Significance of GPU specific Workloads](#significance-of-gpu-specific-workloads)
+  * [CPU Tests Checklist](#cpu-tests-checklist)
+  * [User Experience Enhancements](#user-experience-enhancements)
+  * [Setting Up OneForAll](#setting-up-oneforall)
+  * [Roadmap and Contributions](#roadmap-and-contributions)
+  * [Licensing](#licensing)
+  * [Acknowledgments](#acknowledgments)
+  * [Contact Information](#contact-information)
+  * [Social](#social)
+<!-- TOC -->
+
 ## View Real-Time System Diagnostics in the Browser with WebAssembly
 ![](web_console.png)
 
