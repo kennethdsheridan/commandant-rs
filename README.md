@@ -9,7 +9,7 @@
 
 **Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** OneForAll is an innovative
 toolkit, meticulously crafted to revolutionize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
-This state-of-the-art tool is born from a synthesis of my extensive 8-year journey in enterprise SaaS across California
+This tool is born from a synthesis of my extensive 8-year journey in enterprise SaaS across California
 and the Pacific Northwest.
 
 ![](web_console.png)
