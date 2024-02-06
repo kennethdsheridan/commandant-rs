@@ -6,9 +6,9 @@
 > of now, not all
 > functionalities are fully operational, and the toolset is evolving continuously.
 
-**Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** OneForAll is an innovative
-toolkit, meticulously crafted to revolutionize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
-This state-of-the-art tool is born from a synthesis of my extensive 8-year journey in enterprise SaaS across California
+**Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** OneForAll is an web (and CLI)
+toolkit,  crafted to revolutionize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
+This state-of-the-art tool is born from a blending of my 8-year journey in enterprise SaaS across California
 and the Pacific Northwest.
 
 ## View Real-Time System Diagnostics in the Browser with WebAssembly
