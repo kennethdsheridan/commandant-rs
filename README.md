@@ -1,462 +1,413 @@
-# OneForAll: The Enterprise Hardware Performance Benchmarking & Diagnostic Kit (For Engineers and Gamers)
+# Self Made Techie Guide
 
-#### In Development
+## Guidebook for Transforming into a Successful Technology Professional
 
-> **🦀 Important Notice:** OneForAll is a dynamic project currently under active development. As 
-> of now, not all
-> functionalities are fully operational, and the toolset is evolving continuously.
+This guidebook aims to provide a comprehensive pathway for individuals with 9-5 jobs to transition into successful technology professionals in Frontend, Backend, Cyber Security, Blockchain or SaaS Cloud/AI product engineering. It includes certification guidance and resources for learning.
 
-**Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** 
+# Table of Contents
 
-OneForAll is an web (and CLI)
-toolkit, designed to modernize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
-This tool is born from a blending of my 8-year journey in enterprise SaaS across California
-and the Pacific Northwest; and the characteristics developed from my 8 years in US Marine Corps. 
+1. [Introduction](#introduction)
+2. [Cyber Security Courses](#cyber-security-courses)
+3. [Frontend Engineering](#frontend-engineering)
+4. [Blockchain Engineering](#blockchain-engineering)
+5. [Backend Engineering](#backend-engineering)
+    - [Backend Engineering Roles and Pay Ranges](#backend-engineering-roles-and-pay-ranges)
+    - [Golang Courses](#golang-courses)
+    - [Rust Courses](#rust-courses)
+    - [Linux Courses](#linux-courses)
+6. [Microsoft Azure Training: Machine Learning & AI Courses](#microsoft-azure-training-machine-learning-ai-courses)
+    - [Microsoft Azure AI Services Training Resources](#microsoft-azure-ai-services-training-resources)
+    - [Udemy Courses for Microsoft Azure Certifications](#udemy-courses-for-microsoft-azure-certifications)
+7. [AWS Training: Machine Learning & AI Courses](#aws-training-machine-learning-ai-courses)
+    - [AWS AI Services Training Resources](#aws-ai-services-training-resources)
+    - [Udemy Courses for AWS Certifications](#udemy-courses-for-aws-certifications)
+8. [ServiceNow Training: Career Journey Courses](#servicenow-training-career-journey-courses)
+    - [ServiceNow Career Journey Portal](#servicenow-career-journey-portal)
+    - [ServiceNow RiseUp Program](#servicenow-riseup-program)
+    - [Career Journey Courses](#career-journey-courses)
+9. [Resources for Learning](#resources-for-learning)
+    - [Udemy](#udemy)
+    - [O'Reilly](#oreilly)
+10. [Contact and Socials](#contact-and-socials)
 
-<!-- TOC -->
-  * [View Real-Time System Diagnostics in the Browser with WebAssembly](#view-real-time-system-diagnostics-in-the-browser-with-webassembly)
-    * [Ultra-Low Resource Utilization and Latency](#ultra-low-resource-utilization-and-latency)
-    * [Addressing Key Enterprise Concerns](#addressing-key-enterprise-concerns)
-    * [Making a Difference in the Industry](#making-a-difference-in-the-industry)
-    * [Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?](#why-rust-and-webassembly-for-high-assurance-in-low-level-hardware-tests)
-    * [Embracing Open-Source Tools](#embracing-open-source-tools)
-    * [Engineered in Rust 🦀, a decision driven by several key benefits:](#engineered-in-rust--a-decision-driven-by-several-key-benefits)
-    * [Adapters Architecture:](#adapters-architecture)
-  * [Storage Performance Testing](#storage-performance-testing)
-    * [Storage Test Checklists](#storage-test-checklists)
-    * [Workload Types and Significance](#workload-types-and-significance)
-  * [Network Performance Testing with Iperf3](#network-performance-testing-with-iperf3)
-    * [Network Test Checklists](#network-test-checklists)
-    * [Workload Types and Network Significance](#workload-types-and-network-significance)
-  * [GPU-Centric Performance Testing](#gpu-centric-performance-testing)
-    * [GPU Test Checklists](#gpu-test-checklists)
-    * [Significance of GPU specific Workloads](#significance-of-gpu-specific-workloads)
-  * [CPU Tests Checklist](#cpu-tests-checklist)
-  * [User Experience Enhancements](#user-experience-enhancements)
-  * [Setting Up OneForAll](#setting-up-oneforall)
-  * [Roadmap and Contributions](#roadmap-and-contributions)
-  * [Licensing](#licensing)
-  * [Acknowledgments](#acknowledgments)
-  * [Contact Information](#contact-information)
-  * [Social](#social)
-<!-- TOC -->
+# Boot.dev: Mastering Backend Engineering with Go, Python, and Rust
 
-## View Real-Time System Diagnostics in the Browser with WebAssembly
-![](web_console.png)
+## Boot.dev and My Self-taught Journey
 
-### Ultra-Low Resource Utilization and Latency
+Boot.dev offers a standout approach to learning backend engineering, focusing on the essential and increasingly sought-after languages of Go, Python, and soon, Rust. This platform combines in-depth tutorials with practical coding challenges, catering to both beginners and seasoned developers eager to advance their backend development skills.
 
-OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide real-time system performance and health monitoring with an incredibly low overhead. Developed in Rust, OneForAll capitalizes on the languages affinity with WebAssembly to bring you a seamless, in-browser experience that is both resource-efficient and offers minimal latency.
+## Go: The Performer
 
-- **Real-Time System Metrics:** Monitor CPU, memory, GPU, and network usage in real time, ensuring that you are constantly aware of your system's performance.
+Go, or Golang, is introduced on Boot.dev as a language designed for simplicity, efficiency, and high performance. It's renowned for its strong support for concurrency and efficient memory management, making it a prime choice for scalable backend systems. The Go curriculum on Boot.dev dives into:
 
+- Go's syntax and standard libraries
+- Best practices for Go programming
+- Real-world application development and deployment
 
-- **System Health Checks:** Keep an eye on the pulse of your hardware's health with live diagnostics, including thermal statistics, storage device longevity, and more.
+Learners emerge from the Go modules not just familiar with the language but proficient in creating and deploying Go-based backend solutions.
 
+## Python: The Versatile
 
-### Addressing Key Enterprise Concerns
+Python is celebrated for its versatility and readability, making it another focal point of Boot.dev's backend engineering curriculum. Its wide range of libraries and frameworks, such as Django and Flask, opens up a plethora of backend development possibilities. The Python track covers:
 
-- **Performance vs. Expenditure:**
-  - **Question:** Are you truly receiving the performance that your investment in cloud or on-premises solutions
-    warrants?
+- Fundamental programming concepts
+- Web development with Python
+- Database-driven web application creation
 
-  - **OneForAll's Role:** Providing clear insights into the efficiency and output of your infrastructure, ensuring you
-    get the value you pay for.
+Projects and practical exercises ensure that learners gain hands-on experience, preparing them for diverse roles in web development, data analysis, and more.
 
+## Rust: The Future
 
-- **Optimization of Power Consumption:**
-  - **Question:** What is the power footprint of your design during peak usage, and is there room for optimization?
+Boot.dev's forthcoming Rust curriculum is set to equip learners with skills in this highly demanded language for system-level programming and backend development. Rust offers:
 
-  - **OneForAll's Role:** Analyzing and pinpointing areas where power efficiency can be enhanced, leading to cost
-    savings and environmental benefits.
+- Memory safety without garbage collection
+- Concurrency without data races
+- Zero-cost abstraction
 
+Incorporating Rust, Boot.dev is preparing its users for the future of backend development, focusing on performance, reliability, and efficient resource utilization.
 
-- **Memory Configuration Integrity:**
-  - **Question:** Can a mixed memory configuration operate error-free in a production environment?
+## The Boot.dev Experience
 
-  - **OneForAll's Role:** Running in-depth tests to validate the reliability and stability of mixed memory setups.
+Boot.dev stands out by ensuring a comprehensive learning journey that integrates computer science fundamentals, algorithms, and data structures alongside language-specific tutorials. It offers:
 
+- A supportive community
+- Real-time feedback on coding exercises
+- A pathway to building a solid project portfolio
 
-- **Storage Longevity:**
-  - **Question:** What is the remaining lifespan of your high-value storage drives or NVMe SSDs?
+Whether starting from scratch or looking to broaden your backend development expertise, Boot.dev provides a tailored, self-paced learning experience in Go, Python, and Rust, equipping students for both current and future tech industry demands.
 
-  - **OneForAll's Role:** Offering a detailed prognosis on storage health and longevity, helping you plan for
-    replacements and upgrades.
+## Cyber Security Courses
 
+Udemy offers a variety of Cyber Security courses, including those that focus on the application of Artificial Intelligence (AI) in this field, as well as courses that prepare you for certifications from Microsoft, Google, and AWS. Here are a few notable ones:
 
-- **Network Interface Card (NIC) Performance Validation:**
-  - **Question:** Does the NIC maintain the speeds and latency as advertised by the vendor?
+Details: Here are some Cyber Security courses on Udemy, along with the estimated pay ranges for professionals with these certifications:
 
-  - **OneForAll's Role:** Verifying vendor claims on NIC performance, ensuring that your network backbone lives up to
-    expectations.
+**Microsoft:**
+1. [Microsoft AZ-500 Certification: Azure Security Technologies](https://www.udemy.com/course/az-500-course/): This course provides IT Security Professionals with the knowledge and skills needed to implement security controls, maintain an organization's security posture, and identify and remediate security vulnerabilities on Azure. The average salary for a Microsoft Certified: Azure Security Engineer Associate in the United States ranges from $126,000 to $213,000 annually.
 
+**Google:**
+1. [Google Cloud Security Professional Certificate](https://www.udemy.com/course/google-cloud-security-professional-certificate/): This course covers core cybersecurity skills, from detecting and escalating threats to using key technologies including Google Cloud. The average salary for a Google Professional Cloud Security Engineer in the United States ranges from $120,000 to $208,000 annually.
 
-- **Thermal Efficiency:**
-  - **Question:** Is your hardware designed effectively to prevent thermal events?
+**AWS:**
+1. [AWS Certified Security - Specialty Certification](https://www.udemy.com/course/aws-certified-security-specialty/): This course validates your expertise in creating and implementing security solutions in the AWS Cloud. The average salary for an AWS Certified Security Specialist in the United States ranges from $114,000 to $160,000 annually.
 
-  - **OneForAll's Role:** Assessing thermal behavior under various conditions, ensuring hardware reliability and
-    preventing downtime.
+These figures are estimates and actual salaries may vary based on factors such as location, years of experience, and level of expertise.
 
-```console
-kennethsheridan@Kenneths-Macbook-Prolocal oneforall % ./oneforall --help 
+Details: Here are some generic Cyber Security courses on Udemy, along with the estimated pay ranges for professionals in this field:
 
-OneForAll is a comprehensive tool designed for in-depth hardware performance analysis and 
-diagnostics. It leverages advanced testing methodologies to provide users with detailed insights into their system's capabilities and bottlenecks. With OneForAll, you can run various tests, including benchmarks, stress tests, and hardware discovery, to understand the full scope of your hardware's performance.
+1. [The Complete Cyber Security Course: Hackers Exposed!](https://www.udemy.com/course/network-security-course/): This course covers practical, real-world cybersecurity threats and how to protect yourself from them. The average salary for a Cyber Security Specialist in the United States ranges from $82,002 to $117,097 annually.
 
-The tool is structured into several modules, each targeting a specific aspect of hardware performance:
+2. [Learn Ethical Hacking from Scratch](https://www.udemy.com/course/learn-ethical-hacking-from-scratch/): This course teaches you how to become an ethical hacker and discover vulnerabilities in systems, networks, and applications. The average salary for an Ethical Hacker in the United States ranges from $69,123 to $111,311 annually.
 
-- Benchmark: Run extensive benchmarks to measure the speed and efficiency of your CPU, GPU, memory, and storage devices.
-- Stress: Put your system under intense stress to test stability and endurance under heavy loads.
-- Discover: Analyze and report on the configuration and current state of your hardware components.
-- Overwatch: Watch your systems performance in real-time from the web browser, capturing critical metrics and providing live feedback.
-- Database: Traditional database operations for hardware performance and reliability engineering.
-- Blockchain: Distributed database (blockchain) operations for hardware performance and reliability 
-engineering.
-- Help: Print this message or the help of the given subcommand(s).
+3. [Cyber Security for Beginners 2023](https://www.udemy.com/course/cyber-security-for-beginners-v2023/): This course provides an introduction to cybersecurity, covering topics such as threat landscape, cryptography, and network security. The average salary for a Cyber Security Analyst in the United States ranges from $76,410 to $117,459 annually.
 
-Usage: one_for_all <COMMAND>
+These figures are estimates and actual salaries may vary based on factors such as location, years of experience, and level of expertise.
 
-Commands:
-  benchmark     
-  stress        
-  discover      
-  overwatch     
-  database
-  blockchain
-  help          Print this message or the help of the given subcommand(s)
+## Frontend Engineering
 
-Options:
-  -h, --help
-          Print help (see a summary with '-h')
+Based on the search results, here are the estimated pay ranges for various roles in the tech industry:
 
-  -V, --version
-          Print version
+1. **Front End Developer**: The average salary for a Front End Developer in the United States is approximately $112,255 per year. For those with 7+ years of experience, the average salary is $122,033. The salary range typically falls between $106,922 and $130,083[11].
 
-```
+2. **UI/UX Designer**: The average salary for a UI/UX Designer in the United States is approximately $93,101 per year. The average UX design salary is $94,351 and can go up to $95,572. The average hourly pay for a UI/UX Designer is $53.94[6][12].
 
-### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
+3. **Web Designer**: The average salary for a Web Designer in the United States is approximately $57,000 per year, with a range from $60,117 to $75,185. The average hourly pay for a Web Designer is $25.43[13].
 
-- **Predictable Performance:** With Rust's no garbage collection and zero-cost abstractions, OneForAll ensures predictable performance, a non-negotiable in low-level hardware tests.
+4. **JavaScript Developer**: The average salary for a JavaScript Developer in the United States is approximately $110,156 per year.
 
+These salaries can vary widely depending on factors such as location, years of experience, level of education, and specific skills.
 
-- **Concurrent Processing:** Rust's superior concurrency model allows OneForAll to handle multiple streams of data and metrics efficiently, making real-time updates a reality.
+- [Frontend Development with Nana](https://www.youtube.com/watch?v=t8pPdKYpowI&pp=ygURbGVhcm4gcHl0aG9uIG5hbmE%3D): This comprehensive course by Nana Janashia provides a detailed introduction to frontend development, covering everything from setting up a local development environment to learning core concepts and syntax.
+- [What is UI/UX Design? (with Nana)](https://www.youtube.com/watch?v=4frLlFtFybY): Nana Janashia's content is well-regarded for its comprehensive and practical approach to teaching complex technical concepts.
+- [Frontend Development – HTML, CSS, JavaScript Course with Bonus Projects](https://youtube.com/watch?v=un6ZyFkqFKo): This comprehensive frontend development course for beginners guides you through key concepts and techniques to write performant, idiomatic HTML, CSS, and JavaScript code.
+- [Learn Frontend Development by Building 11 Projects – Full Course](https://youtube.com/watch?v=jFfo23yIWac): This course takes your frontend development skills to the next level by teaching you how to build 10 projects using HTML, CSS, and JavaScript.
+- [Frontend Development Tutorial for Beginners | Full Course](https://youtube.com/watch?v=YS4e4q9oBaU): This full course provides a detailed overview of frontend development, covering everything from setting up a local development environment to learning core concepts and syntax.
 
+### Blockchain Engineering
+Blockchain engineering involves designing, building, and maintaining blockchain systems and applications, which securely record transactions across multiple computers. This technology has gained popularity in various industries, including finance, supply chain, and healthcare, due to its security, transparency, and decentralized nature.
 
-- **Safety and Security:** Rust's strict type system and ownership model eliminate a whole class of runtime errors, providing high assurance in the reliability of the tests and the integrity of the monitoring system.
+Here are some common roles in blockchain engineering along with their estimated pay ranges:
 
+1. **[Blockchain Developer](https://www.betterteam.com/blockchain-developer-job-description)**: These professionals create and implement blockchain solutions, such as smart contracts and decentralized applications (dApps). The average salary for a Blockchain Developer in the United States is approximately $139,000 per year, with a minimum base salary of $60,000 and a maximum of $256,000.
 
-- **Near-Native Speed:** WebAssembly runs with near-native performance, and when combined with Rust's already impressive performance characteristics, it provides an optimal solution for high-stakes, low-level hardware testing environments.
+2. **[Web Designer](https://www.upwork.com/hire/web-designers/job-description/)**: They design the user interface and user experience of blockchain-based web applications. The average salary for a Web Designer in the United States is approximately $57,000 per year, with a range from $60,117 to $75,185.
 
+3. **[Blockchain UX Designer](https://www.analyticsinsight.net/career-guide-all-you-need-to-know-about-a-blockchain-ux-designer/)**: They focus on creating user-friendly interfaces for blockchain applications, ensuring a seamless user experience. The average salary for a UX Designer in the United States is approximately $93,101 per year.
 
-- **Cross-Platform Support:** WebAssembly facilitates the deployment of OneForAll across various platforms without sacrificing performance, broadening accessibility.
+4. **[Blockchain Quality Engineer](https://www.spiceworks.com/tech/it-careers-skills/articles/blockchain-engineer/amp/)**: These engineers are responsible for testing and ensuring the quality of blockchain applications and systems. The average salary for a Quality Engineer in the United States is approximately $71,000 per year.
 
+5. **[Blockchain Legal Consultant](https://www.toptal.com/blockchain/job-description)**: They provide legal advice and guidance on blockchain-related matters, such as regulatory compliance and intellectual property. The average salary for a Legal Consultant in the United States is approximately $81,000 per year.
 
-- **Resource-Efficient Monitoring:** By compiling to WebAssembly, OneForAll can run within the browser with minimal resource footprint, freeing up system resources for critical tasks.
+These salaries can vary widely depending on factors such as location, years of experience, level of education, and specific skills.
 
+To excel in these roles, professionals should be proficient in programming languages like Solidity, Go, Rust, and JavaScript, as well as have a deep understanding of blockchain architecture and cryptography. As the demand for blockchain engineers continues to grow, learning these skills and pursuing a career in this field can lead to numerous opportunities and a promising future.
 
-### Embracing Open-Source Tools
+## Backend Engineering
 
-Recognizing the absence of a comprehensive, all-in-one tool for backend engineers, OneForAll fills this gap effectively. It
-seamlessly incorporates essential open-source tools such as:
+## Backend Engineering Roles and Pay Ranges
 
-**Redfish:** An industry-standard specification for managing and operating computing hardware.
+1. **Backend Engineer**: Backend Engineers are responsible for designing, building, and maintaining the server-side of web applications. They work with databases, servers, and application logic to create the backbone of a website or app. The average annual pay for a Backend Engineer in the United States is around $147,662, with a range from a low of $110,000 to a high of $217,000.
 
-**Flexible I/O Tester (FIO):** A versatile tool for I/O workload simulation, crucial for performance analysis.
 
-**iperf3**: A widely-used network performance measurement tool, essential for bandwidth testing.
+2. **Senior Backend Engineer**: Senior Backend Engineers take on more complex tasks and responsibilities, often leading projects and overseeing the work of junior engineers. They are also involved in strategic decision-making regarding backend technologies and architecture. The average salary for a Senior Backend Engineer in the United States is around $160,000, with a range from $120,000 to $230,000.
 
-**pgbench**: A benchmarking tool for PostgreSQL databases, vital for evaluating database performance.
 
-**sysbench**: A versatile benchmarking tool for CPU, memory, file I/O, and database performance.
+3. **Backend Developer**: Backend Developers are similar to Backend Engineers, but their role is more focused on coding and debugging. They write server-side web application logic and usually develop and maintain the database. The average salary for a Backend Developer in the United States is around $125,000, with a range from $90,000 to $160,000.
 
-**stress-ng**: A tool for stress testing systems, vital for evaluating hardware robustness. Advantages of Building in
-Rust
 
+4. **DevOps Engineer**: DevOps Engineers work on both development and operations, aiming to shorten the system development life cycle and provide continuous delivery with high software quality. They often work closely with Backend Engineers to ensure the scalability and security of the backend infrastructure. The average salary for a DevOps Engineer in the United States is around $115,666, with a range from $85,000 to $150,000.
 
-### Highly Maintainable Adapters Architecture:
 
-OneForAll employs a modular adapters architecture, offering several long-term maintenance benefits:
+5. **Database Administrator**: Database Administrators are responsible for the performance, integrity, and security of a database. They are involved in the planning and development of the database, as well as troubleshooting any issues on behalf of the users. The average salary for a Database Administrator in the United States is around $93,750, with a range from $70,000 to $130,000.
+### Golang Courses
 
-**Scalability:** Adapters can be independently developed and scaled, allowing for more straightforward integration of
-new features and tools.
+1. [Learn How To Code: Google's Go (golang) Programming Language](https://www.udemy.com/course/learn-how-to-code/): This course provides a comprehensive introduction to Go, covering everything from the basics to advanced topics.
 
-**Maintainability:** This architecture simplifies updates and maintenance, as changes to one adapter do not necessarily
-impact others.
 
-**Flexibility:** Adapters enable OneForAll to be more adaptable to different environments and requirements, enhancing
-its utility across various backend scenarios.
+2. [Web Development w/ Google’s Go (golang) Programming Language](https://www.udemy.com/course/go-programming-language/): This course focuses on using Go for web development, teaching you how to build scalable, high-performance web applications with Go.
 
-**Interoperability:** With a standardized interface, adapters facilitate better interoperability between different
-systems and tools.
 
-## Storage Performance Testing
+3. [Go: The Complete Developer's Guide (Golang)](https://www.udemy.com/course/go-the-complete-developers-guide/): This course covers a wide range of topics in Go, including Go's concurrency model, how to organize code using packages, and how to test and debug your Go applications.
 
-OneForAll, using the Flexible I/O Tester (FIO) includes a series of storage tests tailored to various operational
-environments and workload demands. These tests focus on read-write mixes, simulating real-world scenarios in different
-enterprise settings.
 
-### Storage Test Checklists
+4. [Golang with Nana](https://www.youtube.com/watch?v=t8pPdKYpowI&pp=ygURbGVhcm4gcHl0aG9uIG5hbmE%3D): This comprehensive course by Nana Janashia provides a detailed introduction to Go, a popular programming language in the cloud engineering world.
 
-- [ ] **Enterprise SaaS Read Intensive (rw0)**
-  - Use Case: Predominantly read operations
-  - Example: Online content repositories, digital libraries
 
-- [ ] **Enterprise SaaS Write Intensive (rw70)**
-  - Use Case: High-frequency write operations
-  - Example: Data logging systems, high-volume transaction databases
+5. [What is Platform Engineering? (with Nana)](https://www.youtube.com/watch?v=4frLlFtFybY): Nana Janashia's content is well-regarded for its comprehensive and practical approach to teaching complex technical concepts.
 
-- [ ] **Enterprise SaaS Mixed Use (rw30)**
-  - Use Case: Balanced mix of read and write operations
-  - Example: E-commerce platforms, CRM systems
 
-- [ ] **Consumer Use (rw50)**
-  - Use Case: General consumer applications with moderate read and write balance
-  - Example: Home media servers, personal cloud storage solutions
+6. [Go Programming – Golang Course with Bonus Projects](https://youtube.com/watch?v=un6ZyFkqFKo): This comprehensive Go programming course for beginners guides you through key concepts and techniques to write performant, idiomatic Go code.
 
-### Workload Types and Significance
 
-Different operational environments necessitate varied storage performance characteristics:
+7. [Learn Go Programming by Building 11 Projects – Full Course](https://youtube.com/watch?v=jFfo23yIWac): This course takes your Go programming skills to the next level by teaching you how to build 10 projects using Go.
 
-- **Read-Intensive Workloads:**
-  - These workloads are characterized by a high percentage of read operations.
-  - Companies like Netflix utilize this type of workload. They leverage Content Delivery Networks (CDNs) to achieve
-    high read speeds with low latency, essential for streaming movies and shows.
-  - Example Presets: `rw30` (read 70%), `rw0` (read 100%).
 
+8. [Golang Tutorial for Beginners | Full Go Course](https://youtube.com/watch?v=YS4e4q9oBaU): This full course provides a detailed overview of Go, covering everything from setting up a local development environment to learning core concepts and syntax.
 
-- **Write-Intensive Workloads:**
-  - Dominated by write operations, these workloads are crucial for environments where data generation and recording
-    are constant.
-  - Ideal for systems like real-time analytics platforms or high-transaction databases.
 
+9. [Learn Go Programming - Golang Tutorial for Beginners](https://youtube.com/watch?v=YS4e4q9oBaU): This tutorial serves as a stepping-off point to go through a survey of the entire Go language, hitting some of the key libraries along the way.
 
-- **Mixed Workloads:**
-  - Offering a balance between read and write operations, mixed workloads cater to a variety of enterprise
-    applications.
-  - Such environments require versatile storage solutions that can handle fluctuating demands efficiently.
+### Rust Courses
 
-By simulating these varied environments, OneForAll helps enterprises optimize their storage configurations for specific
-operational needs, ensuring maximum efficiency and performance.
+1. [Rust Fundamentals by Duke University](https://www.classcentral.com/report/best-rust-courses/): This course welcomes learners of all levels, from the programming newbie to the pro. It provides a solid foundation in Rust programming and develops proficiency in advanced concepts.
 
-## Network Performance Testing with Iperf3
 
-OneForAll incorporates network performance tests using `iperf3`, catering to diverse network environments and demands.
-These tests simulate a variety of real-world scenarios to assess and optimize network performance.
+2. [Introductory Course for the Curious by Linux Foundation](https://www.classcentral.com/report/best-rust-courses/): This course is perfect for those who wonder why they should learn Rust in addition to C or other legacy programming languages. It covers the basic syntax of Rust, ways to fix and improve Rust code, and the Rust toolchain.
 
-### Network Test Checklists
 
-- [ ] **High-Bandwidth Throughput Testing**
-  - Use Case: Testing maximum data transfer rates in high-capacity networks
-  - Example: Backbone network infrastructures, data center interconnects
+3. [Comprehensive Rust by Google](https://google.github.io/comprehensive-rust/): This is a free Rust course developed by the Android team at Google. The course covers the full spectrum of Rust, from basic syntax to advanced topics like generics and error handling.
 
-- [ ] **Low-Latency Testing**
-  - Use Case: Assessing network responsiveness, crucial for latency-sensitive applications
-  - Example: Online gaming platforms, real-time communication systems
+### Linux Courses
 
-- [ ] **Jitter Measurement**
-  - Use Case: Measuring the variability in latency, important for audio and video streaming
-  - Example: VoIP services, live-streaming platforms
+1. [Introduction to Linux (LFS101x) by Linux Foundation](https://training.linuxfoundation.org/training/introduction-to-linux/): This free course helps you develop a good working knowledge of Linux using both the graphical interface and command line across the major Linux distribution families.
 
-- [ ] **Simultaneous Bidirectional Testing**
-  - Use Case: Evaluating network performance in both directions simultaneously
-  - Example: Symmetric internet services, peer-to-peer networks
 
-- [ ] **TCP/UDP Throughput Testing**
-  - Use Case: Comparing performance differences between TCP and UDP protocols
-  - Example: File transfer services (TCP), live broadcast feeds (UDP)
+2. [Linux Administration: The Complete Linux Bootcamp for 2023](https://www.udemy.com/topic/linux/): This course is one of the top courses in Linux and Linux Command Line on Udemy.
 
-### Workload Types and Network Significance
 
-Different network environments require specific performance characteristics:
+3. [Mastering Linux: The Comprehensive Guide](https://www.udemy.com/topic/linux/): This course on Udemy provides a comprehensive guide to mastering Linux.
 
-- **High-Bandwidth Environments:**
-  - Essential for applications and services that demand high data transfer rates.
-  - Example: Cloud storage providers, large-scale content delivery networks like Netflix.
 
-- **Low-Latency Networks:**
-  - Critical for applications where every millisecond counts.
-  - Example: Financial trading platforms, competitive online gaming.
+4. [Complete Red Hat Linux Training](https://www.udemy.com/topic/linux/): This Udemy course provides complete training for Red Hat Linux.
 
-- **Stable and Reliable Connections:**
-  - Important for services where consistent quality of experience is necessary.
-  - Example: Video conferencing tools, telemedicine applications.
 
-By employing these varied test scenarios, OneForAll enables organizations to fine-tune their networks to meet specific
-operational needs, ensuring optimal performance and user experience.
+### Microsoft Azure Training: Machine Learning & AI Courses
 
-## GPU-Centric Performance Testing
+[Microsoft Azure Training](https://docs.microsoft.com/en-us/learn/azure/) offers a variety of machine learning and AI classes. These courses can help you prepare for job roles like Data Scientist, Machine Learning Engineer, or AI Specialist. Some of the courses include:
 
-OneForAll integrates GPU performance testing to cater to the diverse and evolving needs of modern computing
-environments. These tests are meticulously designed to evaluate and enhance GPU performance for various specialized
-tasks.
+- [Microsoft Azure Machine Learning Embark](https://docs.microsoft.com/en-us/learn/paths/create-no-code-predictive-models-azure-ml/)
+- [Practical Data Science with Microsoft Azure AI Platform](https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/)
+- [Deep Learning on Microsoft Azure](https://docs.microsoft.com/en-us/learn/paths/introduction-to-deep-learning/)
+- [AI/ML Operations (MLOps) with Microsoft Azure DevOps](https://docs.microsoft.com/en-us/learn/paths/mlops-fundamentals/)
+- [Building Intelligent Applications with Microsoft Azure AI Services](https://docs.microsoft.com/en-us/learn/paths/azure-ai-fundamentals/)
 
-### GPU Test Checklists
+These courses cover a range of topics including Azure Machine Learning, Azure AI Services, and more.
 
-- [ ] **Graphics Rendering Performance Testing**
-  - Use Case: Assessing GPU efficiency in rendering tasks.
-  - Example: Gaming engines, 3D modeling software.
+### Microsoft Azure AI Services Training Resources
 
-- [ ] **Compute Shader Testing**
-  - Use Case: Evaluating GPUs in general-purpose computing.
-  - Example: Data analysis software, scientific applications.
+Microsoft Azure AI Services Training Resources offers a set of AI training content. Some of the courses and certifications include:
 
-- [ ] **Parallel Processing Capability Testing**
-  - Use Case: Measuring GPU effectiveness in parallel tasks.
-  - Example: Machine learning models, large-scale simulations.
+- [Get started with Microsoft Azure AI Platform](https://docs.microsoft.com/en-us/learn/paths/get-started-with-artificial-intelligence-on-azure/)
+- [Perform foundational ML, AI and data tasks in Microsoft Azure](https://docs.microsoft.com/en-us/learn/paths/perform-foundational-data-ai-tasks-in-azure/)
+- [Language, Speech, Text, and Translation with Microsoft Azure Speech-to-Text, Text-to-Speech, and Translation API](https://docs.microsoft.com/en-us/learn/paths/translate-speech-with-speech-services/)
+- [Microsoft Certified - Professional Machine Learning Engineer](https://docs.microsoft.com/en-us/learn/certifications/azure-ai-engineer/)
+- [Building AI Applications with Microsoft Azure AI Services](https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/)
+- [Natural Language Processing in Microsoft Azure](https://docs.microsoft.com/en-us/learn/paths/natural-language-processing/)
 
-- [ ] **Video Encoding/Decoding Testing**
-  - Use Case: Testing GPU performance in video processing.
-  - Example: Video editing software, streaming services.
+These courses and certifications cover a range of topics including Azure Machine Learning, Azure AI Services, and more.
 
-- [ ] **Memory Bandwidth and Throughput Testing**
-  - Use Case: Evaluating data transfer speeds within GPUs.
-  - Example: High-resolution image processing, large datasets.
+These courses provide in-depth knowledge, hands-on experience, and practice exams to help you prepare for the Microsoft Azure Certified - Professional Machine Learning Engineer exam.
 
-- [ ] **API Performance Testing**
-  - Use Case: Assessing performance of GPU APIs like CUDA, Vulkan, DirectX.
-  - Example: Specialized software development, cross-platform applications.
+Please note that the availability of these courses and certifications may vary, and it's recommended to check the official websites for the most up-to-date information.
 
-- [ ] **AI Test - Inference Trainability**
-  - Use Case: Testing GPU capabilities in AI model training and inference.
-  - Example: Deep learning applications, AI research.
+### Microsoft Azure Training: Machine Learning & AI Courses
 
-- [ ] **AI Test - Co-processing and Accelerators**
-  - Use Case: Assessing the role of GPUs as co-processors or accelerators.
-  - Example: Complex computations in AI, system acceleration.
+[Microsoft Azure Training](https://docs.microsoft.com/en-us/learn/azure/) offers a variety of machine learning and AI classes. These courses can help you prepare for job roles like Data Scientist, Machine Learning Engineer, or AI Specialist. Some of the courses include:
 
-- [ ] **Thermal Management Testing**
-  - Use Case: Evaluating GPU thermal behavior under load.
-  - Example: High-intensity computing tasks, extended GPU usage.
+- [Microsoft Azure Machine Learning Embark](https://docs.microsoft.com/en-us/learn/paths/create-no-code-predictive-models-azure-ml/)
+- [Practical Data Science with Microsoft Azure AI Platform](https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/)
+- [Deep Learning on Microsoft Azure](https://docs.microsoft.com/en-us/learn/paths/introduction-to-deep-learning/)
+- [AI/ML Operations (MLOps) with Microsoft Azure DevOps](https://docs.microsoft.com/en-us/learn/paths/mlops-fundamentals/)
+- [Building Intelligent Applications with Microsoft Azure AI Services](https://docs.microsoft.com/en-us/learn/paths/azure-ai-fundamentals/)
 
-### Significance of GPU specific Workloads
+These courses cover a range of topics including Azure Machine Learning, Azure AI Services, and more.
 
-GPUs play a critical role in various sectors, necessitating specific performance traits:
+### Microsoft Azure AI Services Training Resources
 
-- **High-Performance Graphics and Computing:**
-  - Crucial for tasks demanding visual fidelity and computational power.
-  - Example: Gaming development, AI model training.
+Microsoft Azure AI Services Training Resources offers a set of AI training content. Some of the courses and certifications include:
 
-- **Efficient Parallel Processing and AI Acceleration:**
-  - Increasingly important in AI and machine learning fields.
-  - Example: Real-time data processing, neural network training.
+- [Get started with Microsoft Azure AI Platform](https://docs.microsoft.com/en-us/learn/paths/get-started-with-artificial-intelligence-on-azure/)
+- [Perform foundational ML, AI and data tasks in Microsoft Azure](https://docs.microsoft.com/en-us/learn/paths/perform-foundational-data-ai-tasks-in-azure/)
+- [Language, Speech, Text, and Translation with Microsoft Azure Speech-to-Text, Text-to-Speech, and Translation API](https://docs.microsoft.com/en-us/learn/paths/translate-speech-with-speech-services/)
+- [Microsoft Certified - Professional Machine Learning Engineer](https://docs.microsoft.com/en-us/learn/certifications/azure-ai-engineer/)
+- [Building AI Applications with Microsoft Azure AI Services](https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/)
+- [Natural Language Processing in Microsoft Azure](https://docs.microsoft.com/en-us/learn/paths/natural-language-processing/)
 
-- **Stable and Effective Thermal Management:**
-  - Essential for maintaining performance and hardware longevity.
-  - Example: Continuously running high-load applications, data centers.
+These courses and certifications cover a range of topics including Azure Machine Learning, Azure AI Services, and more.
 
-## CPU Tests Checklist
+### Udemy Courses for Microsoft Azure Certifications
 
-- [x] **Basic CPU Load Test**
-  - Assessing overall CPU performance under load.
+Udemy offers several courses to help you prepare for Microsoft Azure certifications, including the Microsoft Certified - Professional Machine Learning Engineer certification:
 
-- [x] **Multi-Core Testing**
-  - Evaluating the performance of multicore processing capabilities.
+Details: Here are some Microsoft Azure Certified Professional Machine Learning Engineer courses on Udemy, along with the estimated pay ranges for professionals with this certification:
 
-- [ ] **Floating Point Arithmetic Test**
-  - Testing the CPU's ability to handle floating-point operations.
+- [Microsoft Azure Certified Professional Machine Learning Engineer 2023](https://www.udemy.com/course/azure-machine-learning/): This course provides comprehensive training to prepare you for the Microsoft Azure Certified Professional Machine Learning Engineer exam. The average salary for a Microsoft Azure Certified Professional Machine Learning Engineer in the United States ranges from $120,000 to $190,000 annually.
 
-- [ ] **Integer Arithmetic Test**
-  - Assessing the CPU's efficiency in handling integer calculations.
 
-- [ ] **Prime Number Calculation**
-  - Evaluating CPU performance through prime number generation.
+- [Microsoft Azure Certified Professional Machine Learning Engineer - Hands On!](https://www.udemy.com/course/azure-machine-learning-using-python/): This hands-on course is designed to help you ace the Microsoft Azure Certified Professional Machine Learning Engineer exam, with a mix of in-depth theory, architectural diagrams, and hands-on training. The pay range for professionals with this certification is similar to the previous course, ranging from $120,000 to $190,000 annually.
 
-- [ ] **Cache Performance Test**
-  - Testing the efficiency and speed of the CPU cache.
 
-- [ ] **Thermal Testing**
-  - Monitoring CPU temperature under various load conditions.
+- [Microsoft Azure Certified Professional Machine Learning Engineer Full Practice Exam](https://www.udemy.com/course/azure-ai-fundamentals-ai-900-practice-tests/): This course offers a full practice exam to help you prepare for the Microsoft Azure Certified Professional Machine Learning Engineer exam. The pay range for professionals with this certification is also similar, ranging from $120,000 to $190,000 annually.
 
-- [ ] **Concurrency and Parallelism Test**
-  - Assessing how the CPU handles concurrent and parallel tasks.
+These figures are estimates and actual salaries may vary based on factors such as location, years of experience, and level of expertise.
 
-- [ ] **CPU Stability Test**
-  - Long-duration testing to ensure CPU stability under sustained load.
+These courses provide in-depth knowledge, hands-on experience, and practice exams to help you prepare for the Microsoft Azure Certified - Professional Machine Learning Engineer exam.
 
-- [ ] **Frequency Scaling Test**
-  - Evaluating the CPU's frequency scaling behavior under different load scenarios.
+Please note that the availability of these courses and certifications may vary, and it's recommended to check the official websites for the most up-to-date information.
 
-- [ ] **Instruction Set Testing**
-  - Testing specific CPU instruction sets for performance and stability.
+### AWS Training: Machine Learning & AI Courses
 
-- [ ] **Virtualization Performance Test**
-  - Assessing CPU performance in a virtualized environment.
+[AWS Training](https://aws.amazon.com/training/learn-about/machine-learning/) offers a variety of machine learning and AI classes. These courses can help you prepare for job roles like Data Scientist, Machine Learning Engineer, or AI Specialist. Some of the courses include:
 
-- [ ] **Power Consumption Test**
-  - Monitoring the CPU's power usage under various workloads.
+- [AWS Machine Learning Embark](https://aws.amazon.com/training/course-descriptions/machine-learning-embark/)
+- [Practical Data Science with Amazon SageMaker](https://aws.amazon.com/training/course-descriptions/practical-data-science/)
+- [Deep Learning on AWS](https://aws.amazon.com/training/course-descriptions/deep-learning/)
+- [AI/ML Operations (MLOps) with AWS DevOps](https://aws.amazon.com/training/course-descriptions/mlops/)
+- [Building Intelligent Applications with AWS AI Services](https://aws.amazon.com/training/course-descriptions/building-intelligent-applications/)
 
-## User Experience Enhancements
+These courses cover a range of topics including Amazon SageMaker, AWS DeepRacer, AWS DeepComposer, AWS DeepLens, AWS Inferentia, and more[1].
 
-Our roadmap includes several exciting features designed to expand OneForAll's capabilities:
+### AWS AI Services Training Resources
 
-- [ ] **Advanced Reporting Tools:**
-  - Sophisticated reporting features for compliance, including a Certificate of Production Readiness.
+[AWS AI Services Training Resources](https://aws.amazon.com/training/learning-paths/machine-learning/) offers a set of AI training content. Some of the courses and certifications include:
 
-- [ ] **In-Browser Real-Time Access:**
-  - Enabling real-time system performance and health updates directly through a web browser.
+- [Get started with Amazon SageMaker](https://aws.amazon.com/training/course-descriptions/getting-started-amazon-sagemaker/)
+- [Perform foundational ML, AI and data tasks in AWS](https://aws.amazon.com/training/course-descriptions/foundational-data-ai-tasks/)
+- [Language, Speech, Text, and Translation with Amazon Transcribe, Amazon Polly, Amazon Lex, and Amazon Translate](https://aws.amazon.com/training/course-descriptions/language-speech-text-translation/)
+- [AWS Certified Machine Learning - Specialty](https://aws.amazon.com/training/course-descriptions/machine-learning-specialty/)
+- [Building AI Applications with AWS AI Services](https://aws.amazon.com/training/course-descriptions/building-ai-applications/)
+- [Natural Language Processing in AWS](https://aws.amazon.com/training/course-descriptions/natural-language-processing/)
 
-- [ ] **Long-Term Asset Monitoring:**
-  - Enhancing the monitoring of assets throughout their lifecycle for detailed performance insights.
+These courses and certifications cover a range of topics including Amazon SageMaker, Amazon Comprehend, Amazon Lex, Amazon Polly, and more.
 
-## Setting Up OneForAll
+### Udemy Courses for AWS Certifications
 
-As development progresses, OneForAll is being geared for easy integration:
+Udemy offers several courses to help you prepare for AWS certifications, including the AWS Certified Machine Learning - Specialty certification:
+Details: Here are some AWS Certified Machine Learning Specialty courses on Udemy, along with the estimated pay ranges for professionals with this certification:
 
-- **System Compatibility**: Aiming for compatibility with modern operating systems like Linux and macOS (Windows support
-  planned).
+- [AWS Certified Machine Learning Specialty 2023 - Hands On!](https://www.udemy.com/course/aws-machine-learning/): This course provides hands-on training to prepare you for the AWS Certified Machine Learning Specialty exam. The average salary for an AWS Certified Machine Learning Specialist in the United States ranges from $112,000 to $160,000 annually.
 
 
-- **User-Friendly Installation**: Focused on ensuring a straightforward setup process.
+- [AWS Certified Machine Learning Specialty MLS-C01 [NEW 2023]](https://www.udemy.com/course/aws-certified-machine-learning-specialty-mls/): This course is designed to help you ace the Certified Machine Learning Specialty exam, with a mix of in-depth theory, architectural diagrams, and hands-on training. The pay range for professionals with this certification is similar to the previous course, ranging from $112,000 to $160,000 annually.
 
-## Roadmap and Contributions
 
-The roadmap includes expanding capabilities with a community-driven approach. Contributions that align with the vision
-of enhancing enterprise hardware performance are welcomed.
+- [AWS Certified Machine Learning Specialty Full Practice Exam](https://www.udemy.com/course/aws-machine-learning-practice-exam/): This course offers a full practice exam to help you prepare for the AWS Certified Machine Learning Specialty exam. The pay range for professionals with this certification is also similar, ranging from $112,000 to $160,000 annually.
 
-## Licensing
+These figures are estimates and actual salaries may vary based on factors such as location, years of experience, and level of expertise.
 
-Upon completion, OneForAll will be licensed under the MIT License.
+These courses provide in-depth knowledge, hands-on experience, and practice exams to help you prepare for the AWS Certified Machine Learning - Specialty exam.
 
-## Acknowledgments
+Please note that the availability of these courses and certifications may vary, and it's recommended to check the official websites for the most up-to-date information.
 
-This project owes its progress to the contributors, partners, and the broader open-source community, alongside the
-learnings and experiences gained in the enterprise SaaS sector and the US Marine Corps.
+## ServiceNow Training: Career Journey Courses
 
-- **Stress-ng**: Designed by Colin Ian King, Principal Software Engineer at Intel.  
-  [ColinIanKing/stress-ng](https://github.com/ColinIanKing/stress-ng)
+ServiceNow offers a variety of resources and courses to help you navigate your career journey in IT management and administration. These resources are designed for different levels of learners, from beginners to experienced professionals, and are organized by job level to help you prepare for specific roles.
 
+ServiceNow is a cloud-based software platform that helps businesses streamline their operations and improve efficiency. It does this by automating routine tasks and integrating various IT systems into a single platform. This allows for better management of digital workflows across different departments, such as IT, customer service, HR, and more. ServiceNow also provides tools for real-time communication and collaboration, making it easier for teams to work together. In essence, it's a one-stop-shop for managing and improving enterprise operations
 
-- **Iperf3**: Designed and maintained by Energy Sciences Network (ESnet).  
-  [ESnet](https://github.com/esnet): Energy Sciences Network.
+### ServiceNow Career Journey Portal
 
+The [ServiceNow Career Journey Portal](https://nowlearning.servicenow.com/lxp/en/pages/career-journey?id=journey) provides a comprehensive set of training materials, courses, and credentials. It covers a wide range of topics and roles, including System Administrator, Application Developer, Implementer, and Technical Project Manager.
 
-- **Flexible IO Tester (FIO)**: Created by Jens Axboe, Software Engineer at Meta (formerly Facebook).  
-  [axboe/fio](https://github.com/axboe/fio): Flexible I/O Tester.
+### ServiceNow RiseUp Program
 
-- **Redfish**: Developed by the Distributed Management Task Force (DMTF).  
-  [DMTF](https://www.dmtf.org/): Distributed Management Task Force.
+The [ServiceNow RiseUp Program](https://www.servicenow.com/company/riseup.html) is designed to help individuals take charge of their career paths and benefit from the demand for ServiceNow talent across the ecosystem. The program offers a fast track for learning and provides opportunities to join the thousands who have grown their ServiceNow skills.
 
-- **sysbench**: Created by Alexey Kopytov, Senior Software Engineer at Percona.
+### Career Journey Courses
 
-- **pgbench**: Part of the PostgreSQL database system, maintained by the PostgreSQL Global Development Group.
+Here are some of the career journey courses available:
+Details: Here are the pay ranges for various roles at ServiceNow:
 
-- **Rust Programming Language**: Developed by Mozilla Research, now maintained by the Rust Foundation.  
-  [Rust Programming Language](https://www.rust-lang.org/): A language empowering everyone to build reliable and efficient
-  software.
+- [System Administrator Career Journey](https://nowlearning.servicenow.com/lxp/en/pages/journey-overview?id=journey_overview&journey_id=55f79b4a1b96add013f9a6c1b24bcb30): System Administrators are highly organized technical experts who manage the ServiceNow platform for their companies. The average salary for a ServiceNow System Administrator in the United States is between $70,000 and $120,000 annually.
 
-## Contact Information
 
-For inquiries or feedback:
+- [Application Developer Career Journey](https://nowlearning.servicenow.com/lxp/en/pages/journey-overview?id=journey_overview&journey_id=cbdb13f91b5aa5d013f9a6c1b24bcb44): This journey is a collection of courses, credentials, and activities that will help you prepare for a ServiceNow Application Developer role. The average salary for a ServiceNow Application Developer in the United States ranges from $80,000 to $140,000 per year.
 
-- **Email:** [kennethdashensheridan@gmail.com](mailto:kennethdashensheridan@gmail.com)
 
-## Social
+- [Implementer Career Journey](https://nowlearning.servicenow.com/lxp/en/pages/journey-overview?id=journey_overview&journey_id=5ab1e9591b1e61d013f9a6c1b24bcb1e): This career journey will help you prepare for a role as a ServiceNow Implementer. The average salary for a ServiceNow Implementer in the United States is between $80,000 and $130,000 annually.
 
-- [TikTok: @kennyknightsheridan](https://www.tiktok.com/@kennyknightsheridan?_t=8i3DZQJhD8l&_r=1)
-- [Threads: @kennethdashen](https://www.threads.net/@kennethdashen)
-- [Facebook: knight.sheridan](https://www.facebook.com/knight.sheridan?mibextid=2JQ9oc)
-- [GitLab: Kenny D. Sheridan](https://gitlab.com/kennethdsheridan)
-- [GitHub: kennethdsheridan (Kenny Sheridan)](https://github.com/kennethdsheridan)
-- [LinkedIn: kennethdashensheridan](https://linkedin.com/in/kennethdashensheridan)
-- [X/Twitter: @kennydashen](https://twitter.com/kennydashen)
+
+- [Technical Project Manager Career Journey](https://nowlearning.servicenow.com/lxp/en/pages/journey-overview?id=journey_overview&journey_id=97ac27f11bdaa5d013f9a6c1b24bcb1e): This career journey will help you prepare for a ServiceNow Technical Project Manager role. The average salary for a ServiceNow Technical Project Manager in the United States ranges from $90,000 to $150,000 per year.
+
+These figures are estimates and actual salaries may vary.
+
+These courses provide in-depth knowledge, hands-on experience, and resources to help you master ServiceNow and advance in your career. Please note that the availability of these courses may vary, and it's recommended to check the official ServiceNow website for the most up-to-date information.
+
+
+## Resources for Learning
+
+Here are some resources that can help you on your journey:
+
+## Udemy
+
+[Udemy](https://www.udemy.com) offers a wide range of courses that cater to different learning styles:
+
+- Visual learners: Courses often include videos and images.
+- Auditory learners: Courses may include lectures and discussions.
+- Kinesthetic learners: Courses may include practical exercises and hands-on activities.
+
+Udemy encourages instructors to incorporate various learning styles into their course design, such as visual, aural (auditory), verbal, kinesthetic (physical), logical, social, and solitary learning styles.
+
+## O'Reilly
+
+[O'Reilly](https://www.oreilly.com) provides resources that cater to seven learning styles:
+
+- Visual
+- Print (reading/writing)
+- Auditory
+- Interactive (verbal)
+- Haptic (touch)
+- Kinesthetic (physical)
+- Olfactory (smell and taste)
+
+The platform offers books, live events, and courses curated by job role, allowing learners to choose the resources that best suit their learning style.
+
+These platforms cater to different types of learners by offering a variety of resources and teaching methods that align with various learning styles. They understand that everyone learns differently and strive to provide a diverse range of learning experiences to cater to these differences.
+
+Remember, the journey to becoming a technology professional is a marathon, not a sprint. It requires continuous learning and adaptation. Good luck on your journey!
+
+Here is the requested information formatted into Markdown:
+
+## Contact and Socials
+
+**Email:** kennethdsheridan@gmail.com
+
+**Social Media and Other Platforms:**
+
+- [LinkedIn](https://linkedin.com/in/kennethdashensheridan)
+- [TikTok](https://www.tiktok.com/@kennyknightsheridan?_t=8i3DZQJhD8l&_r=1)
+- [Threads](https://www.threads.net/@kennethdashen)
+- [Facebook](https://www.facebook.com/knight.sheridan?mibextid=2JQ9oc)
+- [GitLab](https://gitlab.com/kennethdsheridan)
+- [GitHub](https://github.com/kennethdsheridan)
 
