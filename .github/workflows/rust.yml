@@ -1,0 +1,76 @@
+# This is a GitHub Actions workflow for a Rust project.
+# It is triggered on every push and pull request.
+name: CI
+
+on: [push, pull_request]
+
+# Environment variables used across the workflow.
+env:
+  BIN_NAME: one_for_all  # The name of the binary to be built.
+  ARTIFACTS_DIR: artifacts  # The directory where artifacts are stored.
+  RUST_PROJECT: github.com/kennethdsheridan/oneforall  # The GitHub repository of the Rust project.
+
+jobs:
+  # The build job compiles the Rust project.
+  build:
+    runs-on: ubuntu-latest  # The type of runner that the job will run on.
+    steps:
+      - name: Checkout code  # Checks out your repository under $GITHUB_WORKSPACE.
+        uses: actions/checkout@v2
+
+      - name: Set up Rust  # Sets up a Rust environment for use in actions.
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable  # The Rust toolchain to install.
+          override: true  # Whether to override the existing Rust toolchain.
+
+      - name: Build  # Builds the Rust project.
+        run: |
+          echo "Preparing to build for Linux..."
+          cargo build --release --target x86_64-unknown-linux-gnu
+
+      - name: Upload artifact  # Uploads the built binary as an artifact.
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux-binary
+          path: target/x86_64-unknown-linux-gnu/release/${{ env.BIN_NAME }}
+
+  # The test job runs the tests of the Rust project.
+  test:
+    needs: build  # This job needs the build job to complete first.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Test  # Runs the tests of the Rust project.
+        run: cargo test --verbose
+
+  # The document job generates the documentation of the Rust project.
+  document:
+    needs: test  # This job needs the test job to complete first.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Generate Documentation  # Generates the documentation of the Rust project.
+        run: cargo doc --no-deps
+
+      - name: Upload artifact  # Uploads the generated documentation as an artifact.
+        uses: actions/upload-artifact@v2
+        with:
+          name: documentation
+          path: target/doc
