@@ -104,6 +104,7 @@ Options:
 
 ```
 
+
 ### Why Rust and WebAssembly for High Assurance in Low-Level Hardware Tests?
 
 - **Predictable Performance:** With Rust's no garbage collection and zero-cost abstractions, OneForAll ensures predictable performance, a non-negotiable in low-level hardware tests.
