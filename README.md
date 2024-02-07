@@ -71,11 +71,13 @@ OneForAll leverages the unique capabilities of WebAssembly (Wasm) to provide rea
 kennethsheridan@Kenneths-Macbook-Prolocal oneforall % ./oneforall --help 
 
 OneForAll is a comprehensive tool designed for in-depth hardware performance analysis and 
-diagnostics. It leverages advanced testing methodologies to provide users with detailed insights into their system's capabilities and bottlenecks. With OneForAll, you can run various tests, including benchmarks, stress tests, and hardware discovery, to understand the full scope of your hardware's performance.
+diagnostics. It leverages advanced testing methodologies to provide users with detailed insights into their
+system's capabilities and bottlenecks. With OneForAll, you can run various tests, including benchmarks, stress
+tests, and hardware discovery, to understand the full scope of your hardware's performance.
 
 The tool is structured into several modules, each targeting a specific aspect of hardware performance:
 
-- Benchmark: Run extensive benchmarks to measure the speed and efficiency of your CPU, GPU, memory, and storage devices.
+- Benchmark: Run extensive benchmarks to measure the speed and efficiency of your CPU, GPU, memory,and storage devices.
 - Stress: Put your system under intense stress to test stability and endurance under heavy loads.
 - Discover: Analyze and report on the configuration and current state of your hardware components.
 - Overwatch: Watch your systems performance in real-time from the web browser, capturing critical metrics and providing live feedback.
