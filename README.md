@@ -4,7 +4,20 @@
 > of now, not all
 > functionalities are fully operational, and the toolset is evolving continuously.
 
-**Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** 
+## Completed Features:
+
+- Realtime in-browser system metrics
+- CPU stress tests
+- RAM stress tests
+
+## Incoming Features:
+
+- GPU stress tests
+- Network stress tests
+- AI assisted system characterization
+- View Stress and Benchmark results in the broswer 
+
+### **Are you maximizing the potential of your cloud or on-premises hardware infrastructure?** 
 
 OneForAll is an web (and CLI)
 toolkit, designed to modernize Enterprise Hardware Infrastructure Performance & Reliability Engineering.
