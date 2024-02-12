@@ -1,8 +1,6 @@
 # OneForAll: The Enterprise Hardware Performance Benchmarking & Diagnostic Kit (For Engineers and Gamers)
 
-> **🦀 Important Notice:** OneForAll is a dynamic project currently under active development. As 
-> of now, not all
-> functionalities are fully operational, and the toolset is evolving continuously.
+> **🦀 Important Notice:** Official release date is March 01, 2024
 
 ## Completed Features:
 
