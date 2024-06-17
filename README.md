@@ -1,5 +1,5 @@
 
-# commandant-rs: Scalable Enterprise Hardware Performance Benchmarking & Diagnostic Kit
+# commandant-rs: A Scalable Enterprise HPC Infrastructure Benchmarking & Diagnostic Kit
 
 
 ## Available Features:
