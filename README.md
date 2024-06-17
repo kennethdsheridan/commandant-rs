@@ -1,5 +1,5 @@
 
-# bootcamp-rs: The Scalable Enterprise Hardware Performance Benchmarking & Diagnostic Kit
+# commandant-rs: The Scalable Enterprise Hardware Performance Benchmarking & Diagnostic Kit
 
 
 ## Available Features:
@@ -15,14 +15,14 @@
 
 ### **Are you overspending on GPUs or other hardware because you don't know exactly what your stack needs to perform?**
 
-bootcamp-rs is a web-based and CLI toolkit engineered to enhance performance and reliability in enterprise hardware infrastructure. This toolkit is the culmination of my 8-year journey in enterprise SaaS in California and the Pacific Northwest, fused with skills honed during my 8 years as a US Marine.
+commandant-rs is a web-based and CLI toolkit engineered to enhance performance and reliability in enterprise hardware infrastructure. This toolkit is the culmination of my 8-year journey in enterprise SaaS in California and the Pacific Northwest, fused with skills honed during my 8 years as a US Marine.
 
 ## Real-Time System Diagnostics via WebAssembly
 ![Web Console Display](web_console.png)
 
 ### Ultra-Low Resource Utilization and Latency
 
-Developed in Rust, bootcamp-rs takes advantage of WebAssembly (Wasm) to offer real-time performance and health monitoring with minimal overhead. This integration ensures resource-efficient, low-latency diagnostics directly in your browser.
+Developed in Rust, commandant-rs takes advantage of WebAssembly (Wasm) to offer real-time performance and health monitoring with minimal overhead. This integration ensures resource-efficient, low-latency diagnostics directly in your browser.
 
 ### Addressing Core Enterprise Concerns
 
@@ -34,7 +34,7 @@ Developed in Rust, bootcamp-rs takes advantage of WebAssembly (Wasm) to offer re
 - **Thermal Efficiency**: Assesses and mitigates risks of thermal issues to maintain reliability.
 
 ```console
-kennethsheridan@Kenneths-Macbook-Prolocal bootcamp-rs % ./bootcamp-rs --help 
+kennethsheridan@Kenneths-Macbook-Prolocal commandant-rs % ./commandant-rs --help 
 
 Detailed instructions for hardware performance analysis and diagnostics. Supports a range of tests including benchmarks, stress tests, and system discovery to unveil your hardware's full capabilities.
 ```
@@ -49,7 +49,7 @@ Detailed instructions for hardware performance analysis and diagnostics. Support
 
 ### Leveraging Open-Source Tools
 
-bootcamp-rs integrates essential tools like Redfish, Flexible I/O Tester (FIO), and iperf3, among others, to provide a robust testing framework.
+commandant-rs integrates essential tools like Redfish, Flexible I/O Tester (FIO), and iperf3, among others, to provide a robust testing framework.
 
 ### Modular Adapters Architecture
 
