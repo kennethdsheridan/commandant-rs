@@ -1,15 +1,15 @@
 
-# commandant-rs: The Scalable Enterprise Hardware Performance Benchmarking & Diagnostic Kit
+# commandant-rs: Scalable Enterprise Hardware Performance Benchmarking & Diagnostic Kit
 
 
 ## Available Features:
-- Real-time system metrics in-browser
 - CPU and RAM stress tests
+- RoCE performanace tests
+- Acclerator (GPU, APU) testing
 
 ## Upcoming Features:
-- GPU and Network stress tests
 - AI-assisted system characterization
-- In-browser result visualization
+- In-browser result visualization (with WebAssembly)
 
 ### **Are you fully utilizing your hardware infrastructure's potential?**
 
