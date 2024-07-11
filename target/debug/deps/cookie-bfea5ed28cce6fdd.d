@@ -1,0 +1,11 @@
+/Users/kennethsheridan/commandant-rs/target/debug/deps/libcookie-bfea5ed28cce6fdd.rmeta: /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/lib.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/builder.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/parse.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/jar.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/delta.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/draft.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/expiration.rs
+
+/Users/kennethsheridan/commandant-rs/target/debug/deps/cookie-bfea5ed28cce6fdd.d: /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/lib.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/builder.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/parse.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/jar.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/delta.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/draft.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/expiration.rs
+
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/lib.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/builder.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/parse.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/jar.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/delta.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/draft.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.16.2/src/expiration.rs:
