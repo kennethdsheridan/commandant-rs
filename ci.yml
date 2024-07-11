@@ -6,7 +6,7 @@
 
   # Environment variables used across the workflow.
   env:
-    BIN_NAME: one_for_all  # The name of the binary to be built.
+    BIN_NAME: commandant-rs  # The name of the binary to be built.
     ARTIFACTS_DIR: artifacts  # The directory where artifacts are stored.
     RUST_PROJECT: github.com/kennethdsheridan/oneforall  # The GitHub repository of the Rust project.
 

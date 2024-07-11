@@ -1547,6 +1547,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "commandant-rs"
+version = "1.75.0"
+dependencies = [
+ "actix-rt",
+ "actix-web",
+ "async-trait",
+ "burn",
+ "bzip2",
+ "chrono",
+ "clap",
+ "colored",
+ "common",
+ "env_logger 0.11.1",
+ "errno",
+ "fern",
+ "fullstack_rust_app",
+ "futures",
+ "getrandom",
+ "log",
+ "plotters",
+ "project-root",
+ "serde",
+ "sled",
+ "tokio",
+ "uuid",
+ "wasm-bindgen",
+ "wasm-pack",
+]
+
+[[package]]
 name = "common"
 version = "0.1.0"
 dependencies = [
@@ -3955,36 +3985,6 @@ name = "once_cell"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
-
-[[package]]
-name = "one_for_all"
-version = "1.75.0"
-dependencies = [
- "actix-rt",
- "actix-web",
- "async-trait",
- "burn",
- "bzip2",
- "chrono",
- "clap",
- "colored",
- "common",
- "env_logger 0.11.1",
- "errno",
- "fern",
- "fullstack_rust_app",
- "futures",
- "getrandom",
- "log",
- "plotters",
- "project-root",
- "serde",
- "sled",
- "tokio",
- "uuid",
- "wasm-bindgen",
- "wasm-pack",
-]
 
 [[package]]
 name = "option-ext"

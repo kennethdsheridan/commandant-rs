@@ -1,7 +1,7 @@
 # The [package] section defines the configuration for your Rust package.
 [package]
 # The name of your package.
-name = "one_for_all"
+name = "commandant-rs"
 # The version of your package following Semantic Versioning (https://semver.org/).
 version = "1.75.0"
 # The edition of Rust you are using, which can affect the syntax and compiler features.
@@ -63,7 +63,7 @@ burn = "0.13.2"
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]
 # The name of the binary executable.
-name = "one_for_all"
+name = "commandant-rs"
 # The path to the source file for the binary executable.
 path = "src/main.rs"
 
