@@ -1,0 +1,18 @@
+2024-07-10T21:42:18 [DEBUG] - [34mno previous snapshot found[0m
+2024-07-10T21:42:18 [DEBUG] - [34mordering before clearing tears: {0: 0}, max_header_stable_lsn: 0[0m
+2024-07-10T21:42:18 [DEBUG] - [34min clean_tail_tears, found missing item in tail: None and we'll scan segments {0: 0} above lowest lsn 0[0m
+2024-07-10T21:42:18 [DEBUG] - [34mfiltering out segments after detected tear at (lsn, lid) 36[0m
+2024-07-10T21:42:18 [DEBUG] - [34mhit max_lsn 36 in iterator, stopping[0m
+2024-07-10T21:42:18 [DEBUG] - [34mzeroing the end of the recovered segment at lsn 0 between lids 37 and 524287[0m
+2024-07-10T21:42:18 [DEBUG] - [34mgc_blobs removing any blob with an lsn above 37[0m
+2024-07-10T21:42:18 [DEBUG] - [34mSA starting with tip 524288 stable -1 free {}[0m
+2024-07-10T21:42:18 [DEBUG] - [34mstarting log at recovered active offset 37, recovered lsn 37[0m
+2024-07-10T21:42:18 [DEBUG] - [34mstarting IoBufs with next_lsn: 37 next_lid: 37[0m
+2024-07-10T21:42:18 [DEBUG] - [34mload_snapshot loading pages from 0..2[0m
+2024-07-10T21:42:18 [DEBUG] - [34mallocated pid 3 for root of new_tree [95, 95, 115, 108, 101, 100, 95, 95, 100, 101, 102, 97, 117, 108, 116][0m
+2024-07-10T21:42:19 [DEBUG] - [34madvancing offset within the current segment from 37 to 96[0m
+2024-07-10T21:42:19 [DEBUG] - [34mwrote lsns 37-95 to disk at offsets 37-95, maxed false complete_len 59[0m
+2024-07-10T21:42:19 [DEBUG] - [34mmark_interval(37, 59)[0m
+2024-07-10T21:42:19 [DEBUG] - [34mnew highest interval: 37 - 95[0m
+2024-07-10T21:42:25 [DEBUG] - [34mpaused accepting connections on 127.0.0.1:8000[0m
+2024-07-10T21:42:25 [DEBUG] - [34mIoBufs dropped[0m

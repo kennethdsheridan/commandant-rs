@@ -1,8 +1,7 @@
 .PHONY: all build build_linux build_macos build_wasm clean test fmt check lint help
 
 # Set the binary name
-BINARY_NAME := commandant-rs
-
+BINARY_NAME := one_for_all
 
 # Set the output directory
 OUTPUT_DIR := ./target/release
@@ -31,20 +30,38 @@ endif
 # Build the Linux binary
 build_linux:
 	cargo build --release --target x86_64-unknown-linux-gnu
-	mkdir -p $(BINARY_LINUX)
-	cp ./target/x86_64-unknown-linux-gnu/release/$(BINARY_NAME) $(BINARY_LINUX)
+	mkdir -p $(OUTPUT_DIR)/linux
+	if [ -f ./target/x86_64-unknown-linux-gnu/release/$(BINARY_NAME) ]; then \
+		cp ./target/x86_64-unknown-linux-gnu/release/$(BINARY_NAME) $(BINARY_LINUX); \
+	else \
+		echo "Build failed: Linux binary not found"; \
+		ls ./target/x86_64-unknown-linux-gnu/release/; \
+		exit 1; \
+	fi
 
 # Build the MacOS binary
 build_macos:
 	cargo build --release --target x86_64-apple-darwin
-	mkdir -p $(BINARY_MACOS)
-	cp ./target/x86_64-apple-darwin/release/$(BINARY_NAME) $(BINARY_MACOS)
+	mkdir -p $(OUTPUT_DIR)/macos
+	if [ -f ./target/x86_64-apple-darwin/release/$(BINARY_NAME) ]; then \
+		cp ./target/x86_64-apple-darwin/release/$(BINARY_NAME) $(BINARY_MACOS); \
+	else \
+		echo "Build failed: macOS binary not found in ./target/x86_64-apple-darwin/release/"; \
+		ls ./target/x86_64-apple-darwin/release/; \
+		exit 1; \
+	fi
 
 # Build the WASM binary
 build_wasm:
 	cargo build --release --target wasm32-unknown-unknown
 	mkdir -p $(OUTPUT_DIR)/wasm
-	cp ./target/wasm32-unknown-unknown/release/$(BINARY_NAME) $(OUTPUT_DIR)/wasm/
+	if [ -f ./target/wasm32-unknown-unknown/release/$(BINARY_NAME) ]; then \
+		cp ./target/wasm32-unknown-unknown/release/$(BINARY_NAME) $(BINARY_WASM); \
+	else \
+		echo "Build failed: WASM binary not found"; \
+		ls ./target/wasm32-unknown-unknown/release/; \
+		exit 1; \
+	fi
 
 # Clean the generated binaries and other build artifacts
 clean:
@@ -80,3 +97,4 @@ help:
 	@echo "  fmt         Format the code"
 	@echo "  check       Check the code for errors"
 	@echo "  lint        Run clippy to catch common mistakes and improve your Rust code"
+

@@ -1,0 +1,177 @@
+2024-07-10T21:42:18 [TRACE] - [36mstarting context[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting pagecache[0m
+2024-07-10T21:42:18 [TRACE] - [36mfile len: 37 segment len 524288 segments: 1[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading segment header at 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mSA scanned header at lid 0 during startup: SegmentHeader { lsn: 0, max_stable_lsn: -1, ok: true }[0m
+2024-07-10T21:42:18 [TRACE] - [36mLogIter::read_segment lsn: 0 cur_lsn: None[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading segment header at 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mread segment header SegmentHeader { lsn: 0, max_stable_lsn: -1, ok: true }[0m
+2024-07-10T21:42:18 [TRACE] - [36msetting stored segment buffer length to 37 after read[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading message from segment: 0 at lid: 20[0m
+2024-07-10T21:42:18 [TRACE] - [36mread message header at lid 20: MessageHeader { crc32: 4224745279, kind: InlineMeta, segment_number: SegmentNumber(0), pid: 0, len: 0 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread a successful inline message[0m
+2024-07-10T21:42:18 [TRACE] - [36mread inline flush with header MessageHeader { crc32: 4224745279, kind: InlineMeta, segment_number: SegmentNumber(0), pid: 0, len: 0 } in LogIter::next[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading message from segment: 0 at lid: 28[0m
+2024-07-10T21:42:18 [TRACE] - [36mread message header at lid 28: MessageHeader { crc32: 2026283633, kind: Counter, segment_number: SegmentNumber(0), pid: 1, len: 1 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread a successful inline message[0m
+2024-07-10T21:42:18 [TRACE] - [36mread inline flush with header MessageHeader { crc32: 2026283633, kind: Counter, segment_number: SegmentNumber(0), pid: 1, len: 1 } in LogIter::next[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading message from segment: 0 at lid: 37[0m
+2024-07-10T21:42:18 [TRACE] - [36mread message header at lid 37: MessageHeader { crc32: 0, kind: Corrupted, segment_number: SegmentNumber(0), pid: 0, len: 0 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread a corrupted message with Corrupted MessageKind: MessageHeader { crc32: 0, kind: Corrupted, segment_number: SegmentNumber(0), pid: 0, len: 0 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread corrupted msg in LogIter::next as lid 37 lsn 37[0m
+2024-07-10T21:42:18 [TRACE] - [36mtrying to find the max stable tip for bounding batch manifests with segment iter {0: 0} of segments >= first_tip 36[0m
+2024-07-10T21:42:18 [TRACE] - [36mgenerated iterator over segments {0: 0} with lsn >= 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mbuilding on top of old snapshot: Snapshot { stable_lsn: None, active_segment: None, pt: [] }[0m
+2024-07-10T21:42:18 [TRACE] - [36mLogIter::read_segment lsn: 0 cur_lsn: None[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading segment header at 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mread segment header SegmentHeader { lsn: 0, max_stable_lsn: -1, ok: true }[0m
+2024-07-10T21:42:18 [TRACE] - [36msetting stored segment buffer length to 37 after read[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading message from segment: 0 at lid: 20[0m
+2024-07-10T21:42:18 [TRACE] - [36mread message header at lid 20: MessageHeader { crc32: 4224745279, kind: InlineMeta, segment_number: SegmentNumber(0), pid: 0, len: 0 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread a successful inline message[0m
+2024-07-10T21:42:18 [TRACE] - [36mread inline flush with header MessageHeader { crc32: 4224745279, kind: InlineMeta, segment_number: SegmentNumber(0), pid: 0, len: 0 } in LogIter::next[0m
+2024-07-10T21:42:18 [TRACE] - [36min advance_snapshot looking at item with pid 0 lsn 20 ptr Inline(20)[0m
+2024-07-10T21:42:18 [TRACE] - [36mtrying to deserialize buf for pid 0 ptr Inline(20) lsn 20[0m
+2024-07-10T21:42:18 [TRACE] - [36mcompact of pid 0 at ptr Inline(20) lsn 20[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading message from segment: 0 at lid: 28[0m
+2024-07-10T21:42:18 [TRACE] - [36mread message header at lid 28: MessageHeader { crc32: 2026283633, kind: Counter, segment_number: SegmentNumber(0), pid: 1, len: 1 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread a successful inline message[0m
+2024-07-10T21:42:18 [TRACE] - [36mread inline flush with header MessageHeader { crc32: 2026283633, kind: Counter, segment_number: SegmentNumber(0), pid: 1, len: 1 } in LogIter::next[0m
+2024-07-10T21:42:18 [TRACE] - [36min advance_snapshot looking at item with pid 1 lsn 28 ptr Inline(28)[0m
+2024-07-10T21:42:18 [TRACE] - [36mtrying to deserialize buf for pid 1 ptr Inline(28) lsn 28[0m
+2024-07-10T21:42:18 [TRACE] - [36mcompact of pid 1 at ptr Inline(28) lsn 28[0m
+2024-07-10T21:42:18 [TRACE] - [36mgenerated snapshot: Snapshot { stable_lsn: Some(37), active_segment: Some(0), pt: [Present { base: (20, Inline(20), 8), frags: [] }, Present { base: (28, Inline(28), 9), frags: [] }] }[0m
+2024-07-10T21:42:18 [TRACE] - [36mwriting snapshot Snapshot { stable_lsn: Some(37), active_segment: Some(0), pt: [Present { base: (20, Inline(20), 8), frags: [] }, Present { base: (28, Inline(28), 9), frags: [] }] }[0m
+2024-07-10T21:42:18 [TRACE] - [36mwrote snapshot to OneForAll_database_file.db/snap.0000000000000025.generating[0m
+2024-07-10T21:42:18 [TRACE] - [36mrenamed snapshot to OneForAll_database_file.db/snap.0000000000000025[0m
+2024-07-10T21:42:18 [TRACE] - [36msetting segment for tip_lid 0 to stable_lsn 0[0m
+2024-07-10T21:42:18 [TRACE] - [36m(snapshot) recovering segment with base lsn 0[0m
+2024-07-10T21:42:18 [TRACE] - [36msetting Segment to Active with new lsn 0[0m
+2024-07-10T21:42:18 [TRACE] - [36madding lsn: 20 lid: 20 sz: 8 for pid 0 to segment 0 during SA recovery[0m
+2024-07-10T21:42:18 [TRACE] - [36madding lsn: 28 lid: 28 sz: 9 for pid 1 to segment 0 during SA recovery[0m
+2024-07-10T21:42:18 [TRACE] - [36mraised self.tip to 524288 during SA initialization[0m
+2024-07-10T21:42:18 [TRACE] - [36minitialized self.segments to [Active(Active { lsn: 0, rss: 17, deferred_replaced_rss: 0, deferred_replaced_pids: {}, pids: {0, 1}, latest_replacement_lsn: 0, can_free_upon_deactivation: {}, deferred_rm_blob: {} })][0m
+2024-07-10T21:42:18 [TRACE] - [36minitialized self.ordering to {0: 0}[0m
+2024-07-10T21:42:18 [TRACE] - [36mload_snapshot pid 0 Present { base: (20, Inline(20), 8), frags: [] }[0m
+2024-07-10T21:42:18 [TRACE] - [36minstalling page for pid 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mpulling pid 0 lsn 20 pointer Inline(20) from disk[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading log lsn 20 ptr Inline(20)[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading message from segment: 0 at lid: 20[0m
+2024-07-10T21:42:18 [TRACE] - [36mread message header at lid 20: MessageHeader { crc32: 4224745279, kind: InlineMeta, segment_number: SegmentNumber(0), pid: 0, len: 0 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread a successful inline message[0m
+2024-07-10T21:42:18 [TRACE] - [36mload_snapshot pid 1 Present { base: (28, Inline(28), 9), frags: [] }[0m
+2024-07-10T21:42:18 [TRACE] - [36minstalling page for pid 1[0m
+2024-07-10T21:42:18 [TRACE] - [36mpulling pid 1 lsn 28 pointer Inline(28) from disk[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading log lsn 28 ptr Inline(28)[0m
+2024-07-10T21:42:18 [TRACE] - [36mreading message from segment: 0 at lid: 28[0m
+2024-07-10T21:42:18 [TRACE] - [36mread message header at lid 28: MessageHeader { crc32: 2026283633, kind: Counter, segment_number: SegmentNumber(0), pid: 1, len: 1 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mread a successful inline message[0m
+2024-07-10T21:42:18 [TRACE] - [36mgetting page iter for META[0m
+2024-07-10T21:42:18 [TRACE] - [36mgetting page iter for idgen[0m
+2024-07-10T21:42:18 [TRACE] - [36mgetting page iter for idgen[0m
+2024-07-10T21:42:18 [TRACE] - [36mpagecache started[0m
+2024-07-10T21:42:18 [TRACE] - [36mgetting page iter for META[0m
+2024-07-10T21:42:18 [TRACE] - [36mallocating pid 2 for the first time[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page called on pid 2 to Node(Node { prefix_len: 0, next: None, merging_child: None, merging: false, lo: [], hi: [], data: Leaf(Leaf { keys: [], values: [] }) }) with old ts 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page on pid 2 has log kind: Replace[0m
+2024-07-10T21:42:18 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:18 [TRACE] - [36mreserving buf of len 16[0m
+2024-07-10T21:42:18 [TRACE] - [36mreserved 16 bytes at lsn 37 lid 37[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page succeeded on pid 2[0m
+2024-07-10T21:42:18 [TRACE] - [36mmark_link pid 2 at cache info CacheInfo { ts: 1, lsn: 37, pointer: Inline(37), log_size: 16 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mmark_replace pid 2 from cache infos [] to cache info CacheInfo { ts: 1, lsn: 37, pointer: Inline(37), log_size: 16 } with lsn 0[0m
+2024-07-10T21:42:18 [TRACE] - [36maccessed pid 2 -> paging out pids [][0m
+2024-07-10T21:42:18 [TRACE] - [36mallocated pid 2 for leaf in new_tree for namespace [95, 95, 115, 108, 101, 100, 95, 95, 100, 101, 102, 97, 117, 108, 116][0m
+2024-07-10T21:42:18 [TRACE] - [36mallocating pid 3 for the first time[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page called on pid 3 to Node(Node { prefix_len: 0, next: None, merging_child: None, merging: false, lo: [], hi: [], data: Index(Index { keys: [[]], pointers: [2] }) }) with old ts 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page on pid 3 has log kind: Replace[0m
+2024-07-10T21:42:18 [TRACE] - [36mreserving buf of len 18[0m
+2024-07-10T21:42:18 [TRACE] - [36mreserved 18 bytes at lsn 53 lid 53[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page succeeded on pid 3[0m
+2024-07-10T21:42:18 [TRACE] - [36mmark_link pid 3 at cache info CacheInfo { ts: 1, lsn: 53, pointer: Inline(53), log_size: 18 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mmark_replace pid 3 from cache infos [] to cache info CacheInfo { ts: 1, lsn: 53, pointer: Inline(53), log_size: 18 } with lsn 0[0m
+2024-07-10T21:42:18 [TRACE] - [36maccessed pid 3 -> paging out pids [][0m
+2024-07-10T21:42:18 [TRACE] - [36mgetting page iter for META[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page called on pid 0 to Meta(Meta { inner: {[95, 95, 115, 108, 101, 100, 95, 95, 100, 101, 102, 97, 117, 108, 116]: 3} }) with old ts 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page on pid 0 has log kind: Replace[0m
+2024-07-10T21:42:18 [TRACE] - [36mreserving buf of len 25[0m
+2024-07-10T21:42:18 [TRACE] - [36mreserved 25 bytes at lsn 71 lid 71[0m
+2024-07-10T21:42:18 [TRACE] - [36mcas_page succeeded on pid 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mmark_link pid 0 at cache info CacheInfo { ts: 1, lsn: 71, pointer: Inline(71), log_size: 25 }[0m
+2024-07-10T21:42:18 [TRACE] - [36mmark_replace pid 0 from cache infos [CacheInfo { ts: 0, lsn: 20, pointer: Inline(20), log_size: 8 }] to cache info CacheInfo { ts: 1, lsn: 71, pointer: Inline(71), log_size: 25 } with lsn 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mremoving pid 0 at lsn 0 from segment Active(Active { lsn: 0, rss: 76, deferred_replaced_rss: 0, deferred_replaced_pids: {}, pids: {0, 1, 2, 3}, latest_replacement_lsn: 0, can_free_upon_deactivation: {}, deferred_rm_blob: {} })[0m
+2024-07-10T21:42:18 [TRACE] - [36maccessed pid 0 -> paging out pids [][0m
+2024-07-10T21:42:18 [TRACE] - [36mgetting page iter for META[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 0[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 1[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 2[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 3[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 4[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 5[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 6[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 7[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 8[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 9[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 10[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 11[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 12[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 13[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 14[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mstarting server worker 15[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(0), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36mregistering event source with poller: token=Token(1), interests=READABLE[0m
+2024-07-10T21:42:18 [TRACE] - [36msetting up OS signal listener[0m
+2024-07-10T21:42:18 [TRACE] - [36mservice "actix-web-service-127.0.0.1:8000" is available[0m
+2024-07-10T21:42:19 [TRACE] - [36msealing ioubuf from  roll_iobuf[0m
+2024-07-10T21:42:19 [TRACE] - [36msealed iobuf with lsn 37[0m
+2024-07-10T21:42:19 [TRACE] - [36masynchronously writing iobuf with lsn 37 to log from maybe_seal[0m
+2024-07-10T21:42:19 [TRACE] - [36mwrite_to_log log_offset 37 lsn 37 len 59[0m
+2024-07-10T21:42:19 [TRACE] - [36mpushing interval (37, 95) into fsynced_ranges [][0m
+2024-07-10T21:42:19 [TRACE] - [36mmark_interval new highest lsn 95[0m
+2024-07-10T21:42:19 [TRACE] - [36mstabilize(37), normalized: -524288, last: -1[0m
+2024-07-10T21:42:19 [TRACE] - [36mexpected stabilization lsn -524288 to be greater than the previous value of -1[0m
+2024-07-10T21:42:19 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:20 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:20 [TRACE] - [36mbumping atomic header lsn to -1[0m
+2024-07-10T21:42:20 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:21 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:21 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:22 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:22 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:23 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:23 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:24 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:24 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:25 [TRACE] - [36mskipping roll_iobuf due to empty segment[0m
+2024-07-10T21:42:25 [TRACE] - [36mSIGINT received[0m
+2024-07-10T21:42:25 [TRACE] - [36mderegistering event source from poller[0m

@@ -58,6 +58,9 @@ enum Commands {
 
     // Embedded Database Operations
     DatabaseOps,
+
+    // HPC  Operations
+    HPC,
 }
 
 /// # OneForAll
@@ -330,6 +333,9 @@ async fn main() -> std::io::Result<()> {
                     Ok(_) => println!("Successfully retrieved all keys"),
                     Err(e) => eprintln!("Error retrieving keys: {:?}", e),
                 }
+            }
+            Commands::HPC => {
+                command_logger.log_info("HPC AIML Model deployment not yet implemented")
             }
         }
     });
