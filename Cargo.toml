@@ -58,6 +58,7 @@ sled = "0.34.7"
 common = { path = "./common" }
 # The fullstack_rust_app crate is a library that contains the application code.
 fullstack_rust_app = { path = "./fullstack_rust_app" }
+burn = "0.13.2"
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]
