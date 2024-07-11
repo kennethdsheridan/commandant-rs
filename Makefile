@@ -1,7 +1,7 @@
 .PHONY: all build build_linux build_macos build_wasm clean test fmt check lint help
 
 # Set the binary name
-BINARY_NAME := one_for_all
+BINARY_NAME := commandant-rs
 
 
 # Set the output directory
