@@ -1,24 +1,25 @@
-2024-07-10T21:42:18 [INFO] - [32mDatabase opened at path: OneForAll_database_file.db[0m
-2024-07-10T21:42:18 [INFO] - [32mDatabaseAdapter created successfully.[0m
-2024-07-10T21:42:18 [INFO] - [32mHPC AIML Model deployment not yet implemented[0m
-2024-07-10T21:42:18 [INFO] - [32mstarting 16 workers[0m
-2024-07-10T21:42:18 [INFO] - [32mTokio runtime found; starting in existing Tokio runtime[0m
-2024-07-10T21:42:25 [INFO] - [32mReceived Ctrl+C, shutting down.[0m
-2024-07-10T21:42:25 [INFO] - [32mSIGINT received; starting forced shutdown[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32maccept thread stopped[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
-2024-07-10T21:42:25 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:00 [INFO] - [32mDatabase opened at path: OneForAll_database_file.db[0m
+2024-07-10T22:33:00 [INFO] - [32mDatabaseAdapter created successfully.[0m
+2024-07-10T22:33:00 [INFO] - [32mExecuting CPU stress test. Attempts remaining: 2[0m
+2024-07-10T22:33:00 [INFO] - [32mstarting 16 workers[0m
+2024-07-10T22:33:00 [INFO] - [32mTokio runtime found; starting in existing Tokio runtime[0m
+2024-07-10T22:33:22 [INFO] - [32mSIGINT received; starting forced shutdown[0m
+2024-07-10T22:33:22 [INFO] - [32mReceived Ctrl+C, shutting down.[0m
+2024-07-10T22:33:22 [INFO] - [32maccept thread stopped[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mshutting down idle worker[0m
+2024-07-10T22:33:22 [INFO] - [32mCPU stress test executed successfully.[0m

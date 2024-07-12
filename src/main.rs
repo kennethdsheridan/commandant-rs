@@ -58,9 +58,6 @@ enum Commands {
 
     // Embedded Database Operations
     DatabaseOps,
-
-    // HPC  Operations
-    HPC,
 }
 
 /// # OneForAll
@@ -132,7 +129,7 @@ async fn main() -> std::io::Result<()> {
     // "adapters" layer in the Ports and Adapters architecture, interfacing
     // with the external logging framework.
     let log_directory = "logs"; // Directory where log files will be stored.
-    let log_level = log::LevelFilter::Trace; // Log level indicating verbosity of the logs.
+    let log_level = log::LevelFilter::Info; // Log level indicating verbosity of the logs.
     let logger = Arc::new(common::adapters::log_adapter::init(
         log_directory,
         log_level,
@@ -333,9 +330,6 @@ async fn main() -> std::io::Result<()> {
                     Ok(_) => println!("Successfully retrieved all keys"),
                     Err(e) => eprintln!("Error retrieving keys: {:?}", e),
                 }
-            }
-            Commands::HPC => {
-                command_logger.log_info("HPC AIML Model deployment not yet implemented")
             }
         }
     });
