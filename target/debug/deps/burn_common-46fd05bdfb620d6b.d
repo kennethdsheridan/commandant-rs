@@ -1,0 +1,10 @@
+/Users/kennethsheridan/commandant-rs/target/debug/deps/libburn_common-46fd05bdfb620d6b.rmeta: /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/lib.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/id.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/rand.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/stub.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/benchmark.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/reader.rs
+
+/Users/kennethsheridan/commandant-rs/target/debug/deps/burn_common-46fd05bdfb620d6b.d: /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/lib.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/id.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/rand.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/stub.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/benchmark.rs /Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/reader.rs
+
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/lib.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/id.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/rand.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/stub.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/benchmark.rs:
+/Users/kennethsheridan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/burn-common-0.13.2/src/reader.rs:
