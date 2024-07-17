@@ -18,7 +18,7 @@ use crate::ports::ps_command_port::PsCommandPort;
 mod adapters;
 mod ports;
 
-// Enumeration representing the supported architectures for the `stress-ng`
+// Enum representing the supported architectures for the `stress-ng`
 // binary.
 // This enum is used to select the correct binary for the running operating
 // system.
