@@ -9,7 +9,7 @@ use std::{fs, io, str};
 use common::ports::log_port::LoggerPort;
 
 use crate::adapters::stress_ng_manager_adapter::StressNgArch;
-use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
+use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS, STRESS_NG_APPLE};
 
 pub struct StressNgAdapter {
     logger: Arc<dyn LoggerPort>,
