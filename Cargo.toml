@@ -46,7 +46,6 @@ actix-web = "4.4.1"
 tokio = { version = "1", features = ["full"] }
 # The async-trait crate provides async versions of the standard library traits.
 async-trait = { version = "0.1.51", features = [] }
-# The serde crate provides a framework for serializing and deserializing Rust data structures.
 serde = "1.0.193"
 # Tokio-based single-threaded async runtime for the Actix ecosystem.
 actix-rt = "2.9.0"
@@ -59,6 +58,7 @@ common = { path = "./common" }
 # The fullstack_rust_app crate is a library that contains the application code.
 fullstack_rust_app = { path = "./fullstack_rust_app" }
 burn = "0.13.2"
+serde_yaml = "0.9.34"
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]
