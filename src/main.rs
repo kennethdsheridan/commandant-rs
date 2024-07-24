@@ -58,6 +58,27 @@ enum Commands {
 
     // Embedded Database Operations
     DatabaseOps,
+    
+    // AIModel 
+    AIModel {
+        #[clap(subcommand)]
+        action: AIModelAction,
+    },
+
+}
+
+
+#[derive(Subcommand, Debug)]
+enum AIModelAction {
+    Predict {
+        #[clap(long, short)]
+        input: Vec<i32>,
+    },
+    LoadPreTrained{
+        #[clap(long, short)]
+        model_path: String,
+    },
+
 }
 
 /// # OneForAll
