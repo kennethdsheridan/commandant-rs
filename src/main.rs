@@ -11,9 +11,12 @@ use common::ports::web_server_port::WebServerPort;
 
 use crate::adapters::database_adapter::DatabaseAdapter;
 use crate::adapters::ps_command_adapter::PsAdapter;
+use crate::adapters::burn_ai_model_adapter::BurnAiModelAdapter;
+use crate::domain::ai_model::AiModel;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
+    
 
 mod adapters;
 mod ports;
