@@ -325,6 +325,29 @@ async fn main() -> std::io::Result<()> {
                     retries -= 1;
                 }
             }
+            
+            Commands::AIModel { action } => {
+                match action {
+                // Logic for handling the 'Discover' command.
+                command_logger.log_info("Starting AI model prediction command");
+                let model = BurnAiModel::new();
+                let prediction = model.predict(input);
+                println!("Prediciton: {:?}", prediction);
+                },
+                AIModelAction::LoadPretrained { model_path} => {
+                    command_logger.logi_info("Loading pretrained AI model.");
+                    match BurnAiModel::load_pretrained() {
+                        Ok(model) => {
+                            command.logger.log_info("Pretrained model loaded successfully");
+                            // Perform operations with teh loaded model here
+
+                        },
+                        Err(e) => command_logger.log_error(&format!("Error loading pretrained model: {}", e)),
+
+                    }
+            
+                },
+            }
 
             Commands::Discover => {
                 // Logic for handling the 'Discover' command.
