@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use serde::Deserialize;
 
 use clap::{Parser, Subcommand};
 use futures::SinkExt;
@@ -20,6 +21,64 @@ use crate::ports::ps_command_port::PsCommandPort;
 
 mod adapters;
 mod ports;
+
+#[derive(Debug, Deserialize)]
+struct Config {
+    general: GeneralConfig,
+    web_server:WebServerConfig,
+    stress_test: StressTestConfig,
+    ai_model: AiModelConfig,
+    overwatch: OverwatchConfig,
+    database_ops: DataabaseOpsConfig,
+}
+
+#[derive(Debug, Deserialize)]
+struct GeneralConfig {
+    log_directory: String,
+    log_level: String, 
+    database_path: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct WebServerConfig {
+    port: i64,
+    host: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct StressTestConfig {
+    cpu: CpuConfig,
+    options: Vec<String>,
+}
+
+
+#[derive(Debug, Deserialize)]
+struct CpuConfig
+    cores: u32,
+    timeout: String,
+}
+
+
+#[derive(Debug, Deserialize)]
+struct AiModelConfig, 
+    pretrained_model_path: String,
+}
+
+
+#[derive(Debug, Deserialize)]
+struct OverwatchConfig, 
+    output_file: String,
+    interval: u32,
+}
+
+
+#[derive(Debug, Deserialize)]
+struct DatabaseOpsConfig, 
+    enabled: bool,
+}
+
+
+
 
 // Enum representing the supported architectures for the `stress-ng`
 // binary.
@@ -147,6 +206,13 @@ fn long_description() -> &'static str {
 // for web applications and services.
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    
+    // Setup the initialization of the  application configuration file "config.yaml"
+    let config_file = File::open("config.yaml")?;
+    let config: Config = serde_yaml::from_reader(config_file)?;
+    
+
+
     // Initialize the logging system with a specified directory and log level.
     // This setup is critical for ensuring that all parts of the application
     // can perform logging activities coherently. The logger is part of the
