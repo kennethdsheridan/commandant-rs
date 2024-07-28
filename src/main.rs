@@ -259,15 +259,21 @@ async fn main() -> std::io::Result<()> {
     // Initialize the PsAdapter with the logger and the DbAdapter for process monitoring and CPU usage analysis.
     let ps_adapter =
         Arc::new(PsAdapter::new(logger.clone(), db_adapter.clone())) as Arc<dyn PsCommandPort>;
+    
+
 
     // Parse command-line arguments using the Cli struct, which is defined using the
     // `clap` crate. This struct represents the command-line interface of the application,
     // defining the available subcommands and their functionalities.
     let cli = Cli::parse();
 
+
+
     // Initialize the StressNgAdapter with the logger. This adapter is responsible for
     // conducting stress tests on the system, utilizing tools like `stress-ng`.
     let _stress_tester = StressNgAdapter::new(logger_as_port.clone());
+    
+
 
     // Handle different commands provided via CLI in an async task. This design allows
     // the main thread to remain responsive and not blocked by long-running operations
@@ -290,12 +296,18 @@ async fn main() -> std::io::Result<()> {
         // Send a shutdown signal to the web server task.
         let _ = shutdown_sender.send(()).await;
     });
+    
+
+
 
     let db_logger = logger.clone(); // Clone the logger for database handling.
 
     // Attempt to create a new DatabaseAdapter
     let path_to_db = "commandant-rs_database_file.db"; // database path
     let db_adapter_result = DatabaseAdapter::new(path_to_db, db_logger.clone());
+    
+
+    // CLI match command logic starts here //
 
     let _command_handle = spawn(async move {
         match cli.command {
