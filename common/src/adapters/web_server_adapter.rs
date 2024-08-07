@@ -252,6 +252,7 @@ impl WebServerPort for WebServerAdapter {
                 .route("/status", web::get().to(get_status)) // Route for get_status
                 .route("/console", web::get().to(show_console)) // Route for show console
         })
+        .workers(1) // set the number of workers
         .bind("127.0.0.1:8000")?
         .run();
 

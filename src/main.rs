@@ -1,6 +1,6 @@
-use std::sync::Arc;
 use std::fs::File;
 use std::io;
+use std::sync::Arc;
 
 use serde::Deserialize;
 
@@ -13,18 +13,16 @@ use common::adapters::web_server_adapter::WebServerAdapter;
 use common::ports::log_port::LoggerPort;
 use common::ports::web_server_port::WebServerPort;
 
+// use crate::adapters::burn_ai_model_adapter::BurnAiModelAdapter;
 use crate::adapters::database_adapter::DatabaseAdapter;
 use crate::adapters::ps_command_adapter::PsAdapter;
-use crate::adapters::burn_ai_model_adapter::BurnAiModelAdapter;
-use crate::domain::ai_model::AiModel;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
+// use crate::domain::ai_model::AiModel;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
 
-
 mod adapters;
 mod ports;
-
 
 /// Main configuration struct that holds all sub-configurations
 #[derive(Debug, Deserialize)]
@@ -110,7 +108,6 @@ pub struct DatabaseOpsConfig {
     pub enabled: bool,
 }
 
-
 // Enum representing the supported architectures for the `stress-ng`
 // binary.
 // This enum is used to select the correct binary for the running operating
@@ -151,15 +148,13 @@ enum Commands {
 
     // Embedded Database Operations
     DatabaseOps,
-    
-    // AIModel 
+
+    // AIModel
     AIModel {
         #[clap(subcommand)]
         action: AIModelAction,
     },
-
 }
-
 
 #[derive(Subcommand, Debug)]
 enum AIModelAction {
@@ -167,11 +162,10 @@ enum AIModelAction {
         #[clap(long, short)]
         input: Vec<i32>,
     },
-    LoadPreTrained{
+    LoadPreTrained {
         #[clap(long, short)]
         model_path: String,
     },
-
 }
 
 /// # commandant-rs
@@ -235,19 +229,16 @@ fn long_description() -> &'static str {
 // The entry point of the application using Actix's asynchronous runtime.
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    
     // Attempt to open the configuration file
     // The '?' operator will return early if an error occurs
     let config_file = File::open("config.yaml")?;
 
     // Parse the YAML content into our Config struct
-    let config: Config = serde_yaml::from_reader(config_file)
-        .map_err(|e| {
-            // Convert serde_yaml::Error to io::Error
-            // to ensure consistent error types throughout the function
-            io::Error::new(io::ErrorKind::InvalidData, e)
-        })?;  
-
+    let config: Config = serde_yaml::from_reader(config_file).map_err(|e| {
+        // Convert serde_yaml::Error to io::Error
+        // to ensure consistent error types throughout the function
+        io::Error::new(io::ErrorKind::InvalidData, e)
+    })?;
 
     // Initialize the logging system with a specified directory and log level.
     // This setup is critical for ensuring that all parts of the application
@@ -295,21 +286,15 @@ async fn main() -> std::io::Result<()> {
     // Initialize the PsAdapter with the logger and the DbAdapter for process monitoring and CPU usage analysis.
     let ps_adapter =
         Arc::new(PsAdapter::new(logger.clone(), db_adapter.clone())) as Arc<dyn PsCommandPort>;
-    
-
 
     // Parse command-line arguments using the Cli struct, which is defined using the
     // `clap` crate. This struct represents the command-line interface of the application,
     // defining the available subcommands and their functionalities.
     let cli = Cli::parse();
 
-
-
     // Initialize the StressNgAdapter with the logger. This adapter is responsible for
     // conducting stress tests on the system, utilizing tools like `stress-ng`.
     let _stress_tester = StressNgAdapter::new(logger_as_port.clone());
-    
-
 
     // Handle different commands provided via CLI in an async task. This design allows
     // the main thread to remain responsive and not blocked by long-running operations
@@ -332,16 +317,12 @@ async fn main() -> std::io::Result<()> {
         // Send a shutdown signal to the web server task.
         let _ = shutdown_sender.send(()).await;
     });
-    
-
-
 
     let db_logger = logger.clone(); // Clone the logger for database handling.
 
     // Attempt to create a new DatabaseAdapter
     let path_to_db = "commandant-rs_database_file.db"; // database path
     let db_adapter_result = DatabaseAdapter::new(path_to_db, db_logger.clone());
-    
 
     // CLI match command logic starts here //
 
@@ -355,96 +336,116 @@ async fn main() -> std::io::Result<()> {
                 command_logger.log_info("Benchmarking functionality not yet implemented.");
             }
             Commands::Stress => {
-    // Pull parameters from the application config file
-    let stress_config = &config.stress_test;
+                // Pull parameters from the application config file
+                let stress_config = &config.stress_test;
 
-    // Build the arguments vector for the stress-ng command
-    let mut args = vec![
-        // Set the number of CPU cores to stress
-        "--cpu".to_string(),
-        stress_config.cpu.cores.to_string(),
+                // Build the arguments vector for the stress-ng command
+                let mut args = vec![
+                    // Set the number of CPU cores to stress
+                    "--cpu".to_string(),
+                    stress_config.cpu.cores.to_string(),
+                    // Set the duration of the stress test
+                    "--timeout".to_string(),
+                    stress_config.cpu.timeout.clone(),
+                ];
 
-        // Set the duration of the stress test
-        "--timeout".to_string(),
-        stress_config.cpu.timeout.clone(),
-    ];
+                // Add metrics option if enabled in the config
+                if stress_config.metrics {
+                    args.push("--metrics-brief".to_string());
+                }
 
-    // Add metrics option if enabled in the config
-    if stress_config.metrics {
-        args.push("--metrics-brief".to_string());
-    }
+                // Add verbose option if enabled in the config
+                if stress_config.verbose {
+                    args.push("--verbose".to_string());
+                }
 
-    // Add verbose option if enabled in the config
-    if stress_config.verbose {
-        args.push("--verbose".to_string());
-    }
+                // Add any additional options specified in the config
+                args.extend(stress_config.options.iter().cloned());
 
-    // Add any additional options specified in the config
-    args.extend(stress_config.additional_options.clone());
+                // Log the final command for debugging purposes
+                command_logger.log_info(&format!("Executing stress test with args: {:?}", args));
 
-    // Log the final command for debugging purposes
-    command_logger.log_info(&format!("Executing stress test with args: {:?}", args));
+                // Initialize the retry mechanism
+                // The test will be attempted up to 3 times (initial try + 2 retries)
+                let mut retries = 2;
 
-    // Initialize the retry mechanism
-    // The test will be attempted up to 3 times (initial try + 2 retries)
-    let mut retries = 2;
-
-    // Start a loop for executing the stress test with retries
-    while retries >= 0 {
-        // Log the start of a stress test attempt
-        command_logger.log_info(&format!(
-            "Executing CPU stress test. Attempts remaining: {}",
-            retries,
-        ));
-
-        // Execute the stress test command asynchronously
-        match StressNgAdapter::execute_stress_ng_command(command_logger.clone(), &args).await {
-            // In case of a successful execution
-            Ok(()) => {
-                command_logger.log_info("CPU stress test executed successfully.");
-                break; // Exit the retry loop on success
-            }
-            // In case of an error, handle the retry mechanism
-            Err(e) => {
-                if retries > 0 {
-                    // If there are retries left, log a warning and wait before retrying
-                    command_logger.log_warn(&format!(
-                        "Retrying CPU stress test. Attempts remaining: {}",
-                        retries
+                // Start a loop for executing the stress test with retries
+                while retries >= 0 {
+                    // Log the start of a stress test attempt
+                    command_logger.log_info(&format!(
+                        "Executing CPU stress test. Attempts remaining: {}",
+                        retries,
                     ));
-                    sleep(Duration::from_secs(10)).await; // Wait 10 seconds before retrying
-                } else {
-                    // If there are no retries left, log the error
-                    command_logger.log_error(&format!("Error executing CPU stress test: {}", e));
+
+                    // Execute the stress test command asynchronously
+                    match StressNgAdapter::execute_stress_ng_command(
+                        command_logger.clone(),
+                        &args.iter().map(String::as_str).collect::<Vec<&str>>(),
+                    )
+                    .await
+                    {
+                        // In case of a successful execution
+                        Ok(()) => {
+                            command_logger.log_info("CPU stress test executed successfully.");
+                            break; // Exit the retry loop on success
+                        }
+                        // In case of an error, handle the retry mechanism
+                        Err(e) => {
+                            if retries > 0 {
+                                // If there are retries left, log a warning and wait before retrying
+                                command_logger.log_warn(&format!(
+                                    "Retrying CPU stress test. Attempts remaining: {}",
+                                    retries
+                                ));
+                                sleep(Duration::from_secs(10)).await; // Wait 10 seconds before retrying
+                            } else {
+                                // If there are no retries left, log the error
+                                command_logger
+                                    .log_error(&format!("Error executing CPU stress test: {}", e));
+                            }
+                        }
+                    }
+                    // Decrement the retry counter after each attempt
+                    retries -= 1;
                 }
             }
-        }
-        // Decrement the retry counter after each attempt
-        retries -= 1;
-    }
-}
-            
             Commands::AIModel { action } => {
                 match action {
-                // Logic for handling the 'Discover' command.
-                command_logger.log_info("Starting AI model prediction command");
-                let model = BurnAiModel::new();
-                let prediction = model.predict(input);
-                println!("Prediction: {:?}", prediction);
-                },
-                AIModelAction::LoadPretrained { model_path} => {
-                    command_logger.logi_info("Loading pretrained AI model.");
-                    match BurnAiModel::load_pretrained() {
-                        Ok(model) => {
-                            command.logger.log_info("Pretrained model loaded successfully");
-                            // Perform operations with the loaded model here
+                    // Handle the Predict action
+                    AIModelAction::Predict { input } => {
+                        // Log the start of the prediction process
+                        command_logger.log_info("Starting AI model prediction command");
 
-                        },
-                        Err(e) => command_logger.log_error(&format!("Error loading pretrained model: {}", e)),
+                        // Create a new BurnAiModel instance
+                        // let model = BurnAiModelAdapter::new();
 
+                        // Perform prediction using the input
+                        // let prediction = model.predict(&input);
+
+                        // Print the prediction result
+                        // println!("Prediction: {:?}", prediction);
                     }
-            
-                },
+
+                    // Handle the LoadPreTrained action
+                    AIModelAction::LoadPreTrained { model_path } => {
+                        // Log the start of the model loading process
+                    //    command_logger.log_info("Loading pretrained AI model.");
+
+                        // Attempt to load the pretrained model
+                      //  match BurnAiModelAdapter::load_pretrained(&model_path) {
+                        //    Ok(model) => {
+                                // Log successful model loading
+                          //      command_logger.log_info("Pretrained model loaded successfully");
+                                // TODO: Perform operations with the loaded model here
+                          //  }
+                           // Err(e) => {
+                                // Log error if model loading fails
+                             //   command_logger
+                               //     .log_error(&format!("Error loading pretrained model: {}", e));
+                           // }
+                       // }
+                    }
+                }
             }
 
             Commands::Discover => {
