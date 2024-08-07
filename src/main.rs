@@ -1,4 +1,7 @@
 use std::sync::Arc;
+use std::fs::File;
+use std::io;
+
 use serde::Deserialize;
 
 use clap::{Parser, Subcommand};
@@ -17,67 +20,95 @@ use crate::domain::ai_model::AiModel;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
-    
+
 
 mod adapters;
 mod ports;
 
+
+/// Main configuration struct that holds all sub-configurations
 #[derive(Debug, Deserialize)]
-struct Config {
-    general: GeneralConfig,
-    web_server:WebServerConfig,
-    stress_test: StressTestConfig,
-    ai_model: AiModelConfig,
-    overwatch: OverwatchConfig,
-    database_ops: DataabaseOpsConfig,
+pub struct Config {
+    /// General application settings
+    pub general: GeneralConfig,
+    /// Web server configuration
+    pub web_server: WebServerConfig,
+    /// Stress test parameters
+    pub stress_test: StressTestConfig,
+    /// AI model settings
+    pub ai_model: AiModelConfig,
+    /// System monitoring configuration
+    pub overwatch: OverwatchConfig,
+    /// Database operations settings
+    pub database_ops: DatabaseOpsConfig,
 }
 
+/// General configuration for the application
 #[derive(Debug, Deserialize)]
-struct GeneralConfig {
-    log_directory: String,
-    log_level: String, 
-    database_path: String,
+pub struct GeneralConfig {
+    /// Directory where log files will be stored
+    pub log_directory: String,
+    /// Log level (e.g., "Info", "Debug", "Error")
+    pub log_level: String,
+    /// Path to the database file
+    pub database_path: String,
 }
 
+/// Web server configuration
 #[derive(Debug, Deserialize)]
-struct WebServerConfig {
-    port: i64,
-    host: String,
+pub struct WebServerConfig {
+    /// Port number for the web server
+    pub port: i64,
+    /// Host address for the web server
+    pub host: String,
 }
 
+/// Configuration for stress tests
 #[derive(Debug, Deserialize)]
-struct StressTestConfig {
-    cpu: CpuConfig,
-    options: Vec<String>,
+pub struct StressTestConfig {
+    /// CPU-specific stress test configuration
+    pub cpu: CpuConfig,
+    /// Additional options for the stress test
+    pub options: Vec<String>,
+    /// Flag to enable metrics output
+    #[serde(default)]
+    pub metrics: bool,
+    /// Flag to enable verbose output
+    #[serde(default)]
+    pub verbose: bool,
 }
 
-
+/// CPU-specific configuration for stress tests
 #[derive(Debug, Deserialize)]
-struct CpuConfig
-    cores: u32,
-    timeout: String,
+pub struct CpuConfig {
+    /// Number of CPU cores to use in the stress test
+    pub cores: u32,
+    /// Duration of the stress test (e.g., "120s")
+    pub timeout: String,
 }
 
-
+/// Configuration for AI model operations
 #[derive(Debug, Deserialize)]
-struct AiModelConfig, 
-    pretrained_model_path: String,
+pub struct AiModelConfig {
+    /// Path to the pre-trained AI model file
+    pub pretrained_model_path: String,
 }
 
-
+/// Configuration for system monitoring (Overwatch)
 #[derive(Debug, Deserialize)]
-struct OverwatchConfig, 
-    output_file: String,
-    interval: u32,
+pub struct OverwatchConfig {
+    /// File path for outputting monitoring data
+    pub output_file: String,
+    /// Interval (in seconds) for collecting monitoring data
+    pub interval: u32,
 }
 
-
+/// Configuration for database operations
 #[derive(Debug, Deserialize)]
-struct DatabaseOpsConfig, 
-    enabled: bool,
+pub struct DatabaseOpsConfig {
+    /// Flag to enable or disable database operations
+    pub enabled: bool,
 }
-
-
 
 
 // Enum representing the supported architectures for the `stress-ng`
@@ -202,15 +233,20 @@ fn long_description() -> &'static str {
 }
 
 // The entry point of the application using Actix's asynchronous runtime.
-// This runtime is essential for handling asynchronous tasks and is particularly suitable
-// for web applications and services.
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
     
-    // Setup the initialization of the  application configuration file "config.yaml"
+    // Attempt to open the configuration file
+    // The '?' operator will return early if an error occurs
     let config_file = File::open("config.yaml")?;
-    let config: Config = serde_yaml::from_reader(config_file)?;
-    
+
+    // Parse the YAML content into our Config struct
+    let config: Config = serde_yaml::from_reader(config_file)
+        .map_err(|e| {
+            // Convert serde_yaml::Error to io::Error
+            // to ensure consistent error types throughout the function
+            io::Error::new(io::ErrorKind::InvalidData, e)
+        })?;  
 
 
     // Initialize the logging system with a specified directory and log level.
@@ -319,90 +355,74 @@ async fn main() -> std::io::Result<()> {
                 command_logger.log_info("Benchmarking functionality not yet implemented.");
             }
             Commands::Stress => {
-                // Define the arguments for the stress test.
-                // The arguments are modified to create a more comprehensive and informative CPU stress test.
+    // Pull parameters from the application config file
+    let stress_config = &config.stress_test;
 
-                // "--cpu 4" specifies that the stress test should use 4 CPU cores instead of 2.
-                // This increases the load on the CPU for a more intensive stress test.
-                let cpu_cores = "--cpu";
-                let number_of_cores = "4";
+    // Build the arguments vector for the stress-ng command
+    let mut args = vec![
+        // Set the number of CPU cores to stress
+        "--cpu".to_string(),
+        stress_config.cpu.cores.to_string(),
 
-                // "--timeout 120s" sets the test to run for 120 seconds, doubling the duration of the test
-                // compared to the initial 60 seconds. This allows for a longer observation of CPU behavior
-                // under stress.
-                let timeout = "--timeout";
-                let duration = "120s";
+        // Set the duration of the stress test
+        "--timeout".to_string(),
+        stress_config.cpu.timeout.clone(),
+    ];
 
-                // "--metrics-brief" outputs brief metrics about the stress test upon completion.
-                // This option provides a summary of how the system responded to the stress test.
-                let metrics = "--metrics-brief";
+    // Add metrics option if enabled in the config
+    if stress_config.metrics {
+        args.push("--metrics-brief".to_string());
+    }
 
-                // "--verbose" increases the verbosity of the output. This is useful for getting detailed
-                // information about the stress test's operation and can aid in diagnosing issues or
-                // understanding the system's behavior under load.
-                let verbose = "--verbose";
+    // Add verbose option if enabled in the config
+    if stress_config.verbose {
+        args.push("--verbose".to_string());
+    }
 
-                // Combine all the arguments into an array. These arguments will configure the behavior
-                // of the `stress-ng` command to perform a more extensive and detailed stress test.
-                let args = [
-                    cpu_cores,
-                    number_of_cores,
-                    timeout,
-                    duration,
-                    metrics,
-                    verbose,
-                ];
+    // Add any additional options specified in the config
+    args.extend(stress_config.additional_options.clone());
 
-                // Initialize the retry mechanism. This allows the stress test to be retried
-                // a specified number of times in case of failure. In this case, the test
-                // will be attempted up to 3 times (initial try + 2 retries).
-                let mut retries = 2;
-                // Start a loop for executing the stress test with retries.
-                while retries >= 0 {
-                    // Log the start of a stress test attempt. This is useful for monitoring
-                    // and debugging purposes, allowing users to track the test's progress
-                    // and retries.
-                    command_logger.log_info(&format!(
-                        "Executing CPU stress test. Attempts remaining: {}",
-                        retries,
+    // Log the final command for debugging purposes
+    command_logger.log_info(&format!("Executing stress test with args: {:?}", args));
+
+    // Initialize the retry mechanism
+    // The test will be attempted up to 3 times (initial try + 2 retries)
+    let mut retries = 2;
+
+    // Start a loop for executing the stress test with retries
+    while retries >= 0 {
+        // Log the start of a stress test attempt
+        command_logger.log_info(&format!(
+            "Executing CPU stress test. Attempts remaining: {}",
+            retries,
+        ));
+
+        // Execute the stress test command asynchronously
+        match StressNgAdapter::execute_stress_ng_command(command_logger.clone(), &args).await {
+            // In case of a successful execution
+            Ok(()) => {
+                command_logger.log_info("CPU stress test executed successfully.");
+                break; // Exit the retry loop on success
+            }
+            // In case of an error, handle the retry mechanism
+            Err(e) => {
+                if retries > 0 {
+                    // If there are retries left, log a warning and wait before retrying
+                    command_logger.log_warn(&format!(
+                        "Retrying CPU stress test. Attempts remaining: {}",
+                        retries
                     ));
-
-                    // Execute the stress test command asynchronously.
-                    // `StressNgAdapter::execute_stress_ng_command` is responsible for running
-                    // the stress test using the `stress-ng` tool. The command is awaited
-                    // to ensure the execution is complete before proceeding.
-                    match StressNgAdapter::execute_stress_ng_command(command_logger.clone(), &args)
-                        .await
-                    {
-                        // In case of a successful execution, log the success and exit the loop.
-                        // This indicates that the stress test was completed without errors.
-                        Ok(()) => {
-                            command_logger.log_info("CPU stress test executed successfully.");
-                            break;
-                        }
-                        // In case of an error, handle the retry mechanism.
-                        Err(e) => {
-                            // If there are retries left, log a warning and decrement the retry counter.
-                            // The `sleep` call introduces a delay before the next attempt, giving
-                            // the system some time to stabilize.
-                            if retries > 0 {
-                                command_logger.log_warn(&format!(
-                                    "Retrying CPU stress test. Attempts remaining: {}",
-                                    retries
-                                ));
-                                sleep(Duration::from_secs(10)).await;
-                            } else {
-                                // If there are no retries left, log the error and exit the loop.
-                                // This indicates that all attempts to run the stress test have failed.
-                                command_logger
-                                    .log_error(&format!("Error executing CPU stress test: {}", e));
-                            }
-                        }
-                    }
-                    // Decrement the retry counter after each attempt.
-                    retries -= 1;
+                    sleep(Duration::from_secs(10)).await; // Wait 10 seconds before retrying
+                } else {
+                    // If there are no retries left, log the error
+                    command_logger.log_error(&format!("Error executing CPU stress test: {}", e));
                 }
             }
+        }
+        // Decrement the retry counter after each attempt
+        retries -= 1;
+    }
+}
             
             Commands::AIModel { action } => {
                 match action {
@@ -410,14 +430,14 @@ async fn main() -> std::io::Result<()> {
                 command_logger.log_info("Starting AI model prediction command");
                 let model = BurnAiModel::new();
                 let prediction = model.predict(input);
-                println!("Prediciton: {:?}", prediction);
+                println!("Prediction: {:?}", prediction);
                 },
                 AIModelAction::LoadPretrained { model_path} => {
                     command_logger.logi_info("Loading pretrained AI model.");
                     match BurnAiModel::load_pretrained() {
                         Ok(model) => {
                             command.logger.log_info("Pretrained model loaded successfully");
-                            // Perform operations with teh loaded model here
+                            // Perform operations with the loaded model here
 
                         },
                         Err(e) => command_logger.log_error(&format!("Error loading pretrained model: {}", e)),
