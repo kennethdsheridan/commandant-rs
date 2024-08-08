@@ -59,6 +59,7 @@ common = { path = "./common" }
 fullstack_rust_app = { path = "./fullstack_rust_app" }
 burn = { version = "0.13.2", features = ["ndarray", "train", "wgpu", "vision"]}
 serde_yaml = "0.9.34"
+sysinfo = "0.31.2"
 
 # The [[bin]] section defines the configuration for building one or more binary executables.
 [[bin]]
