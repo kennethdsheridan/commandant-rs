@@ -23,32 +23,7 @@ impl ProcessData {
             command,
         }
     }
-use serde::{Deserialize, Serialize};
-use wasm_bindgen::prelude::*;
 
-
-// Define a struct to hold process data for demonstration purposes.
-// In a real-world scenario, this would be replaced with appropriate data structures.
-#[wasm_bindgen]
-#[derive(Debug, Serialize, Deserialize)]
-pub struct ProcessData {
-    cpu_usage: f32,
-    memory_usage: f32,
-    command: String,
-}
-
-// Implement the `ProcessData` struct with a new function to create instances.
-#[wasm_bindgen]
-impl ProcessData {
-    #[wasm_bindgen(constructor)]
-    pub fn new(cpu_usage: f32, memory_usage: f32, command: String, string: String) -> ProcessData {
-        ProcessData {
-            cpu_usage,
-            memory_usage,
-            command,
-        }
-    }
-}
 
 /// The `write_to_wasm` function is a public function that takes a string output from the `ps` command,
 /// parses it into process data, serializes the process data into a JSON string, and then converts the JSON string
