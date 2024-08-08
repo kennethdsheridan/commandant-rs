@@ -227,6 +227,8 @@ async fn show_console() -> impl Responder {
 <script>
     // JavaScript for dynamic updates and interactions can be added here
 </script>
+
+
 </body>
 </html>
 "#,
