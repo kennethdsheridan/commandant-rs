@@ -11,6 +11,7 @@ use common::ports::log_port::LoggerPort;
 // These binaries are included at compile time and used for stress testing.
 pub const STRESS_NG_LINUX: &'static [u8] = include_bytes!("linux/stress-ng");
 pub const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
+pub const STRESS_NG_APPLE: &'static [u8] = include_bytes!("macOS_apple_silicon/stress-ng");
 
 /// Enumeration to represent the different architectures for stress-ng.
 /// This helps in determining the correct binary to use based on the operating system.
@@ -18,6 +19,7 @@ pub const STRESS_NG_MACOS: &'static [u8] = include_bytes!("macOS/stress-ng");
 pub enum StressNgArch {
     Linux,
     MacOS,
+    Apple,
 }
 
 /// Writes the stress-ng binary to disk based on the provided architecture.
@@ -39,6 +41,7 @@ pub fn write_stress_ng_to_disk(
     let (binary_data, filename) = match stress_ng_arch {
         StressNgArch::Linux => (STRESS_NG_LINUX, "stress-ng-linux"),
         StressNgArch::MacOS => (STRESS_NG_MACOS, "stress-ng-macos"),
+        StressNgArch::Apple => (STRESS_NG_APPLE, "stress-ng-apple"),
     };
 
     // Attempt to write the binary data to disk and log the outcome.

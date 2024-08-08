@@ -9,7 +9,7 @@ use std::{fs, io, str};
 use common::ports::log_port::LoggerPort;
 
 use crate::adapters::stress_ng_manager_adapter::StressNgArch;
-use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS};
+use crate::adapters::stress_ng_manager_adapter::{STRESS_NG_LINUX, STRESS_NG_MACOS, STRESS_NG_APPLE};
 
 pub struct StressNgAdapter {
     logger: Arc<dyn LoggerPort>,
@@ -42,6 +42,9 @@ impl<'a> StressNgAdapter {
         } else if cfg!(target_os = "macos") {
             logger.log_debug("Selected stress-ng binary for macOS");
             StressNgArch::MacOS
+        } else if cfg!(target_os = "apple-darwin") {
+            logger.log_debug("Selected stress-ng binary for apple silicon (ARM)");
+            StressNgArch::Apple
         } else {
             // Defaulting to Linux for other operating systems
             logger.log_debug("Defaulted to stress-ng binary for Linux");
@@ -70,8 +73,13 @@ impl<'a> StressNgAdapter {
             }
             StressNgArch::MacOS => {
                 logger.log_debug("Selected stress-ng binary for MacOS");
+                STRESS_NG_APPLE
+            }
+            StressNgArch::Apple => {
+                logger.log_debug("Selected stress-ng binary for MacOS");
                 STRESS_NG_MACOS
             }
+
         };
 
         let temp_file_path = "../stress-ng-binary".to_string();

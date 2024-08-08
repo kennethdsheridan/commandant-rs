@@ -1,4 +1,8 @@
+use std::fs::File;
+use std::io;
 use std::sync::Arc;
+
+use serde::Deserialize;
 
 use clap::{Parser, Subcommand};
 use futures::SinkExt;
@@ -9,16 +13,102 @@ use common::adapters::web_server_adapter::WebServerAdapter;
 use common::ports::log_port::LoggerPort;
 use common::ports::web_server_port::WebServerPort;
 
+// use crate::adapters::burn_ai_model_adapter::BurnAiModelAdapter;
 use crate::adapters::database_adapter::DatabaseAdapter;
 use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::adapters::stress_ng_adapter::StressNgAdapter;
+// use crate::domain::ai_model::AiModel;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
 
 mod adapters;
 mod ports;
 
-// Enumeration representing the supported architectures for the `stress-ng`
+/// Main configuration struct that holds all sub-configurations
+#[derive(Debug, Deserialize)]
+pub struct Config {
+    /// General application settings
+    pub general: GeneralConfig,
+    /// Web server configuration
+    pub web_server: WebServerConfig,
+    /// Stress test parameters
+    pub stress_test: StressTestConfig,
+    /// AI model settings
+    pub ai_model: AiModelConfig,
+    /// System monitoring configuration
+    pub overwatch: OverwatchConfig,
+    /// Database operations settings
+    pub database_ops: DatabaseOpsConfig,
+}
+
+/// General configuration for the application
+#[derive(Debug, Deserialize)]
+pub struct GeneralConfig {
+    /// Directory where log files will be stored
+    pub log_directory: String,
+    /// Log level (e.g., "Info", "Debug", "Error")
+    pub log_level: String,
+    /// Path to the database file
+    pub database_path: String,
+}
+
+/// Web server configuration
+#[derive(Debug, Deserialize)]
+pub struct WebServerConfig {
+    /// Port number for the web server
+    pub port: i64,
+    /// Host address for the web server
+    pub host: String,
+}
+
+/// Configuration for stress tests
+#[derive(Debug, Deserialize)]
+pub struct StressTestConfig {
+    /// CPU-specific stress test configuration
+    pub cpu: CpuConfig,
+    /// Additional options for the stress test
+    pub options: Vec<String>,
+    /// Flag to enable metrics output
+    #[serde(default)]
+    pub metrics: bool,
+    /// Flag to enable verbose output
+    #[serde(default)]
+    pub verbose: bool,
+}
+
+/// CPU-specific configuration for stress tests
+#[derive(Debug, Deserialize)]
+pub struct CpuConfig {
+    /// Number of CPU cores to use in the stress test
+    pub cores: u32,
+    /// Duration of the stress test (e.g., "120s")
+    pub timeout: String,
+}
+
+/// Configuration for AI model operations
+#[derive(Debug, Deserialize)]
+pub struct AiModelConfig {
+    /// Path to the pre-trained AI model file
+    pub pretrained_model_path: String,
+}
+
+/// Configuration for system monitoring (Overwatch)
+#[derive(Debug, Deserialize)]
+pub struct OverwatchConfig {
+    /// File path for outputting monitoring data
+    pub output_file: String,
+    /// Interval (in seconds) for collecting monitoring data
+    pub interval: u32,
+}
+
+/// Configuration for database operations
+#[derive(Debug, Deserialize)]
+pub struct DatabaseOpsConfig {
+    /// Flag to enable or disable database operations
+    pub enabled: bool,
+}
+
+// Enum representing the supported architectures for the `stress-ng`
 // binary.
 // This enum is used to select the correct binary for the running operating
 // system.
@@ -28,11 +118,11 @@ enum StressNgArch {
     MacOS,
 }
 
-// OneForAll CLI Application
+// commandant-rs CLI Application
 // This struct represents the command-line interface of the application,
 // defining the available subcommands and their respective functionalities.
 #[derive(Parser, Debug)]
-#[clap(author = "Kenny Sheridan", version = "0.1 (Dev)", about = "OneForAll -\
+#[clap(author = "Kenny Sheridan", version = "0.1 (Dev)", about = "commandant-rs -\
  An advanced tool for hardware performance testing and diagnostics.",
 long_about = long_description())]
 struct Cli {
@@ -58,14 +148,32 @@ enum Commands {
 
     // Embedded Database Operations
     DatabaseOps,
+
+    // AIModel
+    AIModel {
+        #[clap(subcommand)]
+        action: AIModelAction,
+    },
 }
 
-/// # OneForAll
+#[derive(Subcommand, Debug)]
+enum AIModelAction {
+    Predict {
+        #[clap(long, short)]
+        input: Vec<i32>,
+    },
+    LoadPreTrained {
+        #[clap(long, short)]
+        model_path: String,
+    },
+}
+
+/// # commandant-rs
 ///
-/// OneForAll is a comprehensive tool designed for in-depth hardware
+/// commandant-rs is a comprehensive tool designed for in-depth hardware
 /// performance analysis and diagnostics. It leverages advanced testing
 /// methodologies to provide users with detailed insights into their
-/// system's capabilities and bottlenecks. With OneForAll, you can run
+/// system's capabilities and bottlenecks. With commandant-rs, you can run
 /// various tests, including benchmarks, stress tests, and hardware
 /// discovery, to understand the full scope of your hardware's performance.
 ///
@@ -86,15 +194,15 @@ enum Commands {
 /// - **Overwatch**: Watch your system's performance in real-time, capturing
 ///   critical metrics and providing live feedback.
 ///
-/// OneForAll is designed with both simplicity and power in mind, making it
+/// commandant-rs is designed with both simplicity and power in mind, making it
 /// suitable for both casual users looking to check their system's performance
 /// and professionals requiring detailed hardware analysis.
 fn long_description() -> &'static str {
-    "\n\n\nOneForAll is a comprehensive tool designed for in-depth hardware \
+    "\n\n\ncommandant-rs is a comprehensive tool designed for in-depth hardware \
     performance analysis and diagnostics. \
     It leverages advanced testing methodologies to provide users with \
     detailed insights into their system's capabilities \
-    and bottlenecks. With OneForAll, you can run various tests, including \
+    and bottlenecks. With commandant-rs, you can run various tests, including \
     benchmarks, stress tests, and hardware discovery, \
     to understand the full scope of your hardware's performance.\n\n\
     The tool is structured into several modules, each targeting a specific \
@@ -112,24 +220,33 @@ fn long_description() -> &'static str {
     - Overwatch: Watch your system's performance in real-time from the web browser, capturing \
     critical metrics and providing live feedback.\n
    
-    OneForAll is designed with both simplicity and power in mind, making it \
+    commandant-rs is designed with both simplicity and power in mind, making it \
     suitable for both casual users looking to \
     check their system's performance and professionals requiring detailed \
     hardware analysis."
 }
 
 // The entry point of the application using Actix's asynchronous runtime.
-// This runtime is essential for handling asynchronous tasks and is particularly suitable
-// for web applications and services.
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    // Attempt to open the configuration file
+    // The '?' operator will return early if an error occurs
+    let config_file = File::open("config.yaml")?;
+
+    // Parse the YAML content into our Config struct
+    let config: Config = serde_yaml::from_reader(config_file).map_err(|e| {
+        // Convert serde_yaml::Error to io::Error
+        // to ensure consistent error types throughout the function
+        io::Error::new(io::ErrorKind::InvalidData, e)
+    })?;
+
     // Initialize the logging system with a specified directory and log level.
     // This setup is critical for ensuring that all parts of the application
     // can perform logging activities coherently. The logger is part of the
     // "adapters" layer in the Ports and Adapters architecture, interfacing
     // with the external logging framework.
     let log_directory = "logs"; // Directory where log files will be stored.
-    let log_level = log::LevelFilter::Trace; // Log level indicating verbosity of the logs.
+    let log_level = log::LevelFilter::Info; // Log level indicating verbosity of the logs.
     let logger = Arc::new(common::adapters::log_adapter::init(
         log_directory,
         log_level,
@@ -148,7 +265,7 @@ async fn main() -> std::io::Result<()> {
     let db_logger = logger.clone(); // Clone the logger for database handling.
 
     // Attempt to create a new DatabaseAdapter
-    let path_to_db = "OneForAll_database_file.db"; // database path
+    let path_to_db = "commandant-rs_database_file.db"; // database path
     let db_adapter_result = DatabaseAdapter::new(path_to_db, db_logger.clone());
 
     // Handle the Result and create an Arc<dyn DatabasePort> if successful
@@ -204,8 +321,10 @@ async fn main() -> std::io::Result<()> {
     let db_logger = logger.clone(); // Clone the logger for database handling.
 
     // Attempt to create a new DatabaseAdapter
-    let path_to_db = "OneForAll_database_file.db"; // database path
+    let path_to_db = "commandant-rs_database_file.db"; // database path
     let db_adapter_result = DatabaseAdapter::new(path_to_db, db_logger.clone());
+
+    // CLI match command logic starts here //
 
     let _command_handle = spawn(async move {
         match cli.command {
@@ -217,88 +336,115 @@ async fn main() -> std::io::Result<()> {
                 command_logger.log_info("Benchmarking functionality not yet implemented.");
             }
             Commands::Stress => {
-                // Define the arguments for the stress test.
-                // The arguments are modified to create a more comprehensive and informative CPU stress test.
+                // Pull parameters from the application config file
+                let stress_config = &config.stress_test;
 
-                // "--cpu 4" specifies that the stress test should use 4 CPU cores instead of 2.
-                // This increases the load on the CPU for a more intensive stress test.
-                let cpu_cores = "--cpu";
-                let number_of_cores = "4";
-
-                // "--timeout 120s" sets the test to run for 120 seconds, doubling the duration of the test
-                // compared to the initial 60 seconds. This allows for a longer observation of CPU behavior
-                // under stress.
-                let timeout = "--timeout";
-                let duration = "120s";
-
-                // "--metrics-brief" outputs brief metrics about the stress test upon completion.
-                // This option provides a summary of how the system responded to the stress test.
-                let metrics = "--metrics-brief";
-
-                // "--verbose" increases the verbosity of the output. This is useful for getting detailed
-                // information about the stress test's operation and can aid in diagnosing issues or
-                // understanding the system's behavior under load.
-                let verbose = "--verbose";
-
-                // Combine all the arguments into an array. These arguments will configure the behavior
-                // of the `stress-ng` command to perform a more extensive and detailed stress test.
-                let args = [
-                    cpu_cores,
-                    number_of_cores,
-                    timeout,
-                    duration,
-                    metrics,
-                    verbose,
+                // Build the arguments vector for the stress-ng command
+                let mut args = vec![
+                    // Set the number of CPU cores to stress
+                    "--cpu".to_string(),
+                    stress_config.cpu.cores.to_string(),
+                    // Set the duration of the stress test
+                    "--timeout".to_string(),
+                    stress_config.cpu.timeout.clone(),
                 ];
 
-                // Initialize the retry mechanism. This allows the stress test to be retried
-                // a specified number of times in case of failure. In this case, the test
-                // will be attempted up to 3 times (initial try + 2 retries).
+                // Add metrics option if enabled in the config
+                if stress_config.metrics {
+                    args.push("--metrics-brief".to_string());
+                }
+
+                // Add verbose option if enabled in the config
+                if stress_config.verbose {
+                    args.push("--verbose".to_string());
+                }
+
+                // Add any additional options specified in the config
+                args.extend(stress_config.options.iter().cloned());
+
+                // Log the final command for debugging purposes
+                command_logger.log_info(&format!("Executing stress test with args: {:?}", args));
+
+                // Initialize the retry mechanism
+                // The test will be attempted up to 3 times (initial try + 2 retries)
                 let mut retries = 2;
-                // Start a loop for executing the stress test with retries.
+
+                // Start a loop for executing the stress test with retries
                 while retries >= 0 {
-                    // Log the start of a stress test attempt. This is useful for monitoring
-                    // and debugging purposes, allowing users to track the test's progress
-                    // and retries.
+                    // Log the start of a stress test attempt
                     command_logger.log_info(&format!(
                         "Executing CPU stress test. Attempts remaining: {}",
                         retries,
                     ));
 
-                    // Execute the stress test command asynchronously.
-                    // `StressNgAdapter::execute_stress_ng_command` is responsible for running
-                    // the stress test using the `stress-ng` tool. The command is awaited
-                    // to ensure the execution is complete before proceeding.
-                    match StressNgAdapter::execute_stress_ng_command(command_logger.clone(), &args)
-                        .await
+                    // Execute the stress test command asynchronously
+                    match StressNgAdapter::execute_stress_ng_command(
+                        command_logger.clone(),
+                        &args.iter().map(String::as_str).collect::<Vec<&str>>(),
+                    )
+                    .await
                     {
-                        // In case of a successful execution, log the success and exit the loop.
-                        // This indicates that the stress test was completed without errors.
+                        // In case of a successful execution
                         Ok(()) => {
                             command_logger.log_info("CPU stress test executed successfully.");
-                            break;
+                            break; // Exit the retry loop on success
                         }
-                        // In case of an error, handle the retry mechanism.
+                        // In case of an error, handle the retry mechanism
                         Err(e) => {
-                            // If there are retries left, log a warning and decrement the retry counter.
-                            // The `sleep` call introduces a delay before the next attempt, giving
-                            // the system some time to stabilize.
                             if retries > 0 {
+                                // If there are retries left, log a warning and wait before retrying
                                 command_logger.log_warn(&format!(
                                     "Retrying CPU stress test. Attempts remaining: {}",
                                     retries
                                 ));
-                                sleep(Duration::from_secs(10)).await;
+                                sleep(Duration::from_secs(10)).await; // Wait 10 seconds before retrying
                             } else {
-                                // If there are no retries left, log the error and exit the loop.
-                                // This indicates that all attempts to run the stress test have failed.
+                                // If there are no retries left, log the error
                                 command_logger
                                     .log_error(&format!("Error executing CPU stress test: {}", e));
                             }
                         }
                     }
-                    // Decrement the retry counter after each attempt.
+                    // Decrement the retry counter after each attempt
                     retries -= 1;
+                }
+            }
+            Commands::AIModel { action } => {
+                match action {
+                    // Handle the Predict action
+                    AIModelAction::Predict { input } => {
+                        // Log the start of the prediction process
+                        command_logger.log_info("Starting AI model prediction command");
+
+                        // Create a new BurnAiModel instance
+                        // let model = BurnAiModelAdapter::new();
+
+                        // Perform prediction using the input
+                        // let prediction = model.predict(&input);
+
+                        // Print the prediction result
+                        // println!("Prediction: {:?}", prediction);
+                    }
+
+                    // Handle the LoadPreTrained action
+                    AIModelAction::LoadPreTrained { model_path } => {
+                        // Log the start of the model loading process
+                    //    command_logger.log_info("Loading pretrained AI model.");
+
+                        // Attempt to load the pretrained model
+                      //  match BurnAiModelAdapter::load_pretrained(&model_path) {
+                        //    Ok(model) => {
+                                // Log successful model loading
+                          //      command_logger.log_info("Pretrained model loaded successfully");
+                                // TODO: Perform operations with the loaded model here
+                          //  }
+                           // Err(e) => {
+                                // Log error if model loading fails
+                             //   command_logger
+                               //     .log_error(&format!("Error loading pretrained model: {}", e));
+                           // }
+                       // }
+                    }
                 }
             }
 
@@ -380,7 +526,7 @@ fn get_all_keys(logger: Arc<dyn LoggerPort>) -> Result<(), sled::Error> {
     logger.log_info("Attempting to open the Sled database.");
 
     // Attempt to open the Sled database, gracefully handling errors.
-    let db = match sled::open("OneForAll_database_file.db") {
+    let db = match sled::open("commandant-rs_database_file.db") {
         Ok(db) => {
             // Log the successful opening of the database.
             logger.log_info("Database opened successfully.");

@@ -1,0 +1,33 @@
+# Configuration file for Commandant-rs
+
+# Log Level Configuration
+# Specifies the verbosity of the application's logging.
+# Valid options: "Error", "Warn", "Info", "Debug", "Trace"
+# Default: "Info"
+log_level: "Debug"
+
+# Stress Test Configuration
+# Contains settings for the stress testing functionality
+stress_test:
+  # Number of CPU cores to utilize during the stress test
+  # Type: Integer
+  # Range: 1 to the number of available CPU cores
+  # Default: 4
+  cpu_cores: 4
+
+  # Duration of the stress test
+  # Format: A string representing time (e.g., "60s", "5m", "1h")
+  # Examples: "30s" (30 seconds), "2m" (2 minutes), "1h30m" (1 hour and 30 minutes)
+  # Default: "120s"
+  timeout: "120s"
+
+  # Whether to output brief metrics about the stress test upon completion
+  # Type: Boolean
+  # Default: true
+  metrics_brief: true
+
+  # Whether to increase the verbosity of the stress test output
+  # Provides detailed information about the stress test's operation
+  # Type: Boolean
+  # Default: true
+  verbose: true
