@@ -13,12 +13,14 @@ impl SysInfoAdapter {
 }
 
 impl SysInfoPort for SysInfoAdapter {
+    // update cpu information
     fn get_cpu_usage(&self) -> f32 {
         let mut system = System::new_all();
         system.refresh_cpu_all();
         system.global_cpu_usage()
     }
-
+    
+    // update memory information
     fn get_memory_usage(&self) -> (u64, u64) {
         let mut system = System::new_all();
         system.refresh_memory();

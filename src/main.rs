@@ -4,22 +4,36 @@ use std::sync::Arc;
 
 use serde::Deserialize;
 
+// CLI Parser
 use clap::{Parser, Subcommand};
-use futures::SinkExt;
+
+// Web Server
+use common::adapters::web_server_adapter::WebServerAdapter;
+use common::ports::web_server_port::WebServerPort;
 use tokio::time::{sleep, Duration};
 use tokio::{signal, spawn};
 
-use common::adapters::web_server_adapter::WebServerAdapter;
+// Logger
 use common::ports::log_port::LoggerPort;
-use common::ports::web_server_port::WebServerPort;
 
-// use crate::adapters::burn_ai_model_adapter::BurnAiModelAdapter;
+// Database
 use crate::adapters::database_adapter::DatabaseAdapter;
-use crate::adapters::ps_command_adapter::PsAdapter;
-use crate::adapters::stress_ng_adapter::StressNgAdapter;
-// use crate::domain::ai_model::AiModel;
 use crate::ports::database_port::DatabasePort;
+
+// Stressors
+use crate::adapters::stress_ng_adapter::StressNgAdapter;
+
+// Processes
+use crate::adapters::ps_command_adapter::PsAdapter;
 use crate::ports::ps_command_port::PsCommandPort;
+
+// Model Framework
+// use crate::adapters::burn_ai_model_adapter::BurnAiModelAdapter;
+// use crate::domain::ai_model::AiModel;
+
+// SysInfo
+use crate::ports::sysinfo_port;
+use crate::adapters::sysinfo_adapter;
 
 mod adapters;
 mod ports;
