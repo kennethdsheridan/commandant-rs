@@ -26,7 +26,16 @@ impl SysInfoPort for SysInfoAdapter {
     }
     
     // update the disk information
-    fn get_disk_usage(&self) -> u64 {
-            todo!();
+    fn get_disk_usage(&self) -> (u64, u64) {
+       let disks = Disks::new_with_refreshed_list();
+       
+       let total_space: u64 = disks.list().iter()
+           .map(|disk| disk.total_space()).sum();
+       
+       let used_space: u64 = disks.list().iter()
+           .map(|disk| disk.total_space() - disk.available_space()).sum();
+
+       (used_space, total_space) // return the tuple
+        
     }
 }
