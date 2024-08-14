@@ -1,79 +1,66 @@
-# The [package] section defines the configuration for your Rust package.
 [package]
-# The name of your package.
 name = "commandant-rs"
-# The version of your package following Semantic Versioning (https://semver.org/).
 version = "1.75.0"
-# The edition of Rust you are using, which can affect the syntax and compiler features.
 edition = "2021"
-# The path to your main source file, which can be either lib for binaries or lib.rs for libraries.
-# This key is not standard and will be ignored by Cargo.
-src = "src/main"
 
-# The [dependencies] section lists all the crates that your package depends on.
 [dependencies]
-# The log crate provides a logging abstraction layer.
+# Logging
 log = "0.4.14"
-# The env_logger crate provides a logger implementation that can be configured via environment variables.
 env_logger = "0.11.1"
-# The fern crate allows you to configure your own logger.
 fern = "0.6.0"
-# The chrono crate provides date and time functionality.
+
+# Date and Time
 chrono = "0.4.19"
-# The colored crate allows you to colorize your terminal output.
+
+# Utilities
 colored = "2.0.0"
-# The uuid crate provides functionality to generate and parse UUIDs.
 uuid = "1.6.1"
-# The clap crate is used for parsing command-line arguments. The "derive" feature enables macro support.
-clap = { version = "4.4.11", features = ["derive"] }
-# The wasm-pack crate is a tool for building WebAssembly packages from Rust code.
-wasm-pack = "0.12.1"
-# The wasm-bindgen crate provides a way to communicate between WebAssembly and JavaScript.
-wasm-bindgen = "0.2.76"
-# The plotters crate is a data visualization library.
-plotters = "0.3.0"
-# The getrandom crate provides a way to generate random numbers. The "js" feature enables support for WebAssembly.
-getrandom = { version = "0.2.11", features = ["js"] }
-# The bzip2 crate provides support for the BZip2 compression format.
-bzip2 = "0.4.2"
-# The errono crate provides a way to convert errno values to strings.
-errno = "0.3.0"
-# The libc crate provides a way to call C functions from Rust.
 project-root = "0.2.2"
-# The actix-web crate is a web framework for Rust.
-actix-web = "4.4.1"
-# The tokio crate provides asynchronous I/O for Rust.
-tokio = { version = "1", features = ["full"] }
-# The async-trait crate provides async versions of the standard library traits.
-async-trait = { version = "0.1.51", features = [] }
 serde = "1.0.193"
-# Tokio-based single-threaded async runtime for the Actix ecosystem.
-actix-rt = "2.9.0"
-# The futures crate provides a framework for asynchronous programming.
-futures = "0.3.30"
-# The sled crate provides an embedded database.
-sled = "0.34.7"
-# The common crate is a library that contains shared code.
-common = { path = "./common" }
-# The fullstack_rust_app crate is a library that contains the application code.
-fullstack_rust_app = { path = "./fullstack_rust_app" }
-burn = { version = "0.13.2", features = ["ndarray", "train", "wgpu", "vision"]}
+serde_json = "1.0.124"
 serde_yaml = "0.9.34"
+
+# Command Line Interface
+clap = { version = "4.4.11", features = ["derive"] }
+
+# WebAssembly
+wasm-pack = "0.12.1"
+wasm-bindgen = "0.2.76"
+getrandom = { version = "0.2.11", features = ["js"] }
+
+# Data Visualization
+plotters = "0.3.0"
+
+# Compression
+bzip2 = "0.4.2"
+
+# System Interactions
+errno = "0.3.0"
 sysinfo = "0.31.2"
 
-# The [[bin]] section defines the configuration for building one or more binary executables.
-[[bin]]
-# The name of the binary executable.
-name = "commandant-rs"
-# The path to the source file for the binary executable.
-path = "src/main.rs"
+# Web Framework and Async Runtime
+actix-web = "4.4.1"
+actix-rt = "2.9.0"
+tokio = { version = "1", features = ["full"] }
+async-trait = { version = "0.1.51", features = [] }
+futures = "0.3.30"
 
-# For more information on the keys and their definitions, refer to the official Rust documentation:
-# https://doc.rust-lang.org/cargo/reference/manifest.html
+# Database
+surrealdb = { version = "1.5.4", features = ["kv-rocksdb"] }
+
+# Machine Learning
+burn = { version = "0.13.2", features = ["ndarray", "train", "wgpu", "vision"] }
+
+# Local Dependencies
+common = { path = "./common" }
+fullstack_rust_app = { path = "./fullstack_rust_app" }
+
+[[bin]]
+name = "commandant-rs"
+path = "src/main.rs"
 
 [workspace]
 members = [
     "fullstack_rust_app",
     "common"
-    # Add other workspace members if any
 ]

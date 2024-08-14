@@ -32,8 +32,8 @@ use crate::ports::ps_command_port::PsCommandPort;
 // use crate::domain::ai_model::AiModel;
 
 // SysInfo
-use crate::ports::sysinfo_port;
 use crate::adapters::sysinfo_adapter;
+use crate::ports::sysinfo_port;
 
 mod adapters;
 mod ports;
@@ -282,22 +282,21 @@ async fn main() -> std::io::Result<()> {
     let path_to_db = "commandant-rs_database_file.db"; // database path
     let db_adapter_result = DatabaseAdapter::new(path_to_db, db_logger.clone());
 
-    // Handle the Result and create an Arc<dyn DatabasePort> if successful
-    let db_adapter: Arc<dyn DatabasePort> = match db_adapter_result {
-        Ok(adapter) => {
-            db_logger.log_info("DatabaseAdapter created successfully.");
-            Arc::new(adapter) // Cast the DatabaseAdapter to a trait object
-        }
-        Err(e) => {
-            db_logger.log_error(&format!("Error creating DatabaseAdapter: {}", e));
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Failed to create DatabaseAdapter",
-            ));
-        }
-    };
+    let db_adapter: Arc<dyn DatabasePort> =
+        match DatabaseAdapter::new(&path_to_db, db_logger.clone()).await {
+            Ok(adapter) => {
+                db_logger.log_info("DatabaseAdapter created successfully.");
+                Arc::new(adapter) // Cast the DatabaseAdapter to a trait object
+            }
+            Err(e) => {
+                db_logger.log_error(&format!("Error creating DatabaseAdapter: {}", e));
+                return Err(std::io::Error::new(
+                    std::io::ErrorKind::Other,
+                    "Failed to create DatabaseAdapter",
+                ));
+            }
+        };
 
-    // Initialize the PsAdapter with the logger and the DbAdapter for process monitoring and CPU usage analysis.
     let ps_adapter =
         Arc::new(PsAdapter::new(logger.clone(), db_adapter.clone())) as Arc<dyn PsCommandPort>;
 
@@ -443,21 +442,21 @@ async fn main() -> std::io::Result<()> {
                     // Handle the LoadPreTrained action
                     AIModelAction::LoadPreTrained { model_path } => {
                         // Log the start of the model loading process
-                    //    command_logger.log_info("Loading pretrained AI model.");
+                        //    command_logger.log_info("Loading pretrained AI model.");
 
                         // Attempt to load the pretrained model
-                      //  match BurnAiModelAdapter::load_pretrained(&model_path) {
+                        //  match BurnAiModelAdapter::load_pretrained(&model_path) {
                         //    Ok(model) => {
-                                // Log successful model loading
-                          //      command_logger.log_info("Pretrained model loaded successfully");
-                                // TODO: Perform operations with the loaded model here
-                          //  }
-                           // Err(e) => {
-                                // Log error if model loading fails
-                             //   command_logger
-                               //     .log_error(&format!("Error loading pretrained model: {}", e));
-                           // }
-                       // }
+                        // Log successful model loading
+                        //      command_logger.log_info("Pretrained model loaded successfully");
+                        // TODO: Perform operations with the loaded model here
+                        //  }
+                        // Err(e) => {
+                        // Log error if model loading fails
+                        //   command_logger
+                        //     .log_error(&format!("Error loading pretrained model: {}", e));
+                        // }
+                        // }
                     }
                 }
             }
