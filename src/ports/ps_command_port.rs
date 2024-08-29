@@ -1,3 +1,5 @@
+use async_trait::async_trait;
+
 /// `PsCommandPort` Trait
 ///
 /// Defines an interface for executing the `ps` command to monitor system processes.
@@ -6,6 +8,7 @@
 ///
 /// Implementors can provide specific strategies for process monitoring, adhering to
 /// the Dependency Inversion Principle for flexibility and loose coupling in application design.
+#[async_trait]
 pub trait PsCommandPort: Send + Sync {
     /// Executes the `ps` command to gather process statistics.
     ///
@@ -39,7 +42,7 @@ pub trait PsCommandPort: Send + Sync {
     ///
     /// # Arguments
     /// * `output_file_path` - The path to the file where the command output will be saved.
-    fn collect_cpu_statistics(&self, output_file_path: &str);
+    async fn collect_cpu_statistics(&self, output_file_path: &str);
 
     /// Writes the output of the `ps` command to a database.
     ///
@@ -47,10 +50,11 @@ pub trait PsCommandPort: Send + Sync {
     /// This can be useful for persistent storage, analysis, or real-time monitoring purposes.
     ///
     /// # Arguments
-    /// * `output` - The output string from the `ps` command.
+    /// * `output`
+    /// - The output string from the `ps` command.
     /// * `key` - The key to use for writing to the database.
     ///
     /// # Returns
     /// A `Result` indicating the success or failure of the write operation.
-    fn write_to_db(&self, output: String, key: &[u8], db_identifier: &str) -> Result<(), String>;
+    async fn write_to_db(&self, output: String, key: &[u8], db_identifier: &str) -> Result<(), String>;
 }

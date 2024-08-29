@@ -7,7 +7,14 @@ use serde::Deserialize;
 // CLI Parser
 use clap::{Parser, Subcommand};
 
+use surrealdb::Surreal;
+use surrealdb::engine::remote::ws::{Client, Ws};
+use surrealdb::iam::signin::db;
+use surrealdb::opt::auth::Root;
+use surrealdb::sql::Thing;
+
 // Web Server
+use tokio;
 use common::adapters::web_server_adapter::WebServerAdapter;
 use common::ports::web_server_port::WebServerPort;
 use tokio::time::{sleep, Duration};
@@ -471,23 +478,55 @@ async fn main() -> std::io::Result<()> {
                 // Specify the output file path for CPU statistics
                 let output_file_path = "cpu_stats.txt";
 
+                // Clone the ps_adapter if its being moved into the tokio task
+                let ps_adapter_clone = ps_adapter.clone();
+
                 // Spawn a new thread to run the process monitoring task
                 // This allows the Overwatch functionality to operate in the background
                 // without blocking the main async executor
-                std::thread::spawn(move || {
-                    ps_adapter.collect_cpu_statistics(output_file_path);
+                tokio::spawn(async move {
+                    ps_adapter_clone.collect_cpu_statistics(output_file_path).await;
                 });
 
                 command_logger.log_info("Monitoring CPU usage and top processes.");
             }
             Commands::DatabaseOps => {
-                // Assuming `db_logger` is a reference to an implementation of `LoggerPort`
-                command_logger.log_info("Database operations functionality not yet implemented.");
+                command_logger.log_info("Starting database operations.");
 
-                match get_all_keys(logger.clone()) {
-                    // Pass a reference, not a clone
-                    Ok(_) => println!("Successfully retrieved all keys"),
-                    Err(e) => eprintln!("Error retrieving keys: {:?}", e),
+                // Establish a connection to SurrealDB
+                let db = match Surreal::new::<Ws>("ws://localhost:8000").await {
+                    Ok(db) => db,
+                    Err(e) => {
+                        command_logger.log_error(&format!("Failed to connect to database: {:?}", e));
+                        return;
+                    }
+                };
+
+                // Signin to the database
+                match db.signin(Root {
+                    username: "root",
+                    password: "root",
+                }).await {
+                    Ok(_) => command_logger.log_info("Signed in to database"),
+                    Err(e) => {
+                        command_logger.log_error(&format!("Failed to sign in to database: {:?}", e));
+                        return;
+                    }
+                }
+
+                // Use a default namespace and database
+                if let Err(e) = db.use_ns("test").use_db("test").await {
+                    command_logger.log_error(&format!("Failed to select namespace and database: {:?}", e));
+                    return;
+                }
+
+                match get_all_keys(logger.clone(), &db).await {
+                    Ok(_) => {
+                        command_logger.log_info("Successfully retrieved all keys");
+                    },
+                    Err(e) => {
+                        command_logger.log_error(&format!("Error retrieving keys: {:?}", e));
+                    },
                 }
             }
         }
@@ -522,65 +561,39 @@ async fn main() -> std::io::Result<()> {
     Ok(())
 }
 
-/// Retrieves all keys from the Sled database.
+/// Retrieves all keys from the SurrealDB database.
 ///
-/// This function attempts to open the Sled database and create an iterator over all key-value pairs.
+/// This function attempts to connect to the SurrealDB database and retrieve all records.
 /// It logs the process and counts the total number of keys found.
 ///
 /// # Arguments
 ///
 /// * `logger` - An Arc-wrapped LoggerPort trait object for logging.
+/// * `db` - A reference to the SurrealDB connection.
 ///
 /// # Returns
 ///
-/// * `Result<(), sled::Error>` - Returns Ok(()) if successful, or an Err containing the sled::Error if an error occurred.
-fn get_all_keys(logger: Arc<dyn LoggerPort>) -> Result<(), sled::Error> {
-    // Log the attempt to open the Sled database.
-    logger.log_info("Attempting to open the Sled database.");
+/// * `Result<(), surrealdb::Error>` - Returns Ok(()) if successful, or an Err containing the surrealdb::Error if an error occurred.
+async fn get_all_keys(logger: Arc<dyn LoggerPort>, db: &Surreal<Client>) -> Result<(), surrealdb::Error> {
+    // Log the attempt to retrieve all records from the SurrealDB database.
+    logger.log_info("Attempting to retrieve all records from the SurrealDB database.");
 
-    // Attempt to open the Sled database, gracefully handling errors.
-    let db = match sled::open("commandant-rs_database_file.db") {
-        Ok(db) => {
-            // Log the successful opening of the database.
-            logger.log_info("Database opened successfully.");
-            db
-        }
-        Err(e) => {
-            // Log the error and return it if the database fails to open.
-            logger.log_error(&format!("Error opening database: {}", e));
-            return Err(e);
-        }
-    };
+    // Retrieve all records from the database
+    let result: Vec<Thing> = db.select("records").await?;
 
-    // Log the creation of an iterator over all key-value pairs in the database.
-    logger.log_debug("Creating an iterator over all key-value pairs in the database.");
+    // Log the successful retrieval of records
+    logger.log_info(&format!("Successfully retrieved {} records.", result.len()));
 
-    // Create an iterator over all key-value pairs in the database.
-    let mut iter = db.iter();
-    let mut key_count = 0;
-
-    // Iterate over all keys.
-    while let Some(result) = iter.next() {
-        match result {
-            Ok((key, _)) => {
-                // Increment key count.
-                key_count += 1;
-
-                // Log each key.
-                logger.log_debug(&format!("Key: {:?}", key));
-            }
-            Err(e) => {
-                // Log the error and return it if an error occurs while iterating over the keys.
-                logger.log_error(&format!("Error iterating over keys: {}", e));
-                return Err(e);
-            }
-        }
+    // Iterate over all records
+    for (index, record) in result.iter().enumerate() {
+        // Log each record's ID
+        logger.log_debug(&format!("Record {}: ID = {}", index + 1, record.id));
     }
 
-    // Log the total number of keys found.
+    // Log the total number of records found
     logger.log_info(&format!(
-        "Successfully iterated over all keys. Total keys found: {}",
-        key_count
+        "Successfully iterated over all records. Total records found: {}",
+        result.len()
     ));
 
     Ok(())

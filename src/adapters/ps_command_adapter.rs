@@ -9,6 +9,7 @@ use std::process::Command;
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
+use async_trait::async_trait;
 
 use common::adapters::ps_wasm_adapter;
 use common::ports::log_port::LoggerPort;
@@ -33,6 +34,7 @@ struct ProcessData {
 
 /// Represents the linux `ps` command adapter.
 /// This struct is used to execute the `ps` command and manage its output.
+#[derive(Clone)]
 pub struct PsAdapter {
     logger: Arc<dyn LoggerPort>, // inject the logger port
     db: Arc<dyn DatabasePort>,   // inject the database port
@@ -55,6 +57,7 @@ impl PsAdapter {
 // Implement the `PsCommandPort` trait for `PsAdapter`. This allows the adapter to be used
 // as a port in the application, and it also provides a concrete implementation of the
 // `PsCommandPort` interface.
+#[async_trait]
 impl PsCommandPort for PsAdapter {
     fn execute_ps_command(&self) -> Result<String, String> {
         // Execute the `ps` command
@@ -97,14 +100,14 @@ impl PsCommandPort for PsAdapter {
     ///
     /// # Arguments
     /// * `output_file_path` - The path to the file where the command output will be saved.
-    fn collect_cpu_statistics(&self, key: &str) {
+    async fn collect_cpu_statistics(&self, key: &str) {
         loop {
             // Loop forever
             match self.execute_ps_command() {
                 Ok(output) => {
                     // write to the database if the command was successful and the output is not
                     // empty (i.e., the command returned no results)
-                    if let Err(e) = self.write_to_db(output, key.as_bytes(), "database") {
+                    if let Err(e) = self.write_to_db(output, key.as_bytes(), "database").await {
                         self.logger.log_error(&e);
                         break; // Break out of the loop if an error occurs
                     }
@@ -129,16 +132,15 @@ impl PsCommandPort for PsAdapter {
     /// A `Result` indicating the success or failure of the write operation.
     /// This method writes the output of the `ps` command to a database.
     /// This can be useful for logging, analysis, or real-time monitoring purposes.
-    fn write_to_db(&self, output: String, key: &[u8], db_identifier: &str) -> Result<(), String> {
+    async fn write_to_db(&self, output: String, key: &[u8], db_identifier: &str) -> Result<(), String> {
         // Convert the output to bytes
-        let output_bytes = output.as_bytes();
+        let output_bytes = output;
 
         // Write the output to the database
-        match self.db.insert(key, output_bytes) {
+        match self.db.insert(key, &output_bytes).await {
             Ok(_) => Ok(()),
             Err(e) => {
-                let error_message =
-                    format!("Failed to write to database at {}: {}", db_identifier, e);
+                let error_message = format!("Failed to write to database at {}: {}", db_identifier, e);
                 self.logger.log_error(&error_message);
                 Err(error_message)
             }
