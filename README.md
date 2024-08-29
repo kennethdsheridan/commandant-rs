@@ -1,87 +1,94 @@
+# commandant-rs: Supercompute Cluster Performance Analysis Toolkit
 
-# commandant-rs: A Scalable Enterprise HPC Infrastructure Benchmarking & Diagnostic Kit
+## Unleash the Full Potential of Your HPC Infrastructure
 
+commandant-rs is a Rust-based toolkit designed for comprehensive performance analysis and optimization of high-performance computing (HPC) clusters. By leveraging WebAssembly, advanced open-source tools, and custom-built modules, to provide insights into hardware's capabilities.
 
-## Available Features:
-- CPU and RAM stress tests
-- RoCE performanace tests
-- Acclerator (GPU, APU) testing
+---
 
-## Upcoming Features:
-- AI-assisted system characterization
-- In-browser result visualization (with WebAssembly)
+## 🚀 Key Features
 
-### **Are you fully utilizing your hardware infrastructure's potential?**
+- **Cluster-wide Performance Profiling**: Utilize MPI, NCCL (Nvidia), and RCCL (AMD) for comprehensive cluster analysis
+- **Network Performance Testing**: Leverage iperf3 for detailed network throughput and latency assessments
+- **CPU Stress Testing**: Employ Stress-NG for rigorous CPU and system stress analysis
+- **GPU and Accelerator Benchmarking**: Evaluate GPU capabilities across various workloads
+- **Machine Learning Workload Optimization**: Harness Burn for ML model training and inference performance testing
+- **Storage I/O Analysis**: Use Flexible I/O Tester (FIO) for in-depth storage performance evaluation
+- **Real-time Monitoring**: WebAssembly-powered dashboard for low-latency, resource-efficient diagnostics
+- **Scalable Data Management**: SurrealDB integration for efficient storage and analysis of large-scale test results
 
-### **Are you overspending on GPUs or other hardware because you don't know exactly what your stack needs to perform?**
+---
 
-commandant-rs is a web-based and CLI toolkit engineered to enhance performance and reliability in enterprise hardware infrastructure. This toolkit is the culmination of my 8-year journey in enterprise SaaS in California and the Pacific Northwest, fused with skills honed during my 8 years as a US Marine.
+## 💡 Why commandant-rs?
 
-## Real-Time System Diagnostics via WebAssembly
-![Web Console Display](web_console.png)
+1. **Holistic Cluster Analysis**: From individual node performance to cluster-wide communication patterns
+2. **Cross-Platform Compatibility**: Rust and WebAssembly ensure consistent performance across diverse environments
+3. **Low-Overhead Diagnostics**: Minimal impact on system resources during testing and monitoring
+4. **Extensible Architecture**: Modular design allows for easy integration of new tools and testing methodologies
+5. **Data-Driven Insights**: Advanced analytics powered by SurrealDB to extract actionable intelligence from test results
 
-### Ultra-Low Resource Utilization and Latency
+---
 
-Developed in Rust, commandant-rs takes advantage of WebAssembly (Wasm) to offer real-time performance and health monitoring with minimal overhead. This integration ensures resource-efficient, low-latency diagnostics directly in your browser.
+## 🛠️ Core Technologies
 
-### Addressing Core Enterprise Concerns
+- **Rust**: For system-level performance and safety
+- **WebAssembly**: Enabling cross-platform, low-latency monitoring
+- **Burn**: ML training framework for GPU acceleration
+- **Stress-NG**: Comprehensive system stress testing
+- **iperf3**: Network performance measurement
+- **MPI**: Message Passing Interface for cluster communication
+- **NCCL/RCCL**: GPU-accelerated collective communication libraries
+- **SurrealDB**: High-performance database for test result storage and analysis
 
-- **Performance versus Expenditure**: Ensures your investment in hardware is optimized for peak performance.
-- **Power Consumption Optimization**: Identifies potential savings and environmental impacts through power efficiency enhancements.
-- **Memory Configuration Integrity**: Validates reliability and stability in mixed memory configurations.
-- **Storage Longevity**: Provides projections on storage device lifespan, aiding in timely upgrades.
-- **NIC Performance Validation**: Ensures network interfaces perform to vendor specifications.
-- **Thermal Efficiency**: Assesses and mitigates risks of thermal issues to maintain reliability.
+---
 
-```console
-kennethsheridan@Kenneths-Macbook-Prolocal commandant-rs % ./commandant-rs --help 
+## 📊 Supported Workloads and Tests
 
-Detailed instructions for hardware performance analysis and diagnostics. Supports a range of tests including benchmarks, stress tests, and system discovery to unveil your hardware's full capabilities.
+- **Cluster Communication**: MPI-based tests for inter-node communication patterns
+- **GPU Collective Operations**: NCCL/RCCL tests for multi-GPU setups
+- **Network Throughput and Latency**: iperf3-powered network performance analysis
+- **CPU Stress and Reliability**: Stress-NG tests for CPU, memory, and I/O subsystems
+- **Storage I/O Performance**: FIO tests for various I/O patterns and storage configurations
+- **Machine Learning Benchmarks**: Burn-powered tests for training and inference workloads
+- **Custom Workload Profiling**: Extensible framework for integrating application-specific benchmarks
+
+---
+
+## 🚦 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/username/commandant-rs.git
+
+# Build the project
+cd commandant-rs
+cargo build --release
+
+# Run help
+./target/release/commandant-rs --help 
 ```
 
-### Why Rust and WebAssembly?
+For detailed installation instructions and configuration options, please refer to our [Documentation](https://docs.commandant-rs.io).
 
-- **Predictable Performance**: Rust's efficient handling of system resources ensures reliable performance for critical tests.
-- **Concurrent Processing**: Manages multiple data streams effectively, thanks to Rust's advanced concurrency features.
-- **Safety and Security**: Minimizes common runtime errors through Rust's strict type system and ownership model.
-- **Cross-Platform Support**: WebAssembly enables deployment across different platforms without performance loss.
-- **Resource-Efficient Monitoring**: Operates within the browser with minimal impact on system resources.
+---
 
-### Leveraging Open-Source Tools
+## 📈 Real-time Monitoring Dashboard
 
-commandant-rs integrates essential tools like Redfish, Flexible I/O Tester (FIO), and iperf3, among others, to provide a robust testing framework.
+The WebAssembly-powered dashboard provides real-time insights into your cluster's performance, allowing you to:
 
-### Modular Adapters Architecture
+- Monitor node-level and cluster-wide metrics
+- Visualize network topology and communication patterns
+- Track GPU utilization and memory usage
+- Identify performance bottlenecks in real-time
 
-This design offers scalability, maintainability, flexibility, and interoperability, enhancing the toolkit’s utility across various scenarios.
+---
 
-## Testing Frameworks
+## 🙏 Acknowledgments
 
-- **Storage Performance**: Utilizes FIO for detailed testing across different operational environments.
-- **Network Performance**: Incorporates `iperf3` for comprehensive network assessments.
-- **GPU Performance**: Executes a variety of tests to evaluate GPU capabilities across different tasks.
+This project stands on the shoulders of giants. We'd like to thank the developers and communities behind Rust, WebAssembly, Burn, Stress-NG, iperf3, MPI, NCCL, RCCL, and SurrealDB. Your incredible work makes commandant-rs possible.
 
-### GPU-Centric Performance Testing
+---
 
-Addresses specific needs of modern computing environments, assessing everything from graphics rendering to AI model training.
+## 📬 Contact and Support
 
-## CPU Tests Checklist
-
-Detailed checklist for comprehensive CPU testing, including load tests, multicore processing, thermal testing, and more.
-
-## User Experience Enhancements
-
-Upcoming features aim to expand capabilities with real-time performance updates and long-term asset monitoring.
-
-## System Setup and Roadmap
-
-Focused on compatibility with major operating systems and ease of installation. Contributions are welcomed to enhance hardware performance evaluation.
-
-## Licensing and Acknowledgments
-
-Licensed under the MIT License, acknowledging contributions from both the open-source community and experiences from the enterprise SaaS sector and the US Marine Corps.
-
-## Contact and Social Media
-
-For inquiries, feedback, or following updates, contact via email or follow on various social media platforms.
-
+- **GitHub Issues**: For bug reports and feature requests
