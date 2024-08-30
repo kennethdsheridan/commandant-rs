@@ -7,16 +7,16 @@ use serde::Deserialize;
 // CLI Parser
 use clap::{Parser, Subcommand};
 
-use surrealdb::Surreal;
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::iam::signin::db;
 use surrealdb::opt::auth::Root;
 use surrealdb::sql::Thing;
+use surrealdb::Surreal;
 
 // Web Server
-use tokio;
 use common::adapters::web_server_adapter::WebServerAdapter;
 use common::ports::web_server_port::WebServerPort;
+use tokio;
 use tokio::time::{sleep, Duration};
 use tokio::{signal, spawn};
 
@@ -485,7 +485,9 @@ async fn main() -> std::io::Result<()> {
                 // This allows the Overwatch functionality to operate in the background
                 // without blocking the main async executor
                 tokio::spawn(async move {
-                    ps_adapter_clone.collect_cpu_statistics(output_file_path).await;
+                    ps_adapter_clone
+                        .collect_cpu_statistics(output_file_path)
+                        .await;
                 });
 
                 command_logger.log_info("Monitoring CPU usage and top processes.");
@@ -497,36 +499,42 @@ async fn main() -> std::io::Result<()> {
                 let db = match Surreal::new::<Ws>("ws://localhost:8000").await {
                     Ok(db) => db,
                     Err(e) => {
-                        command_logger.log_error(&format!("Failed to connect to database: {:?}", e));
+                        command_logger
+                            .log_error(&format!("Failed to connect to database: {:?}", e));
                         return;
                     }
                 };
 
                 // Signin to the database
-                match db.signin(Root {
-                    username: "root",
-                    password: "root",
-                }).await {
+                match db
+                    .signin(Root {
+                        username: "root",
+                        password: "root",
+                    })
+                    .await
+                {
                     Ok(_) => command_logger.log_info("Signed in to database"),
                     Err(e) => {
-                        command_logger.log_error(&format!("Failed to sign in to database: {:?}", e));
+                        command_logger
+                            .log_error(&format!("Failed to sign in to database: {:?}", e));
                         return;
                     }
                 }
 
                 // Use a default namespace and database
                 if let Err(e) = db.use_ns("test").use_db("test").await {
-                    command_logger.log_error(&format!("Failed to select namespace and database: {:?}", e));
+                    command_logger
+                        .log_error(&format!("Failed to select namespace and database: {:?}", e));
                     return;
                 }
 
                 match get_all_keys(logger.clone(), &db).await {
                     Ok(_) => {
                         command_logger.log_info("Successfully retrieved all keys");
-                    },
+                    }
                     Err(e) => {
                         command_logger.log_error(&format!("Error retrieving keys: {:?}", e));
-                    },
+                    }
                 }
             }
         }
@@ -574,7 +582,10 @@ async fn main() -> std::io::Result<()> {
 /// # Returns
 ///
 /// * `Result<(), surrealdb::Error>` - Returns Ok(()) if successful, or an Err containing the surrealdb::Error if an error occurred.
-async fn get_all_keys(logger: Arc<dyn LoggerPort>, db: &Surreal<Client>) -> Result<(), surrealdb::Error> {
+async fn get_all_keys(
+    logger: Arc<dyn LoggerPort>,
+    db: &Surreal<Client>,
+) -> Result<(), surrealdb::Error> {
     // Log the attempt to retrieve all records from the SurrealDB database.
     logger.log_info("Attempting to retrieve all records from the SurrealDB database.");
 
