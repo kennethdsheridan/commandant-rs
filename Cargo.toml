@@ -54,6 +54,7 @@ burn = { version = "0.13.2", features = ["ndarray", "train", "wgpu", "vision"] }
 # Local Dependencies
 common = { path = "./common" }
 fullstack_rust_app = { path = "./fullstack_rust_app" }
+tungstenite = "0.24.0"
 
 [[bin]]
 name = "commandant-rs"

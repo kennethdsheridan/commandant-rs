@@ -1,5 +1,8 @@
 use std::future;
 use std::sync::Arc;
+use std::thread::spawn;
+use tokio::net::TcpListener;
+use tungstenite::accept;
 
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use tokio::io;
@@ -239,7 +242,7 @@ async fn show_console() -> impl Responder {
 ///
 /// A simple endpoint to check the server's status. It responds with "Server is running"
 /// when the server is operational.
-/// // Define the get_status handler function
+///  Define the get_status handler function
 async fn get_status() -> impl Responder {
     HttpResponse::Ok().body("Server is running")
 }
@@ -263,6 +266,55 @@ impl WebServerPort for WebServerAdapter {
         // Wait indefinitely, or until you have another condition to close the application
         future::pending::<()>().await;
 
+        Ok(())
+    }
+
+    async fn start_websocket(&self) -> io::Result<()> {
+        // Bing the websocket server to the localhost on port 9001
+        let listener = TcpListener::bind("127.0.0.1:9001").await?;
+        println!("Websocket server listening");
+
+        // main server loop: continuously accept new connections
+        while let Ok((stream, _)) = listener.accept().await {
+            // Spawn a new task for each connection to handle them concurrently
+            tokio::spawn(async move {
+                // Attempt to accept the TCP stream as a websocket connection
+                // if successful, we get a websocket stream to communicate over
+                let mut ws_stream = match accept(stream).await {
+                    Ok(ws) => ws,
+                    Err(e) => {
+                        eprintln!("error accepting websocket connection: {:?}", e);
+                        return;
+                    }
+                };
+
+                // Start an infinite loop to handle incoming websocket messages
+                while let Some(result) = ws_stream.next().await {
+                    match result {
+                        Ok(message) => {
+                            // Only echo back text or binary messages
+                            if message.is_text() || message.is_binary() {
+                                // Attempt to send the message to the client
+                                if let Err(e) = ws_stream.send(message).await {
+                                    eprintln!("Error sending WebSocket message: {:?}", e);
+                                    break; // exit the loop if we cant send messages
+                                }
+                            }
+                            // we're ignoring other types of messages (e.g., ping, pong, close)
+                        }
+                        Err(e) => {
+                            // if theres an error receiving a message, log it and break the loop
+                            eprintln!("error receiving websocket message: {:?}", e);
+                            break;
+                        }
+                    }
+                }
+                // the loop has ended, meaning the connection is closed or an error occurred
+                println!("websocket connection closed");
+            });
+        }
+        // this line should be unreachable whiel loop above is infinite
+        // it is here to satisfy the function signature returning an io::Result<()>
         Ok(())
     }
 }

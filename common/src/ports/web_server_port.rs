@@ -8,4 +8,6 @@ use async_trait::async_trait;
 #[async_trait]
 pub trait WebServerPort {
     async fn start_server(&self) -> io::Result<()>;
+
+    async fn start_websocket(&self) -> io::Result<()>;
 }

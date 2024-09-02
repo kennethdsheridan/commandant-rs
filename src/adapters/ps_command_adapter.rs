@@ -1,15 +1,19 @@
 //! PS Adapter
 //!
 //! This module provides an adapter for the `ps` command, a tool for monitoring
-//! process statuses and CPU usage on Unix-based systems.
+//! process statuses and CPU usage on Unix-based systems. It executes the command
+//! processes the output through WebAssembly for the browser, then stores it within
+//! SurrealDB using the RockDB engine.
 
+use async_trait::async_trait;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::process::Command;
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
-use async_trait::async_trait;
+
+use wasm_bindgen::prelude::*;
 
 use common::adapters::ps_wasm_adapter;
 use common::ports::log_port::LoggerPort;
@@ -17,6 +21,12 @@ use common::ports::log_port::LoggerPort;
 use crate::ports::database_port::DatabasePort;
 use crate::ports::ps_command_port::PsCommandPort;
 
+/// WebAssembly binding for browsers console.log function
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
 
 /// The ProcessData struct represents a single process and its CPU usage percentage.
 /// This struct is used to parse the output of the `ps` command and extract the CPU usage
@@ -65,15 +75,16 @@ impl PsCommandPort for PsAdapter {
             .arg("-c")
             .arg("ps aux | sort -nrk 3,3 | head -n 10")
             .output()
-            .expect("Failed to execute command");
+            .map_err(|e| format!("Failed to execute command: {}", e))?;
 
         // Convert the output to a string
         let output_str = String::from_utf8_lossy(&output.stdout).to_string();
 
         // Call the WASM serialization function from ps_wasm_adapter.rs
-        let wasm_output = ps_wasm_adapter::write_to_wasm(output_str).unwrap();
+        let wasm_output = ps_wasm_adapter::write_to_wasm(output_str)
+            .map_err(|e| format!("Failed to serialize for WASM: {:?}", e))?;
 
-        Ok(String::try_from(wasm_output).unwrap()) // Return the output as a `String`
+        Ok(wasm_output) // Return the output as a `String`
     }
     /// Writes the output of the `ps` command to a specified file.
     fn write_to_file(&self, output: String, file_path: &str) -> Result<(), String> {
@@ -132,7 +143,12 @@ impl PsCommandPort for PsAdapter {
     /// A `Result` indicating the success or failure of the write operation.
     /// This method writes the output of the `ps` command to a database.
     /// This can be useful for logging, analysis, or real-time monitoring purposes.
-    async fn write_to_db(&self, output: String, key: &[u8], db_identifier: &str) -> Result<(), String> {
+    async fn write_to_db(
+        &self,
+        output: String,
+        key: &[u8],
+        db_identifier: &str,
+    ) -> Result<(), String> {
         // Convert the output to bytes
         let output_bytes = output;
 
@@ -140,7 +156,8 @@ impl PsCommandPort for PsAdapter {
         match self.db.insert(key, &output_bytes).await {
             Ok(_) => Ok(()),
             Err(e) => {
-                let error_message = format!("Failed to write to database at {}: {}", db_identifier, e);
+                let error_message =
+                    format!("Failed to write to database at {}: {}", db_identifier, e);
                 self.logger.log_error(&error_message);
                 Err(error_message)
             }
