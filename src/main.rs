@@ -281,7 +281,7 @@ async fn main() -> std::io::Result<()> {
     // Initialize the web server adapter with the logger. This adapter is responsible for
     // handling HTTP requests and serving web content. It represents the web server
     // "adapter" in the architecture.
-    let web_server = WebServerAdapter::new(logger.clone());
+    let web_server = WebServerAdapter::new();
 
     let db_logger = logger.clone(); // Clone the logger for database handling.
 

@@ -1,4 +1,4 @@
-2024-08-29T14:42:24 [INFO] - [32mStarting kvs store at file://commandant-rs_database_file.db[0m
-2024-08-29T14:42:24 [INFO] - [32mStarted kvs store at file://commandant-rs_database_file.db[0m
-2024-08-29T14:42:24 [INFO] - [32mDatabase opened at path: commandant-rs_database_file.db[0m
-2024-08-29T14:42:24 [INFO] - [32mDatabaseAdapter created successfully.[0m
+2024-09-04T19:08:49 [INFO] - [32mStarting kvs store at file://commandant-rs_database_file.db[0m
+2024-09-04T19:08:50 [INFO] - [32mStarted kvs store at file://commandant-rs_database_file.db[0m
+2024-09-04T19:08:50 [INFO] - [32mDatabase opened at path: commandant-rs_database_file.db[0m
+2024-09-04T19:08:50 [INFO] - [32mDatabaseAdapter created successfully.[0m
