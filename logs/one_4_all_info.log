@@ -1,4 +1,14 @@
-2024-09-04T19:08:49 [INFO] - [32mStarting kvs store at file://commandant-rs_database_file.db[0m
-2024-09-04T19:08:50 [INFO] - [32mStarted kvs store at file://commandant-rs_database_file.db[0m
-2024-09-04T19:08:50 [INFO] - [32mDatabase opened at path: commandant-rs_database_file.db[0m
-2024-09-04T19:08:50 [INFO] - [32mDatabaseAdapter created successfully.[0m
+2024-09-04T19:28:21 [INFO] - [32mStarting kvs store at file://commandant-rs_database_file.db[0m
+2024-09-04T19:28:21 [INFO] - [32mStarted kvs store at file://commandant-rs_database_file.db[0m
+2024-09-04T19:28:21 [INFO] - [32mDatabase opened at path: commandant-rs_database_file.db[0m
+2024-09-04T19:28:21 [INFO] - [32mDatabaseAdapter created successfully.[0m
+2024-09-04T19:28:21 [INFO] - [32mExecuting stress test with args: ["--cpu", "8", "--timeout", "30s", "--metrics-brief", "--verbose"][0m
+2024-09-04T19:28:21 [INFO] - [32mExecuting CPU stress test. Attempts remaining: 2[0m
+2024-09-04T19:28:21 [INFO] - [32mstarting 1 workers[0m
+2024-09-04T19:28:21 [INFO] - [32mTokio runtime found; starting in existing Tokio runtime[0m
+2024-09-04T19:28:21 [INFO] - [32mstarting service: "actix-web-service-127.0.0.1:8000", workers: 1, listening on: 127.0.0.1:8000[0m
+2024-09-04T19:28:40 [INFO] - [32mSIGINT received; starting forced shutdown[0m
+2024-09-04T19:28:40 [INFO] - [32mReceived Ctrl+C, shutting down.[0m
+2024-09-04T19:28:40 [INFO] - [32mshutting down idle worker[0m
+2024-09-04T19:28:40 [INFO] - [32maccept thread stopped[0m
+2024-09-04T19:28:40 [INFO] - [32mCPU stress test executed successfully.[0m
