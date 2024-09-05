@@ -7,7 +7,6 @@ edition = "2021"
 async-trait = "0.1.77"
 actix-rt = "2.9.0"
 log = "0.4.20"
-# import Fern for logging
 fern = "0.6.0"
 chrono = "0.4.33"
 colored = { version = "2.1.0", features = [] }
@@ -17,6 +16,8 @@ serde_json = "1.0.113"
 tokio = "1.35.1"
 actix-web = "4.5.1"
 serde = { version = "1.0.196", features = ["derive"] }# import log_port from internal crate
-
+tungstenite = "0.24.0"
+tokio-tungstenite = "0.23.1"
+futures-util = "0.3"
 
 

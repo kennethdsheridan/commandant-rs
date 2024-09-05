@@ -46,8 +46,8 @@ struct ProcessData {
 /// This struct is used to execute the `ps` command and manage its output.
 #[derive(Clone)]
 pub struct PsAdapter {
-    logger: Arc<dyn LoggerPort>, // inject the logger port
-    db: Arc<dyn DatabasePort>,   // inject the database port
+    db: Arc<dyn DatabasePort>,
+    logger: Arc<dyn LoggerPort>, // inject the database port
 }
 
 impl PsAdapter {
@@ -60,7 +60,7 @@ impl PsAdapter {
     /// An instance of `PsAdapter`.
     pub fn new(logger: Arc<dyn LoggerPort>, db: Arc<dyn DatabasePort>) -> Self {
         // Implement the `new` method for `PsAdapter`
-        PsAdapter { logger, db } // Return a new instance of `PsAdapter` with the specified logger
+        PsAdapter { db, logger } // Return a new instance of `PsAdapter` with the specified logger
     }
 }
 
@@ -84,8 +84,13 @@ impl PsCommandPort for PsAdapter {
         let wasm_output = ps_wasm_adapter::write_to_wasm(output_str)
             .map_err(|e| format!("Failed to serialize for WASM: {:?}", e))?;
 
-        Ok(wasm_output) // Return the output as a `String`
+        // Convert the JsValue to string
+        match wasm_output.as_string() {
+            Some(s) => Ok(s),
+            None => Err("Failed to convert WASM output to string".to_string()),
+        }
     }
+
     /// Writes the output of the `ps` command to a specified file.
     fn write_to_file(&self, output: String, file_path: &str) -> Result<(), String> {
         match OpenOptions::new() // Create a new `OpenOptions` instance

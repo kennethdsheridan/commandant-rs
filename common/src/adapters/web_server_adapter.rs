@@ -1,11 +1,12 @@
+use futures_util::SinkExt;
 use std::future;
-use std::sync::Arc;
-use std::thread::spawn;
-use tokio::net::TcpListener;
-use tungstenite::accept;
 
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use futures_util::stream::StreamExt;
+use std::sync::Arc;
 use tokio::io;
+use tokio::net::TcpListener;
+use tokio_tungstenite::accept_async;
 
 use crate::ports::log_port::LoggerPort;
 // web_server_adapter.rs
@@ -14,17 +15,15 @@ use crate::ports::web_server_port::WebServerPort;
 /// WebServerAdapter
 ///
 /// Adapter for the web server, integrating a logging facility.
-pub struct WebServerAdapter {
-    logger: Arc<dyn LoggerPort>, // Use LoggerPort trait for the logger
-}
+pub struct WebServerAdapter {}
 
 // Implement the Sync trait for the WebServerAdapter struct.
 impl WebServerAdapter {
     /// new
     ///
     /// Constructs a new WebServerAdapter instance.
-    pub fn new(logger: Arc<dyn LoggerPort>) -> Self {
-        Self { logger }
+    pub fn new() -> Self {
+        Self {}
     }
 }
 // show_dashboard
@@ -268,53 +267,61 @@ impl WebServerPort for WebServerAdapter {
 
         Ok(())
     }
-
-    async fn start_websocket(&self) -> io::Result<()> {
-        // Bing the websocket server to the localhost on port 9001
+    async fn start_websocket(&self, logger: Arc<dyn LoggerPort>) -> io::Result<()> {
         let listener = TcpListener::bind("127.0.0.1:9001").await?;
-        println!("Websocket server listening");
+        logger.log_info("WebSocket server listening on 127.0.0.1:9001");
 
-        // main server loop: continuously accept new connections
-        while let Ok((stream, _)) = listener.accept().await {
-            // Spawn a new task for each connection to handle them concurrently
+        while let Ok((stream, addr)) = listener.accept().await {
+            logger.log_info(&format!("New WebSocket connection: {}", addr));
+
+            let task_logger = Arc::clone(&logger);
+
             tokio::spawn(async move {
-                // Attempt to accept the TCP stream as a websocket connection
-                // if successful, we get a websocket stream to communicate over
-                let mut ws_stream = match accept(stream).await {
-                    Ok(ws) => ws,
-                    Err(e) => {
-                        eprintln!("error accepting websocket connection: {:?}", e);
-                        return;
-                    }
-                };
+                match accept_async(stream).await {
+                    Ok(ws_stream) => {
+                        task_logger
+                            .log_info(&format!("WebSocket connection established: {}", addr));
 
-                // Start an infinite loop to handle incoming websocket messages
-                while let Some(result) = ws_stream.next().await {
-                    match result {
-                        Ok(message) => {
-                            // Only echo back text or binary messages
-                            if message.is_text() || message.is_binary() {
-                                // Attempt to send the message to the client
-                                if let Err(e) = ws_stream.send(message).await {
-                                    eprintln!("Error sending WebSocket message: {:?}", e);
-                                    break; // exit the loop if we cant send messages
+                        let (mut ws_sender, mut ws_receiver) = ws_stream.split();
+
+                        while let Some(result) = ws_receiver.next().await {
+                            match result {
+                                Ok(msg) => {
+                                    if msg.is_text() || msg.is_binary() {
+                                        task_logger.log_debug(&format!(
+                                            "Received message from {}: {:?}",
+                                            addr, msg
+                                        ));
+                                        if let Err(e) = ws_sender.send(msg).await {
+                                            task_logger.log_error(&format!(
+                                                "Error sending WebSocket message to {}: {:?}",
+                                                addr, e
+                                            ));
+                                            break;
+                                        }
+                                    }
+                                }
+                                Err(e) => {
+                                    task_logger.log_error(&format!(
+                                        "Error receiving WebSocket message from {}: {:?}",
+                                        addr, e
+                                    ));
+                                    break;
                                 }
                             }
-                            // we're ignoring other types of messages (e.g., ping, pong, close)
                         }
-                        Err(e) => {
-                            // if theres an error receiving a message, log it and break the loop
-                            eprintln!("error receiving websocket message: {:?}", e);
-                            break;
-                        }
+                        task_logger.log_info(&format!("WebSocket connection closed: {}", addr));
+                    }
+                    Err(e) => {
+                        task_logger.log_error(&format!(
+                            "Error during the WebSocket handshake with {}: {:?}",
+                            addr, e
+                        ));
                     }
                 }
-                // the loop has ended, meaning the connection is closed or an error occurred
-                println!("websocket connection closed");
             });
         }
-        // this line should be unreachable whiel loop above is infinite
-        // it is here to satisfy the function signature returning an io::Result<()>
+
         Ok(())
     }
 }
