@@ -1,47 +1,47 @@
-stress-ng: debug: [40261] invoked with '../stress-ng-binary --cpu 8 --timeout 30s --metrics-brief --verbose' by user 501 'kennethsheridan'
-stress-ng: debug: [40261] stress-ng 0.18.01 g93fd313ef8f8
-stress-ng: debug: [40261] system: Darwin kilo-sierra-actual 23.6.0 Darwin Kernel Version 23.6.0: Mon Jul 29 21:14:46 PDT 2024; root:xnu-10063.141.2~1/RELEASE_ARM64_T6031 arm64, clang 12.0.5, Darwin libc, little endian
-stress-ng: debug: [40261] RAM total: 944.8G, RAM free: 1.2G, swap free: 0.0
-stress-ng: debug: [40261] temporary file path: '/Users/kennethsheridan/commandant-rs'
-stress-ng: debug: [40261] 16 processors online, 16 processors configured
-stress-ng: info:  [40261] setting to a 30 secs run per stressor
-stress-ng: debug: [40261] cache allocate: using built-in defaults as unable to determine cache size
-stress-ng: debug: [40261] CPU data cache: L1: 64K
-stress-ng: debug: [40261] cache allocate: shared cache buffer size: 2048K
-stress-ng: info:  [40261] dispatching hogs: 8 cpu
-stress-ng: debug: [40261] starting stressors
-stress-ng: debug: [40280] cpu: [40280] started (instance 0 on CPU 0)
-stress-ng: debug: [40281] cpu: [40281] started (instance 1 on CPU 0)
-stress-ng: debug: [40282] cpu: [40282] started (instance 2 on CPU 0)
-stress-ng: debug: [40283] cpu: [40283] started (instance 3 on CPU 0)
-stress-ng: debug: [40284] cpu: [40284] started (instance 4 on CPU 0)
-stress-ng: debug: [40285] cpu: [40285] started (instance 5 on CPU 0)
-stress-ng: debug: [40261] 8 stressors started
-stress-ng: debug: [40286] cpu: [40286] started (instance 6 on CPU 0)
-stress-ng: debug: [40287] cpu: [40287] started (instance 7 on CPU 0)
-stress-ng: debug: [40280] cpu: using method 'all'
-stress-ng: debug: [40287] cpu: [40287] exited (instance 7 on CPU 0)
-stress-ng: debug: [40282] cpu: [40282] exited (instance 2 on CPU 0)
-stress-ng: debug: [40283] cpu: [40283] exited (instance 3 on CPU 0)
-stress-ng: debug: [40280] cpu: [40280] exited (instance 0 on CPU 0)
-stress-ng: debug: [40286] cpu: [40286] exited (instance 6 on CPU 0)
-stress-ng: debug: [40261] cpu: [40280] terminated (success)
-stress-ng: debug: [40285] cpu: [40285] exited (instance 5 on CPU 0)
-stress-ng: debug: [40284] cpu: [40284] exited (instance 4 on CPU 0)
-stress-ng: debug: [40281] cpu: [40281] exited (instance 1 on CPU 0)
-stress-ng: debug: [40261] cpu: [40281] terminated (success)
-stress-ng: debug: [40261] cpu: [40282] terminated (success)
-stress-ng: debug: [40261] cpu: [40283] terminated (success)
-stress-ng: debug: [40261] cpu: [40284] terminated (success)
-stress-ng: debug: [40261] cpu: [40285] terminated (success)
-stress-ng: debug: [40261] cpu: [40286] terminated (success)
-stress-ng: debug: [40261] cpu: [40287] terminated (success)
-stress-ng: debug: [40261] metrics-check: all stressor metrics validated and sane
-stress-ng: metrc: [40261] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
-stress-ng: metrc: [40261]                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
-stress-ng: metrc: [40261] cpu              410437     18.86    149.05      0.21     21759.12        2749.89
-stress-ng: info:  [40261] skipped: 0
-stress-ng: info:  [40261] passed: 8: cpu (8)
-stress-ng: info:  [40261] failed: 0
-stress-ng: info:  [40261] metrics untrustworthy: 0
-stress-ng: info:  [40261] successful run completed in 18.87 secs
+stress-ng: debug: [51884] invoked with '../stress-ng-binary --cpu 8 --timeout 30s --metrics-brief --verbose' by user 501 'kennethsheridan'
+stress-ng: debug: [51884] stress-ng 0.18.01 g93fd313ef8f8
+stress-ng: debug: [51884] system: Darwin kilo-sierra-actual 23.6.0 Darwin Kernel Version 23.6.0: Mon Jul 29 21:14:46 PDT 2024; root:xnu-10063.141.2~1/RELEASE_ARM64_T6031 arm64, clang 12.0.5, Darwin libc, little endian
+stress-ng: debug: [51884] RAM total: 1.1T, RAM free: 1.4G, swap free: 0.0
+stress-ng: debug: [51884] temporary file path: '/Users/kennethsheridan/commandant-rs'
+stress-ng: debug: [51884] 16 processors online, 16 processors configured
+stress-ng: info:  [51884] setting to a 30 secs run per stressor
+stress-ng: debug: [51884] cache allocate: using built-in defaults as unable to determine cache size
+stress-ng: debug: [51884] CPU data cache: L1: 64K
+stress-ng: debug: [51884] cache allocate: shared cache buffer size: 2048K
+stress-ng: info:  [51884] dispatching hogs: 8 cpu
+stress-ng: debug: [51884] starting stressors
+stress-ng: debug: [51915] cpu: [51915] started (instance 0 on CPU 0)
+stress-ng: debug: [51916] cpu: [51916] started (instance 1 on CPU 0)
+stress-ng: debug: [51917] cpu: [51917] started (instance 2 on CPU 0)
+stress-ng: debug: [51918] cpu: [51918] started (instance 3 on CPU 0)
+stress-ng: debug: [51919] cpu: [51919] started (instance 4 on CPU 0)
+stress-ng: debug: [51920] cpu: [51920] started (instance 5 on CPU 0)
+stress-ng: debug: [51884] 8 stressors started
+stress-ng: debug: [51921] cpu: [51921] started (instance 6 on CPU 0)
+stress-ng: debug: [51922] cpu: [51922] started (instance 7 on CPU 0)
+stress-ng: debug: [51915] cpu: using method 'all'
+stress-ng: debug: [51917] cpu: [51917] exited (instance 2 on CPU 0)
+stress-ng: debug: [51918] cpu: [51918] exited (instance 3 on CPU 0)
+stress-ng: debug: [51921] cpu: [51921] exited (instance 6 on CPU 0)
+stress-ng: debug: [51915] cpu: [51915] exited (instance 0 on CPU 0)
+stress-ng: debug: [51884] cpu: [51915] terminated (success)
+stress-ng: debug: [51920] cpu: [51920] exited (instance 5 on CPU 0)
+stress-ng: debug: [51919] cpu: [51919] exited (instance 4 on CPU 0)
+stress-ng: debug: [51916] cpu: [51916] exited (instance 1 on CPU 0)
+stress-ng: debug: [51922] cpu: [51922] exited (instance 7 on CPU 0)
+stress-ng: debug: [51884] cpu: [51916] terminated (success)
+stress-ng: debug: [51884] cpu: [51917] terminated (success)
+stress-ng: debug: [51884] cpu: [51918] terminated (success)
+stress-ng: debug: [51884] cpu: [51919] terminated (success)
+stress-ng: debug: [51884] cpu: [51920] terminated (success)
+stress-ng: debug: [51884] cpu: [51921] terminated (success)
+stress-ng: debug: [51884] cpu: [51922] terminated (success)
+stress-ng: debug: [51884] metrics-check: all stressor metrics validated and sane
+stress-ng: metrc: [51884] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
+stress-ng: metrc: [51884]                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
+stress-ng: metrc: [51884] cpu              143548      6.47     51.75      0.04     22170.67        2772.07
+stress-ng: info:  [51884] skipped: 0
+stress-ng: info:  [51884] passed: 8: cpu (8)
+stress-ng: info:  [51884] failed: 0
+stress-ng: info:  [51884] metrics untrustworthy: 0
+stress-ng: info:  [51884] successful run completed in 6.48 secs

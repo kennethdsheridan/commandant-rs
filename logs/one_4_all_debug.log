@@ -1,0 +1,19 @@
+2024-09-04T21:54:08 [DEBUG] - [34mnotifications;[0m
+2024-09-04T21:54:08 [DEBUG] - [34mBinary not found at ../stress-ng-binary. Preparing binary...[0m
+2024-09-04T21:54:08 [DEBUG] - [34mSelected stress-ng binary for macOS[0m
+2024-09-04T21:54:08 [DEBUG] - [34mSelected architecture: MacOS[0m
+2024-09-04T21:54:08 [DEBUG] - [34mSelected stress-ng binary for MacOS[0m
+2024-09-04T21:54:08 [DEBUG] - [34mAttempting to write stress-ng binary to ../stress-ng-binary[0m
+2024-09-04T21:54:08 [DEBUG] - [34mattepting to write the stress-ng binary at ../stress-ng-binary[0m
+2024-09-04T21:54:08 [DEBUG] - [34mstress-ng binary successfully written to disk[0m
+2024-09-04T21:54:08 [DEBUG] - [34mExecutable permissions set on stress-ng binary[0m
+2024-09-04T21:54:08 [DEBUG] - [34mSuccessfully prepared stress-ng binary at ../stress-ng-binary[0m
+2024-09-04T21:54:08 [DEBUG] - [34mBinary at ../stress-ng-binary has execute permissions[0m
+2024-09-04T21:54:08 [DEBUG] - [34mPreparing stress-ng command with args: ["--cpu", "8", "--timeout", "30s", "--metrics-brief", "--verbose"][0m
+2024-09-04T21:54:08 [DEBUG] - [34mRedirecting stress-ng output to stress_ng_output.txt[0m
+2024-09-04T21:54:08 [DEBUG] - [34mstress-ng command spawned, waiting for it to finish[0m
+2024-09-04T21:54:15 [DEBUG] - [34mpaused accepting connections on 127.0.0.1:8000[0m
+2024-09-04T21:54:15 [DEBUG] - [34mstress-ng command finished successfully[0m
+2024-09-04T21:54:15 [DEBUG] - [34mAttempting to remove stress-ng binary at ../stress-ng-binary[0m
+2024-09-04T21:54:15 [DEBUG] - [34mSuccessfully removed stress-ng binary at ../stress-ng-binary[0m
+2024-09-04T21:54:15 [DEBUG] - [34mCleaned up binary at ../stress-ng-binary[0m

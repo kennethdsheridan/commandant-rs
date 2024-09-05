@@ -395,6 +395,8 @@ async fn main() -> std::io::Result<()> {
                 // Log the final command for debugging purposes
                 command_logger.log_info(&format!("Executing stress test with args: {:?}", args));
 
+                let stress_tester = StressNgAdapter::new(command_logger.clone());
+
                 // Initialize the retry mechanism
                 // The test will be attempted up to 3 times (initial try + 2 retries)
                 let mut retries = 2;
@@ -408,11 +410,11 @@ async fn main() -> std::io::Result<()> {
                     ));
 
                     // Execute the stress test command asynchronously
-                    match StressNgAdapter::execute_stress_ng_command(
-                        command_logger.clone(),
-                        &args.iter().map(String::as_str).collect::<Vec<&str>>(),
-                    )
-                    .await
+                    match stress_tester
+                        .execute_stress_ng_command(
+                            &args.iter().map(String::as_str).collect::<Vec<&str>>(),
+                        )
+                        .await
                     {
                         // In case of a successful execution
                         Ok(()) => {
