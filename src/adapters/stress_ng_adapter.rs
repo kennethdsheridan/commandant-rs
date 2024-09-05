@@ -13,14 +13,6 @@ use crate::adapters::stress_ng_manager_adapter::{
     STRESS_NG_APPLE, STRESS_NG_LINUX, STRESS_NG_MACOS,
 };
 
-#[derive(Debug)]
-enum StressNgArchOptions {
-    LinuxX86_64,
-    LinuxARM64,
-    MacOSIntel,
-    MacOSAppleSilicon,
-}
-
 pub struct StressNgAdapter {
     logger: Arc<dyn LoggerPort>,
 }
@@ -49,12 +41,13 @@ impl<'a> StressNgAdapter {
         let arch = if cfg!(target_os = "linux") {
             self.logger.log_debug("Selected stress-ng binary for Linux");
             StressNgArch::Linux
-        } else if cfg!(target_os = "macos") {
-            self.logger.log_debug("Selected stress-ng binary for macOS");
-            StressNgArch::MacOS
-        } else if cfg!(target_os = "apple-darwin") {
+        } else if cfg!(all(target_os = "macos", target_arch = "x86_64")) {
             self.logger
-                .log_debug("Selected stress-ng binary for apple silicon (ARM)");
+                .log_debug("Selected stress-ng binary for macOS (Intel)");
+            StressNgArch::MacOS
+        } else if cfg!(all(target_os = "macos", target_arch = "aarch64")) {
+            self.logger
+                .log_debug("Selected stress-ng binary for macOS (Apple Silicon)");
             StressNgArch::Apple
         } else {
             // Defaulting to Linux for other operating systems
@@ -62,7 +55,6 @@ impl<'a> StressNgAdapter {
                 .log_debug("Defaulted to stress-ng binary for Linux");
             StressNgArch::Linux
         };
-
         arch
     }
 
