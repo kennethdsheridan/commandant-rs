@@ -267,7 +267,17 @@ async fn main() -> std::io::Result<()> {
     // "adapters" layer in the Ports and Adapters architecture, interfacing
     // with the external logging framework.
     let log_directory = "logs"; // Directory where log files will be stored.
-    let log_level = log::LevelFilter::Info; // Log level indicating verbosity of the logs.
+
+    // Convert the log_level string from the config to a log::LevelFilter
+    let log_level = match config.general.log_level.to_lowercase().as_str() {
+        "error" => log::LevelFilter::Error,
+        "warn" => log::LevelFilter::Warn,
+        "info" => log::LevelFilter::Info,
+        "debug" => log::LevelFilter::Debug,
+        "trace" => log::LevelFilter::Trace,
+        _ => log::LevelFilter::Info, // Default to Info if unrecognized
+    }; // Log level indicating verbosity of the logs.
+
     let logger = Arc::new(common::adapters::log_adapter::init(
         log_directory,
         log_level,

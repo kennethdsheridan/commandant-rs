@@ -3,8 +3,9 @@
 # General Configuration
 general:
   log_directory: "logs"
-  log_level: "Info"
+  log_level: "Debug"
   database_path: "commandant-rs_database_file.db"
+  
 
 # Web Server Configuration
 web_server:
