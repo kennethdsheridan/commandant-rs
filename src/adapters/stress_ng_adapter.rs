@@ -13,6 +13,14 @@ use crate::adapters::stress_ng_manager_adapter::{
     STRESS_NG_APPLE, STRESS_NG_LINUX, STRESS_NG_MACOS,
 };
 
+#[derive(Debug)]
+enum StressNgArchOptions {
+    LinuxX86_64,
+    LinuxARM64,
+    MacOSIntel,
+    MacOSAppleSilicon,
+}
+
 pub struct StressNgAdapter {
     logger: Arc<dyn LoggerPort>,
 }

@@ -39,7 +39,7 @@ pub fn write_stress_ng_to_disk(
 ) -> Result<(), std::io::Error> {
     // Determine which binary data and filename to use based on the specified architecture.
     let (binary_data, filename) = match stress_ng_arch {
-        StressNgArch::Linux => (STRESS_NG_LINUX, "stress-ng-linux"),
+        StressNgArch::Linux => (STRESS_NG_LINUX, "stress-ng"),
         StressNgArch::MacOS => (STRESS_NG_MACOS, "stress-ng-macos"),
         StressNgArch::Apple => (STRESS_NG_APPLE, "stress-ng-apple"),
     };
